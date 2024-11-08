@@ -128,6 +128,7 @@ const Form = () => {
     setErrorMessage(""); // Clear any previous error message
 
     try {
+      console.log(formData.videoUrl);
       // Fetch embed HTML from Iframely API
       const response = await fetch(
         `https://iframe.ly/api/iframely?url=${encodeURIComponent(
@@ -135,6 +136,7 @@ const Form = () => {
         )}&api_key=cdbaa84aba61ecdea5943bY`
       );
       const data = await response.json();
+      console.log({ data });
 
       if (data.html) {
         setEmbedHtml(data.html); // Store the HTML to render
@@ -146,6 +148,8 @@ const Form = () => {
       setErrorMessage("Error fetching video preview.");
     }
   };
+
+  console.log({ errorMessage });
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       {submitStatus === "idle" && (
