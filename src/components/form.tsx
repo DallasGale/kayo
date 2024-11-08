@@ -115,7 +115,6 @@ const Form = () => {
     }
   };
 
-  console.log({ submitStatus });
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       {submitStatus === "idle" && (
@@ -162,6 +161,7 @@ const Form = () => {
             value={formData.videoUrl}
             onChange={handleChange}
           />
+          <button>Validate Video</button>
           {errors.videoUrl && <p>{errors.videoUrl}</p>}
           <textarea
             id="message"
