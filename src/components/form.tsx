@@ -115,6 +115,37 @@ const Form = () => {
     }
   };
 
+  // Video Validation
+
+  const [embedHtml, setEmbedHtml] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleValidateVideo = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    // setVideoUrl(formData.videoUrl);
+    setErrorMessage(""); // Clear any previous error message
+
+    try {
+      // Fetch embed HTML from Iframely API
+      const response = await fetch(
+        `https://iframe.ly/api/iframely?url=${encodeURIComponent(
+          formData.videoUrl
+        )}&api_key=cdbaa84aba61ecdea5943bY`
+      );
+      const data = await response.json();
+
+      if (data.html) {
+        setEmbedHtml(data.html); // Store the HTML to render
+      } else {
+        setEmbedHtml(null);
+        setErrorMessage("Unable to preview this video.");
+      }
+    } catch (error) {
+      setErrorMessage("Error fetching video preview.");
+    }
+  };
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       {submitStatus === "idle" && (
@@ -161,7 +192,8 @@ const Form = () => {
             value={formData.videoUrl}
             onChange={handleChange}
           />
-          <button>Validate Video</button>
+          <button onClick={handleValidateVideo}>Validate Video</button>
+          {embedHtml && <div dangerouslySetInnerHTML={{ __html: embedHtml }} />}
           {errors.videoUrl && <p>{errors.videoUrl}</p>}
           <textarea
             id="message"
