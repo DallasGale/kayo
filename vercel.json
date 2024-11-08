@@ -1,7 +1,3 @@
 {
-  "build": {
-    "ignoredBuildFiles": [
-      "functions/**"
-    ]
-  }
+  "buildCommand": "npm install && npm run build --ignore=functions"
 }
