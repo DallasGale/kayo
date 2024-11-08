@@ -29,6 +29,9 @@ interface EmbedHtml {
   };
 }
 
+const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
+const isDev = import.meta.env.MODE === "development";
+
 const Form = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "Test User",
@@ -63,7 +66,7 @@ const Form = () => {
       const response = await fetch(
         `https://iframe.ly/api/iframely?url=${encodeURIComponent(
           formData.videoUrl,
-        )}&omit_script=1&api_key=cdbaa84aba61ecdea5943b`,
+        )}&omit_script=1&${isDev ? "key" : "api_key"}=${key}`,
       );
       const data = await response.json();
       console.log({ data });
