@@ -1,16 +1,68 @@
 ---
+import Header from "../components/header/index.astro";
+import VideoPlayer from "../components/videoPlayer/index.astro";
+import Step from "../components/step/index.astro";
 
+const steps = [
+  {
+    title: "Records your entry",
+    description:
+      "Tell us why you should be the next big thing in footy broadcasting. Entries close 11 December 2024.",
+  },
+  {
+    title: "Upload to a social platform",
+    description:
+      "Our panel of experts will select the top 10 entries. Shortlist announced 12 January 2025.",
+  },
+  {
+    title: "Submit YOUR ENTRY",
+    description:
+      "The top 10 will be flown to Melbourne for a live audition. Finalists announced 26 January 2025.",
+  },
+];
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Kayo</title>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>The Kayo Call Up</h1>
+      <h2>
+        THE SEARCH TO UNEARTH THE NEWEST MEMBER OF FOX FOOTY’S ON-AIR TEAM.
+      </h2>
+      <p>MUST BE 18+ TO ENTER. TERMS AND CONDITIONS APPLY</p>
+      <button>Submit your entry</button>
+      <p>
+        2025 is set to be our biggest year yet... To celebrate, Fox Footy and
+        Kayo are searching for one lucky fan to join the game’s top broadcast
+        team for Super Saturday Live, bringing Australia exclusive coverage of
+        the first eight weeks of the AFL season. Entries are open from Wednesday
+        20 November to 11 December 2024. A winner will be selected and announced
+        on the 12 February 2025.
+      </p>
+
+      <h3>
+        YOU WIN: AN ON-AIR ROLE FOR THE FIRST 8 WEEKS OF THE SEASON, PLUS
+        MENTORING FROM THE BIGGEST NAMES IN FOOTY.
+      </h3>
+
+      <h4>How it works</h4>
+      <VideoPlayer />
+      <ul>
+        {
+          steps.map((step) => (
+            <li>
+              <Step title={step.title} description={step.description} />
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+  </body>
 </html>

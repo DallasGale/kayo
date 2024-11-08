@@ -20,6 +20,15 @@ interface FormErrors {
   message?: string;
 }
 
+interface EmbedHtml {
+  error?: string;
+  html?: string;
+  meta?: {
+    site: string;
+    title: string;
+  };
+}
+
 const Form = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "Test User",
@@ -35,6 +44,40 @@ const Form = () => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+
+  // Video Validation
+
+  const [embedHtml, setEmbedHtml] = useState<EmbedHtml | null>(null);
+  const [videoErrorMessage, setVideoErrorMessage] = useState("privateVideo");
+
+  const handleValidateVideo = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault();
+    // setVideoUrl(formData.videoUrl);
+    setVideoErrorMessage(""); // Clear any previous error message
+
+    try {
+      console.log(formData.videoUrl);
+      // Fetch embed HTML from Iframely API
+      const response = await fetch(
+        `https://iframe.ly/api/iframely?url=${encodeURIComponent(
+          formData.videoUrl,
+        )}&omit_script=1&api_key=cdbaa84aba61ecdea5943b`,
+      );
+      const data = await response.json();
+      console.log({ data });
+
+      if (data.html) {
+        setEmbedHtml(data); // Store the HTML to render
+      } else {
+        setEmbedHtml(null);
+        setVideoErrorMessage("Unable to preview this video.");
+      }
+    } catch (error) {
+      setVideoErrorMessage("Error fetching video preview.");
+    }
+  };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -55,6 +98,10 @@ const Form = () => {
       newErrors.mobile = "Please enter a valid mobile number";
     }
 
+    if (videoErrorMessage === "privateVideo") {
+      newErrors.videoUrl = "A public Video URL is required";
+    }
+
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     }
@@ -62,6 +109,8 @@ const Form = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  console.log({ videoErrorMessage });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +146,7 @@ const Form = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     // Apply phone formatting if it's the mobile field
@@ -115,41 +164,6 @@ const Form = () => {
     }
   };
 
-  // Video Validation
-
-  const [embedHtml, setEmbedHtml] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleValidateVideo = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    // setVideoUrl(formData.videoUrl);
-    setErrorMessage(""); // Clear any previous error message
-
-    try {
-      console.log(formData.videoUrl);
-      // Fetch embed HTML from Iframely API
-      const response = await fetch(
-        `https://iframe.ly/api/iframely?url=${encodeURIComponent(
-          formData.videoUrl
-        )}&api_key=cdbaa84aba61ecdea5943bY`
-      );
-      const data = await response.json();
-      console.log({ data });
-
-      if (data.html) {
-        setEmbedHtml(data.html); // Store the HTML to render
-      } else {
-        setEmbedHtml(null);
-        setErrorMessage("Unable to preview this video.");
-      }
-    } catch (error) {
-      setErrorMessage("Error fetching video preview.");
-    }
-  };
-
-  console.log({ errorMessage });
   return (
     <div style={{ maxWidth: 600, margin: "auto" }}>
       {submitStatus === "idle" && (
@@ -197,7 +211,20 @@ const Form = () => {
             onChange={handleChange}
           />
           <button onClick={handleValidateVideo}>Validate Video</button>
-          {embedHtml && <div dangerouslySetInnerHTML={{ __html: embedHtml }} />}
+          {embedHtml?.meta && (
+            <div style={{ height: 300 }}>
+              <div>
+                Platform: {embedHtml.meta.site}
+                Title: {embedHtml.meta.title}
+                Preview:{" "}
+                <div
+                  style={{ width: 200, height: 200 }}
+                  dangerouslySetInnerHTML={{ __html: `${embedHtml?.html}` }}
+                />
+              </div>
+            </div>
+          )}
+          {embedHtml?.error && <p>{embedHtml.error}</p>}
           {errors.videoUrl && <p>{errors.videoUrl}</p>}
           <textarea
             id="message"
@@ -208,7 +235,11 @@ const Form = () => {
             onChange={handleChange}
           />
           {errors.message && <p>{errors.message}</p>}
-          <button style={{ padding: 20 }} type="submit" disabled={isSubmitting}>
+          <button
+            style={{ padding: 20 }}
+            type="submit"
+            disabled={isSubmitting && !!errors}
+          >
             {isSubmitting ? "Submitting..." : "LET'S GO"}
           </button>
         </form>
