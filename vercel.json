@@ -1,5 +1,7 @@
 {
-  "ignoreBuildStep": [
-    "functions"
-  ]
+  "build": {
+    "ignoredBuildFiles": [
+      "functions/**"
+    ]
+  }
 }
