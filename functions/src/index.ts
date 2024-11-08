@@ -9,7 +9,7 @@ const corsHandler = cors({ origin: true }); // Enable CORS to allow any origin.
 
 export const exportFirestoreToCSV = functions
   .region("us-central1")
-  .https.onRequest((req, res) => {
+  .https.onRequest((req: functions.Request, res: functions.Response) => {
     corsHandler(req, res, async () => {
       try {
         const collection = req.query.collection as string;
