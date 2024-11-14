@@ -1,0 +1,58 @@
+---
+import Step from "./step/index.astro";
+const steps = [
+  {
+    stepNumber: 1,
+    title: "Record your entry",
+    description:
+      "Show us your on-air style, personality and passion for AFL. Imagine you are live on camera during a Fox Footy broadcast and submit a 15 to 30 second video. We're not looking for anything specific so just showcase your dream position which might be as a commentator, boundary rider, host, interviewer, expert analyst or something else entirely. Choose a role and get as creative as you like!",
+  },
+  {
+    stepNumber: 2,
+    title: "Upload to a social platform",
+    description:
+      "Post your video to a social platform: either Instagram, TikTok, Facebook, Instagram, YouTube or  Vimeo. Feel free to include the hashtag <span class='highlight'>#TheKayoCallUp</span>. Just make sure your profile is public and copy the link to your post in the entry form.",
+  },
+  {
+    stepNumber: 3,
+    title: "Submit your entry",
+    description:
+      "Paste the link to your post into our entry form, along with a quick 100-word note on why you’re perfect for The Kayo Call Up. Good luck!",
+  },
+];
+---
+
+<section>
+  <div class="content">
+    <ul class="steps">
+      {
+        steps.map((step) => (
+          <li>
+            <Step {...step} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+
+  section {
+    background-color: var(--darkgrey);
+    color: var(--white);
+    padding: 64px 16px;
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 73px;
+    }
+    section {
+      padding-top: 130px;
+    }
+  }
+</style>

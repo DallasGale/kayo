@@ -1,0 +1,76 @@
+@import "../../breakpoints.scss";
+.section {
+  background-color: var(--kayogreen);
+}
+
+.questionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.question {
+  transform: var(--skewDeg);
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  padding: 0 20px;
+  width: 100%;
+  border: none;
+}
+
+.content {
+  position: relative;
+  transform: skewX(10deg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+.label {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.toggle {
+  text-indent: -99999px;
+  background-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.seeMore {
+  text-align: center;
+}
+
+@media screen and (min-width: $breakpoint-desktop) {
+  .section {
+    padding-top: 122px;
+  }
+  .questionsList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+  }
+  .question {
+    height: 80px;
+    width: auto;
+    max-width: calc(50% - 18px);
+    min-width: calc(50% - 18px);
+  }
+
+  .seeMore {
+    display: none;
+  }
+}

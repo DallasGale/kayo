@@ -1,0 +1,105 @@
+---
+import KayoLogo from "../../assets/kayo-logo-mono.png";
+import FoxLogo from "../../assets/fox-logo.png";
+import TikTok from "../../assets/tiktok.svg";
+import Instagram from "../../assets/instagram.svg";
+---
+
+<footer>
+  <div class="content">
+    <div class="logos">
+      <img src={KayoLogo.src} class="kayo-logo" alt="Kayo Sports" />
+      <img src={FoxLogo.src} class="fox-logo" alt="Fox Footy" />
+    </div>
+
+    <div class="links">
+      <div class="legal">
+        <p class="small-print">Privacy Policy</p>
+        <p class="small-print">Terms and conditions</p>
+      </div>
+
+      <div class="social">
+        <p class="small-print"><img src={TikTok.src} alt="TikTok" /></p>
+        <p class="small-print">
+          <img src={Instagram.src} alt="Instagram3" />
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+  /* section {
+    height: 70vh;
+  } */
+
+  footer {
+    position: absolute;
+    bottom: 90px;
+    width: 100%;
+  }
+  .logos {
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .kayo-logo {
+    width: 84px;
+    height: 45px;
+  }
+  .fox-logo {
+    width: 75px;
+    height: 47px;
+  }
+
+  .legal {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    .small-print {
+      text-transform: uppercase;
+    }
+  }
+
+  .social {
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .content {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .legal {
+      flex-direction: row;
+      width: 100%;
+      min-width: 300px;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+    .logos {
+      justify-content: flex-start;
+      gap: 20px;
+    }
+    .social {
+      justify-content: flex-end;
+    }
+
+    .links {
+      gap: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>

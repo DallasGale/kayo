@@ -1,0 +1,50 @@
+---
+import Button from "../button/index.astro";
+import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
+---
+
+<section>
+  <div class="content">
+    <h2 class="display-2">Will you get the kayo call up?</h2>
+    <div>
+      <Button label="Submit your entry" isLarge link="/submit" />
+    </div>
+  </div>
+  <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+</section>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+
+  section {
+    align-items: center;
+    display: flex;
+    background-color: var(--kayogreen);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    position: relative;
+  }
+  .content {
+    text-align: center;
+    gap: 62px;
+    max-width: 800px;
+  }
+  .bg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    mix-blend-mode: darken;
+    background-position: center bottom 56px;
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    section {
+      // padding-top: 104px;
+      height: calc(100vh - 60px);
+    }
+  }
+</style>

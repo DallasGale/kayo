@@ -8,5 +8,8 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     envPrefix: "NEXT_PUBLIC_",
+    ssr: {
+      noExternal: ["webcoreui"],
+    },
   },
 });

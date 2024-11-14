@@ -1,18 +1,59 @@
 ---
-import Form from "../../components/form";
+import Form from "../../components/form/";
+import Layout from "../../layouts/layout.astro";
+import HeroImg from "../../assets/hero.svg";
+import Button from "../../components/button/index.astro";
+import Bg from "../../assets/footballs.png";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Kayo</title>
-	</head>
-	<body>
-		<h1>Submit</h1>
-
+<Layout title="Kayo - Subit">
+  <header>
+    <Button label="Back" isDark link="/" />
+  </header>
+  <section>
+    <img class="hero" src={HeroImg.src} alt="Kato Sports Call Up" />
+    <h2 class="display-1">Submit your entry</h2>
     <Form client:load />
-	</body>
-</html>
+
+    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+  </section>
+</Layout>
+
+<style>
+  header {
+    box-sizing: border-box;
+    padding: 40px;
+    max-width: 1440px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .hero {
+    max-width: 306px;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+  }
+
+  .bg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: 1600px;
+    mix-blend-mode: darken;
+    background-position: center top;
+  }
+  @media screen and (min-width: 768px) {
+    section {
+      padding: 64px;
+    }
+  }
+</style>

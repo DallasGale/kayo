@@ -1,0 +1,123 @@
+---
+import HeroImg from "../../assets/hero.svg";
+import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
+import Button from "../button/index.astro";
+import Animation from "./animation";
+---
+
+<section id="hero">
+  <Animation client:load />
+  <!-- <div class="content">
+    <div class="logo">
+      <img src={HeroImg.src} alt="The Kayo Callup" />
+    </div>
+    <div class="message">
+      <h2 class="display-1 text-center">
+        THE SEARCH TO UNEARTH THE NEWEST MEMBER OF FOX FOOTY’S ON-AIR TEAM.
+      </h2>
+      <div class="submit-lockup">
+        <Button label="Submit your entry" isLarge link="/submit" />
+        <p class="small-print text-center">
+          Must be 18+ to enter and a current Australian resident. <a href="#"
+            >TERMS AND CONDITIONS</a
+          > APPLY
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div> -->
+</section>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+  section {
+    background-color: var(--darkgrey);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 68px;
+    padding: 101px 0 107px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 100%;
+    // margin-top: -40px;
+    height: 100vh;
+    // height: calc(100vh - 52px);
+    position: relative;
+  }
+  .bg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    mix-blend-mode: darken;
+    background-position: center bottom;
+  }
+  .message {
+    max-width: 770px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .logo {
+    padding: 0 60px;
+    box-sizing: border-box;
+  }
+  img {
+    width: 100%;
+  }
+
+  .submit-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    // z-index: 2;
+  }
+
+  .content {
+    gap: 62px;
+  }
+
+  .small-print {
+    padding: 0 40px;
+  }
+  a {
+    color: var(--darkgrey);
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .content {
+      max-width: 915px;
+      z-index: 1;
+      // padding-top: 178px;
+    }
+    section {
+      padding-top: 0;
+      // height: calc(100vh - 52px);
+      margin-top: -60px;
+    }
+    .logo {
+      width: 100%;
+      margin: auto;
+      padding-top: 10vh;
+    }
+
+    .display-1 {
+      font-size: 24px;
+    }
+
+    .btn {
+      order: 1;
+      margin-top: 71px;
+    }
+
+    .small-print {
+      flex: 1;
+      order: 0;
+    }
+  }
+</style>

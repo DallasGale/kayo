@@ -1,0 +1,261 @@
+<script>
+  import type { CollectionEntry } from "astro:content";
+
+  // Create a function to handle intersection observer setup
+  function setupIntersectionObserver() {
+    // Options for the observer
+    const options = {
+      root: null, // use viewport as root
+      rootMargin: "0px",
+      threshold: 0.5, // trigger when 10% of target is visible
+    };
+
+    const navFollower = document.getElementById("nav-follower");
+    const whatYouWinAnchor = document.getElementById("what-you-win-anchor");
+    const howItWorksAnchor = document.getElementById("how-it-works-anchor");
+    const haveAQuestionAnchor = document.getElementById(
+      "have-a-question-anchor",
+    );
+    // let lastVisibleSection: string | null = null;
+
+    // Callback function to handle intersections
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log(`Section ${entry.target.id} is now visible`);
+          // Add your custom logic here
+
+          const { id } = entry.target;
+          if (navFollower) {
+            if (id === "hero") {
+              whatYouWinAnchor?.classList.remove("active");
+              howItWorksAnchor?.classList.remove("active");
+              haveAQuestionAnchor?.classList.remove("active");
+              navFollower.style.transform = "translateX(-200%)";
+            }
+            if (id === "what-you-win") {
+              whatYouWinAnchor?.classList.add("active");
+              howItWorksAnchor?.classList.remove("active");
+              navFollower.style.transform = "translateX(-75%) skew(-25deg)";
+            }
+            if (id === "how-it-works") {
+              whatYouWinAnchor?.classList.add("active");
+              howItWorksAnchor?.classList.add("active");
+              haveAQuestionAnchor?.classList.remove("active");
+              navFollower.style.transform = "translateX(-50%) skew(-25deg)";
+              // lastVisibleSection = id;
+            }
+            if (id === "have-a-question") {
+              whatYouWinAnchor?.classList.add("active");
+              howItWorksAnchor?.classList.add("active");
+              haveAQuestionAnchor?.classList.add("active");
+              navFollower.style.transform = "translateX(-25%) skew(-25deg)";
+              // lastVisibleSection = id;
+            }
+
+            // return lastVisibleSection;
+          }
+
+          // Uncomment the next line if you want to stop observing after first intersection
+          // observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    // Create the observer
+    const observer = new IntersectionObserver(handleIntersect, options);
+
+    // Select all sections you want to observe
+    const sections = document.querySelectorAll("section[id]");
+
+    // Start observing each section
+    sections.forEach((section) => {
+      console.log({ section });
+      observer.observe(section);
+    });
+
+    return observer;
+  }
+
+  // Initialize the observer when the DOM is ready
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = setupIntersectionObserver();
+  });
+</script>
+
+<div class="nav-wrapper">
+  <nav class="nav">
+    <ul>
+      <li id="what-you-win-anchor">
+        <a href="#what-you-win" class="anchor">What you win</a>
+      </li>
+      <li id="how-it-works-anchor">
+        <a href="#how-it-works" href="/about" class="anchor">How it works</a>
+      </li>
+      <li id="have-a-question-anchor">
+        <a href="#have-a-question" href="/blog" class="anchor"
+          >Have a question?</a
+        >
+      </li>
+      <li id="super-saturday-live-anchor">
+        <a href="#what-you-win" href="/blog" class="anchor"
+          >Super saturday live</a
+        >
+      </li>
+    </ul>
+    <div id="nav-follower" class="nav-follower"></div>
+  </nav>
+</div>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+  .nav-wrapper {
+    overflow: scroll;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background-color: var(--black);
+    height: auto;
+    display: flex;
+    align-items: center;
+  }
+  .nav {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+  }
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      right: 0;
+      border-bottom: 2px dotted var(--kayogreen);
+      z-index: -2;
+    }
+  }
+  .anchor {
+    // background-color: var(--black);
+    padding: 0 10px;
+    color: var(--kayogreen);
+    font-size: 15px;
+    text-transform: uppercase;
+    font-family: "GibsonSemiBold", sans-serif;
+    text-decoration: none;
+    position: relative;
+    &:before {
+      content: "";
+      height: 20px;
+      width: 100%;
+      background-color: var(--black);
+      right: 0;
+      top: 0;
+      transition: all 0.25s ease-out;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+
+  li {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding: 0 0;
+    position: relative;
+
+    // &:before {
+    //   content: "";
+    //   position: absolute;
+    //   width: 100%;
+    //   width: 2000px;
+    //   height: 100%;
+    //   background-color: var(--kayogreen);
+    //   opacity: 0;
+    //   bottom: 0;
+    //   left: auto;
+    //   right: 0;
+    //   transform: translateX(-10%) skew(-25deg);
+    //   z-index: -1;
+    //   transition: all 0.35s ease-out;
+    // }
+  }
+
+  li.active {
+    // &:before {
+    //   opacity: 1;
+    //   transform: translateX(0) skew(-25deg);
+    // }
+    .anchor {
+      color: var(--black);
+      background-color: transparent;
+      transition: none;
+      transition: all 0.25s ease-out;
+      &:first-of-type {
+        &:before {
+          width: 100%;
+          transform: translateX(0);
+          transition: all 0.35s ease-out;
+        }
+      }
+      &:before {
+        width: 0%;
+        transform: translateX(0);
+        transition: all 0.25s ease-out;
+      }
+    }
+  }
+
+  .nav-follower {
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    background-color: var(--kayogreen);
+    // opacity: 0;
+    bottom: 0;
+    // left: auto;
+    // right: 0;
+    transform: translateX(-200%) skew(-25deg);
+    z-index: -1;
+    transition: all 0.35s ease-out;
+    &:before {
+      content: "";
+      background-color: var(--kayogreen);
+      left: -1400px;
+      width: 2000px;
+      position: absolute;
+      height: 100%;
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .nav-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+    .nav {
+      width: 100%;
+    }
+
+    ul {
+      max-width: 1440px;
+    }
+  }
+  @media screen and (min-width: $breakpoint-widescreen) {
+    .nav-follower {
+      width: 1440px;
+    }
+  }
+</style>

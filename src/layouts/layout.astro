@@ -1,0 +1,173 @@
+---
+import Header from "../components/header/index.astro";
+import Nav from "../components/nav/nav.astro";
+import Button from "../components/button/index.astro";
+import "react-multi-carousel/lib/styles.css";
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style lang="scss" is:global>
+  @import "../fonts.css";
+  @import "../breakpoints.scss";
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Gibson", sans-serif;
+    background-color: var(--black);
+    margin: 0;
+  }
+
+  main {
+    position: relative;
+  }
+
+  section {
+    // margin-bottom: 68px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .content {
+    max-width: 1440px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  :root {
+    --black: #000000;
+    --darkgrey: #171717;
+    --white: #ffffff;
+    --kayogreen: #40f87f;
+    --skewDeg: skewX(-10deg);
+  }
+
+  .display-1 {
+    font-size: 20px;
+    line-height: 111%;
+    font-family: "KayoGravity", sans-serif;
+    text-transform: uppercase;
+  }
+  .display-2 {
+    font-size: 76px;
+    line-height: 79%;
+    font-family: "KnockoutFeatherweight", sans-serif;
+    text-transform: uppercase;
+  }
+  .display-3 {
+    font-size: 32px;
+    line-height: 111%;
+    font-family: "KnockoutFeatherweight", sans-serif;
+    text-transform: uppercase;
+  }
+
+  .highlight {
+    font-family: "GibsonBold", sans-serif;
+    color: var(--kayogreen);
+    font-weight: bold;
+  }
+
+  .color-kayogreen {
+    color: var(--kayogreen);
+  }
+
+  .color-white {
+    color: var(--white);
+  }
+
+  .color-warning {
+    color: rgb(188, 51, 51);
+  }
+
+  .small-print {
+    font-family: "GibsonSemiBold", sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .text-center {
+    text-align: center;
+  }
+
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 143%;
+    strong {
+      font-family: "GibsonBold", sans-serif;
+      font-weight: bold;
+    }
+    a {
+      font-family: "GibsonBoldItalic", sans-serif;
+      color: var(--kayogreen);
+      font-weight: bold;
+      font-size: italic;
+      text-decoration: none;
+    }
+  }
+
+  .cta-container {
+    transform: translateY(-96px); // Move it up to overlap with header
+    position: sticky;
+    display: flex;
+    justify-content: flex-end;
+    top: 120px;
+    display: flex;
+    right: 0;
+    margin-left: auto;
+    z-index: 2;
+    width: 95%;
+    max-width: 1440px;
+    margin: auto;
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .display-1 {
+      font-size: 32px;
+    }
+    .display-2 {
+      font-size: 140px;
+    }
+    p {
+      font-size: 18px;
+    }
+
+    .btn {
+      height: 72px;
+      padding: 0 50px;
+    }
+  }
+</style>

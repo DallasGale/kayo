@@ -1,0 +1,184 @@
+.scene {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--black);
+  z-index: 13;
+  position: absolute;
+  top: 0;
+}
+
+@keyframes moveUpward {
+  0% {
+    height: 700px;
+    transform: translateY(0);
+    border-width: 600px;
+  }
+  50% {
+    border-width: 100px;
+  }
+  60% {
+    border-width: 100px;
+  }
+  100% {
+    height: 700px;
+    transform: translateY(-280%);
+    border-width: 800px;
+  }
+}
+.greenBar {
+  z-index: 1;
+  box-sizing: border-box;
+  background-color: var(--kayogreen);
+  width: 100%;
+  height: 100px;
+  transform: translateY(0);
+  position: absolute;
+  bottom: -500px;
+  left: 0;
+  right: 0;
+  border-bottom: 80px solid var(--black);
+  &.lift {
+    animation: moveUpward 2s forwards linear;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+}
+
+@keyframes moveUpwardHero {
+  0% {
+    transform: translateY(100%);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.greenBg {
+  transform: translateY(100%);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  bottom: 0;
+  background-color: var(--kayogreen);
+  transform: translateY(1650px);
+  animation: moveUpwardHero 2s forwards linear;
+  animation-timing-function: cubic-bezier(0.79, 0.14, 0.15, 0.86);
+  // animation-delay: 300ms;
+}
+
+@keyframes animateLogo {
+  0% {
+    transform: translateY(100%) scale(8);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  30% {
+    transform: translateY(45%) scale(1);
+  }
+
+  55% {
+    transform: translateY(45%) scale(1);
+  }
+  70% {
+    transform: translateY(35%) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(35%) scale(1);
+  }
+}
+.logo {
+  z-index: 0;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  max-width: 800px;
+
+  &.lift {
+    animation: animateLogo 4.5s forwards linear;
+    animation-delay: 500ms;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+// .bg {
+//   z-index: 0;
+//   margin: auto;
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   opacity: 0;
+//   max-width: 800px;
+
+//   &.lift {
+//     animation: zoomOutLogo 4.5s forwards linear;
+//     animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+//   }
+//   img {
+//     width: 100%;
+//     height: auto;
+//   }
+// }
+
+@keyframes animateGoalPosts {
+  0% {
+    transform: translateY(-10%) scale(4.5);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  30% {
+    transform: translateY(0%) scale(1.5);
+  }
+
+  55% {
+    transform: translateY(0%) scale(1.5);
+  }
+  70% {
+    transform: translateY(0%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%) scale(0.8);
+  }
+}
+.goalPosts {
+  z-index: 0;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  // opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  mix-blend-mode: darken;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+  &.lift {
+    animation: animateGoalPosts 4.5s forwards linear;
+    animation-delay: 500ms;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+}

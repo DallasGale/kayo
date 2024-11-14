@@ -1,0 +1,70 @@
+@font-face {
+  font-family: "Gibson";
+  src: url("/src/assets/fonts/Gibson/CanadaType-Gibson-Light.otf")
+    format("opentype");
+  /* font-weight: 400; */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GibsonBold";
+  src: url("/src/assets/fonts/Gibson/CanadaType-Gibson-Bold.otf")
+    format("opentype");
+  /* font-weight: 400; */
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GibsonSemiBold";
+  src: url("/src/assets/fonts/Gibson/CanadaType-Gibson-SemiBold.otf")
+    format("opentype");
+  /* font-weight: 400; */
+  /* font-weight: bold; */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GibsonBoldItalic";
+  src: url("/src/assets/fonts/Gibson/CanadaType-Gibson-BoldItalic.otf")
+    format("opentype");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KayoGravity";
+  src: url("/src/assets/fonts/KayoGravity/KayoGravity-ExpandedItalic.ttf")
+    format("truetype");
+  src: url("/src/assets/fonts/KayoGravity/KayoGravity-ExpandedItalic.otf")
+    format("opentype");
+  src: url("/src/assets/fonts/KayoGravity/KayoGravity-ExpandedItalic.woff")
+    format("woff");
+  src: url("/src/assets/fonts/KayoGravity/KayoGravity-ExpandedItalic.woff2")
+    format("woff2");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KnockoutLightweight";
+  src: url("/src/assets/fonts/Knockout_Slant/Knockout_No-29_Junior-Lightweight-7deg.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KnockoutFeatherweight";
+  src: url("/src/assets/fonts/Knockout_Slant/Knockout_No-68_Full-Featherweight-7deg.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KnockoutCruiserweight";
+  src: url("/src/assets/fonts/Knockout_Slant/Knockout_No-92_Ultimate-Cruiserweight-7deg.ttf")
+    format("truetype");
+  font-display: swap;
+}

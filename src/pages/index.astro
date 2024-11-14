@@ -1,68 +1,96 @@
 ---
-import Header from "../components/header/index.astro";
+import Layout from "../layouts/layout.astro";
+import Accordion from "../components/accordion/index.astro";
 import VideoPlayer from "../components/videoPlayer/index.astro";
-import Step from "../components/step/index.astro";
+import Steps from "../components/steps/index.astro";
+import FutureCollegues from "../components/futureColleagues/index.astro";
 
-const steps = [
+import Hero from "../components/hero/index.astro";
+import HowToWin from "../components/howToWin/index.astro";
+import HowToEnter from "../components/howToEnter/index.astro";
+import HaveAQuestion from "../components/haveAQuestion";
+import WillYouGetTheCallUp from "../components/willYouGetTheCallUp/index.astro";
+import Footer from "../components/footer/index.astro";
+import Header from "../components/header/index.astro";
+import Button from "../components/button/index.astro";
+import Nav from "../components/nav/nav.astro";
+const questions = [
   {
-    title: "Records your entry",
-    description:
-      "Tell us why you should be the next big thing in footy broadcasting. Entries close 11 December 2024.",
+    question: "Who can enter the competition?",
+    answer: "You can apply by filling out the form on the website.",
   },
   {
-    title: "Upload to a social platform",
-    description:
-      "Our panel of experts will select the top 10 entries. Shortlist announced 12 January 2025.",
+    question: "What do I need to submit?",
+    answer: "The deadline is 31st of December.",
   },
   {
-    title: "Submit YOUR ENTRY",
-    description:
-      "The top 10 will be flown to Melbourne for a live audition. Finalists announced 26 January 2025.",
+    question: "Which social media platforms can I use?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "What’s the deadline for entries?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "When is the shortlisting phase of the talent search?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "What is the prize?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "How much will I get paid?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "What are the judges looking for?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "When will the winner be announced?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "Can I submit multiple entries?",
+    answer: "The prize is a 6 month internship at Kayo.",
+  },
+  {
+    question: "I don’t have professional equipment—can I still enter?",
+    answer: "The prize is a 6 month internship at Kayo.",
   },
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Kayo</title>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h1>The Kayo Call Up</h1>
-      <h2>
-        THE SEARCH TO UNEARTH THE NEWEST MEMBER OF FOX FOOTY’S ON-AIR TEAM.
-      </h2>
-      <p>MUST BE 18+ TO ENTER. TERMS AND CONDITIONS APPLY</p>
-      <button>Submit your entry</button>
-      <p>
-        2025 is set to be our biggest year yet... To celebrate, Fox Footy and
-        Kayo are searching for one lucky fan to join the game’s top broadcast
-        team for Super Saturday Live, bringing Australia exclusive coverage of
-        the first eight weeks of the AFL season. Entries are open from Wednesday
-        20 November to 11 December 2024. A winner will be selected and announced
-        on the 12 February 2025.
-      </p>
+<Layout title="Kayo">
+  <Header />
+  <div class="cta-container">
+    <Button label="Submit your entry" isLarge link="/submit" />
+  </div>
+  <Hero />
+  <HowToWin />
+  <HowToEnter />
+  <Steps />
+  <FutureCollegues />
+  <HaveAQuestion questions={questions} client:load />
+  <WillYouGetTheCallUp />
+  <Nav />
 
-      <h3>
-        YOU WIN: AN ON-AIR ROLE FOR THE FIRST 8 WEEKS OF THE SEASON, PLUS
-        MENTORING FROM THE BIGGEST NAMES IN FOOTY.
-      </h3>
+  <Footer />
+</Layout>
 
-      <h4>How it works</h4>
-      <VideoPlayer />
-      <ul>
-        {
-          steps.map((step) => (
-            <li>
-              <Step title={step.title} description={step.description} />
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-  </body>
-</html>
+<style>
+  img {
+    width: 90%;
+  }
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: center;
+    max-width: 1048px;
+    margin: auto;
+  }
+</style>

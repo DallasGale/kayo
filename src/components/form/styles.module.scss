@@ -1,0 +1,82 @@
+.input {
+  height: 56px;
+  padding: 0;
+  border: none;
+  padding-left: 24px;
+  font-size: 16px;
+  font-family: "GibsonRegular", sans-serif;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 679px;
+}
+
+.fieldHeading {
+  font-size: 16px;
+  line-height: 87%;
+  margin-bottom: 8px;
+  font-family: "GibsonSemiBold", sans-serif;
+  padding-left: 26px;
+}
+
+.fieldset {
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  gap: 14px;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.videoFieldLockup {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  input {
+    min-width: 100%;
+  }
+
+  button {
+    position: absolute;
+    right: 0;
+    &:before {
+      transform: skew(0);
+    }
+  }
+}
+
+.videoTerms {
+  font-size: 12px;
+  line-height: 87%;
+}
+
+.textArea {
+  border: 0;
+  padding: 24px;
+  min-height: 279px;
+  font-size: 16px;
+  font-family: "GibsonRegular", sans-serif;
+}
+
+.limit {
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+  font-size: 12px;
+  font-family: "GibsonRegular", sans-serif;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: flex-end;
+}
+
+.remove {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  cursor: pointer;
+}

@@ -1,0 +1,82 @@
+---
+const { title, description, stepNumber } = Astro.props;
+---
+
+<div class="step">
+  <div class="step-number">
+    <span>{stepNumber}</span>
+  </div>
+  <div class="step-content">
+    <h5 class="display-2">{title}</h5>
+    <p set:html={description} />
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../../../breakpoints.scss";
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .step-number {
+    position: relative;
+    height: 56px;
+    width: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      font-family: "KnockoutFeatherweight", sans-serif;
+      font-size: 43px;
+      z-index: 1;
+      color: var(--darkgrey);
+      position: absolute;
+      text-align: center;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-color: var(--kayogreen);
+      transform: var(--skewDeg);
+    }
+  }
+
+  .step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  h5 {
+    font-size: 40px;
+    line-height: 79%;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .step {
+      gap: 24px;
+    }
+    .step-content {
+      gap: 40px;
+    }
+    .step-number {
+      height: 90px;
+      width: 101px;
+      span {
+        font-size: 72px;
+      }
+    }
+  }
+</style>

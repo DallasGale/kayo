@@ -1,0 +1,69 @@
+<section id="what-you-win">
+  <div class="content">
+    <div class="col intro">
+      <h3 class="display-1">2025 is set to be the biggest year yet.</h3>
+    </div>
+    <div class="col">
+      <p>
+        Bespoke Fox Footy commentary and graphics for every game, no ad-breaks
+        during play and every match available in 4K.
+      </p>
+
+      <p>
+        Kayo Sports is searching for one lucky fan/ budding broadcaster to join
+        the Fox Footy team for a <strong>paid</strong> on-air role during our <a
+          href="">Super Saturday LIVE</a
+        > coverage in 2025. Around the country, Fox Footy will be the only place
+        to watch live games on Saturday’s for the first XX rounds of the season.
+      </p>
+
+      <p>
+        Entries are open from Wednesday 20 November to Wednesday 11 December
+        2024. A winner will be selected and announced by February 2025.
+      </p>
+    </div>
+
+    <h4 class="display-2 stretch">
+      YOU WIN: <span class="color--kayogreen">A</span> paid, on-air role <span
+        >for at least the first 11 weeks of the season, plus</span
+      > mentoring <span class="color--kayogreen"
+        >from the biggest names at Fox Footy.</span
+      >
+    </h4>
+  </div>
+</section>
+
+<style lang="scss">
+  @import "../../breakpoints.scss";
+  .content,
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  section {
+    background-color: var(--darkgrey);
+    color: var(--white);
+    padding: 64px 16px;
+  }
+  .display-2 {
+    span {
+      color: var(--kayogreen);
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-desktop) {
+    .content {
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
+
+    .stretch {
+      grid-column: span 2;
+      margin-top: 87px;
+    }
+    .intro {
+      padding-right: 100px;
+    }
+  }
+</style>

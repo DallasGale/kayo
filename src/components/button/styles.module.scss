@@ -1,0 +1,74 @@
+@import "../../breakpoints.scss";
+.btn {
+  font-family: "KayoGravity", sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  background-color: transparent;
+  color: var(--darkgrey);
+  height: 40px;
+  position: relative;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    z-index: 0;
+    transform: var(--skewDeg);
+  }
+
+  span {
+    z-index: 1;
+  }
+}
+
+.largeBtn {
+  font-size: 15px;
+  height: 56px;
+}
+.primaryBtn {
+  position: relative;
+  color: var(--darkgrey);
+  &:before {
+    background-color: var(--white);
+  }
+}
+.secondaryBtn {
+  font-family: "Gibson", sans-serif;
+  color: var(--white);
+  &:before {
+    background-color: var(--darkgrey);
+  }
+}
+
+.darkBtn {
+  &:before {
+    background-color: var(--black);
+  }
+  span {
+    color: var(--white);
+  }
+}
+
+.whiteBtn {
+  &:before {
+    background-color: var(--white);
+  }
+  span {
+    color: var(--black);
+  }
+}
