@@ -1,28 +1,79 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
+import btnStyles from "../button/styles.module.scss";
 import HeroImg from "../../assets/hero.svg";
 import GoalPosts from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
 
 const Animation = () => {
-  const [liftBar, setLiftBar] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    setLiftBar(true);
+    requestAnimationFrame(() => {
+      setIsAnimating(true);
+    });
+
+    return () => {
+      setIsAnimating(false);
+    };
   }, []);
   return (
     <div className={styles.scene}>
-      {/* scene */}
+      <div
+        className={styles.animationContainer}
+        style={{
+          visibility: isAnimating ? "visible" : "hidden",
+          willChange: "transform",
+        }}
+      >
+        {/* scene */}
 
-      {/* 1. Lift green bar upward */}
-      <div className={`${styles.greenBar} ${liftBar ? styles.lift : ""}`}></div>
-      <div className={`${styles.greenBg} ${liftBar ? styles.lift : ""}`}></div>
+        {/* 1. animate green bar upward */}
+        <div
+          className={`${styles.greenBar} ${isAnimating ? styles.animate : ""}`}
+        />
+        <div
+          className={`${styles.greenBg} ${isAnimating ? styles.animate : ""}`}
+        />
 
-      <div className={`${styles.logo} ${liftBar ? styles.lift : ""}`}>
-        <img src={HeroImg.src} alt="The Kayo Callup" />
-      </div>
+        <div className={styles.logoMessageContainer}>
+          <picture
+            className={`${styles.logo} ${isAnimating ? styles.animate : ""}`}
+          >
+            <img
+              src={HeroImg.src}
+              alt="The Kayo Callup"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+          <div
+            className={`${styles.message} ${isAnimating ? styles.animate : ""}`}
+          >
+            <h2 className={`display-1 text-center ${styles.display1}`}>
+              THE SEARCH TO UNEARTH THE NEWEST MEMBER OF FOX FOOTY’S ON-AIR
+              TEAM.
+            </h2>
+            <div className={styles.submitLockup}>
+              <a
+                href="/submit"
+                className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}`}
+              >
+                <span>Submit your entry</span>
+              </a>
+              {/* <Button label="Submit your entry" isLarge link="/submit" /> */}
+              <p className="small-print text-center">
+                Must be 18+ to enter and a current Australian resident.{" "}
+                <a href="#">TERMS AND CONDITIONS</a> APPLY
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <div className={`${styles.goalPosts} ${liftBar ? styles.lift : ""}`}>
-        <img src={GoalPosts.src} />
+        <picture
+          className={`${styles.goalPosts} ${isAnimating ? styles.animate : ""}`}
+        >
+          <img src={GoalPosts.src} loading="eager" decoding="async" />
+        </picture>
       </div>
     </div>
   );

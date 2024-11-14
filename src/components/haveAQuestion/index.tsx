@@ -11,7 +11,7 @@ interface QuestionProps {
 }
 const HaveAQuestion = ({ questions }: QuestionProps) => {
   return (
-    <section className={styles.section} id="have-a-que">
+    <section className={styles.section} id="have-a-question">
       <div className="content">
         <h6 className="display-1">Have a Question?</h6>
         <div className={styles.questionsList}>

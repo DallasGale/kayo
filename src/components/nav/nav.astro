@@ -109,16 +109,30 @@
 
 <style lang="scss">
   @import "../../breakpoints.scss";
+
+  @keyframes animateNav {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   .nav-wrapper {
     overflow: scroll;
     width: 100vw;
     position: fixed;
     bottom: 0;
-    z-index: 2;
+    z-index: 20;
+    transform: translateY(100%);
     background-color: var(--black);
     height: auto;
     display: flex;
     align-items: center;
+    animation: animateNav 300ms forwards linear;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+    animation-delay: 4.5s;
+    will-change: transform;
   }
   .nav {
     position: relative;
