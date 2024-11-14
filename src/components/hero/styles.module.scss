@@ -5,6 +5,7 @@
   background-color: var(--black);
   z-index: 13;
   position: absolute;
+  margin-top: -152px;
   top: 0;
   overflow: hidden; // Prevent potential scrollbars during animation
 }
@@ -64,6 +65,8 @@
   left: 0;
   right: 0;
   opacity: 0;
+  margin: auto;
+  text-align: center;
   max-width: 800px;
   will-change: transform, opacity;
 
@@ -76,7 +79,8 @@
   img {
     width: 100%;
     height: auto;
-    max-height: 50vh;
+    max-height: 45vh;
+    // max-width: 30vw;
     transform: translateZ(0); // Force GPU acceleration
   }
 }
@@ -188,9 +192,11 @@
 
 @keyframes animateMessage {
   0% {
-    transform: translateY(200%);
+    opacity: 0;
+    transform: translateY(30%);
   }
   100% {
+    opacity: 1;
     transform: translateY(0%);
   }
 }
@@ -204,14 +210,14 @@
   align-items: center;
 }
 .message {
-  opacity: 1;
+  opacity: 0;
   height: auto;
   max-width: 770px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: absolute;
-  bottom: 100px;
+  bottom: 10%;
   transform: translateY(200%);
   z-index: 2;
   margin: auto;
@@ -221,7 +227,31 @@
   transform-origin: top;
   &.animate {
     animation: animateMessage 1s forwards linear;
-    animation-delay: 2.8s;
+    animation-delay: 3s;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+}
+
+@keyframes animateCta {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.btn {
+  opacity: 0;
+  transform-origin: left;
+  transform: translateX(-40%);
+  will-change: transform;
+
+  &.animate {
+    animation: animateCta 1s forwards linear;
+    animation-delay: 4.5s;
     animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
   }
 }
@@ -230,7 +260,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 20px;
   a {
     color: var(--black);
   }
@@ -246,11 +276,37 @@
 
   .btn {
     order: 1;
-    margin-top: 71px;
+    // margin-top: 71px;
   }
 
-  .small-print {
+  .smallPrint {
     flex: 1;
     order: 0;
+  }
+}
+
+.ctaContainer {
+  opacity: 0;
+  transform: translateX(-50px) translateY(-96px); // Move it up to overlap with header
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  top: 0;
+  display: flex;
+  right: 0;
+  margin-left: auto;
+  z-index: 21;
+  width: 95%;
+  max-width: 1440px;
+  margin: auto;
+  transform-origin: left;
+  will-change: transform;
+  &.animate {
+    animation: animateCta 1s forwards linear;
+    animation-delay: 4.5s;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
+  }
+  .btn {
+    opacity: 1;
   }
 }

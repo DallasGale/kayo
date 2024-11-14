@@ -10,7 +10,20 @@ import FoxLogo from "../../assets/fox-logo.png";
 
 <style lang="scss">
   @import "../../breakpoints.scss";
+
+  @keyframes animateHeader {
+    0% {
+      opacity: 0;
+      transform: translateY(30%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
   header {
+    opacity: 0;
+    position: relative;
     align-items: center;
     display: flex;
     justify-content: flex-start;
@@ -18,7 +31,7 @@ import FoxLogo from "../../assets/fox-logo.png";
     gap: 20px;
     align-items: center;
     box-sizing: border-box;
-    position: absolute;
+    position: relative;
     padding: 24px 16px 0; // Added right padding
     max-width: 1440px;
     margin: auto;
@@ -26,6 +39,12 @@ import FoxLogo from "../../assets/fox-logo.png";
     box-sizing: border-box;
     left: 0;
     right: 0;
+    z-index: 22;
+    height: auto;
+    will-change: transform;
+    animation: animateHeader 1s forwards linear;
+    animation-delay: 3s;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
   }
 
   .kayo-logo {

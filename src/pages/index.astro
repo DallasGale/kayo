@@ -79,7 +79,17 @@ const questions = [
   <Footer />
 </Layout>
 
-<style>
+<style lang="scss">
+  @keyframes animateCta {
+    0% {
+      opacity: 0;
+      transform: translateX(-100px) translateY(-96px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0%) translateY(-96px);
+    }
+  }
   img {
     width: 90%;
   }
@@ -92,5 +102,26 @@ const questions = [
     text-align: center;
     max-width: 1048px;
     margin: auto;
+  }
+
+  .cta-container {
+    opacity: 0;
+    transform: translateX(-100px) translateY(-96px); // Move it up to overlap with header
+    position: sticky;
+    display: flex;
+    justify-content: flex-end;
+    top: 120px;
+    display: flex;
+    right: 0;
+    margin-left: auto;
+    z-index: 21;
+    width: 95%;
+    max-width: 1440px;
+    margin: auto;
+    // transform-origin: left;
+    will-change: transform;
+    animation: animateCta 1s forwards linear;
+    animation-delay: 4.5s;
+    animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
   }
 </style>
