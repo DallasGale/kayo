@@ -347,6 +347,34 @@ const Form = () => {
             </div>
           </fieldset>
           {errors.message && <p>{errors.message}</p>}
+
+          <label htmlFor="read" className={styles.termsLabel}>
+            <input
+              type="checkbox"
+              id="read"
+              name="read"
+              className={styles.checkbox}
+            />
+            <p>I have read and accept the terms and conditions</p>
+          </label>
+          <label htmlFor="age" className={styles.termsLabel}>
+            <input
+              type="checkbox"
+              id="age"
+              name="age"
+              className={styles.checkbox}
+            />
+            <p>I AM OVER THE AGE OF 18</p>
+          </label>
+          <label htmlFor="resident" className={styles.termsLabel}>
+            <input
+              type="checkbox"
+              id="resident"
+              name="resident"
+              className={styles.checkbox}
+            />
+            <p>I Live in australia</p>
+          </label>
           <div>
             <button
               className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
