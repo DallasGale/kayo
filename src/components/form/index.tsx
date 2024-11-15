@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { validatePhone } from "../phValidate";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, writeBatch, doc } from "firebase/firestore";
 import { db } from "../../firebase/client";
 import styles from "./styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
@@ -12,6 +12,9 @@ interface FormData {
   mobile: string;
   videoUrl: string;
   message: string;
+  readTerms: boolean;
+  over18: boolean;
+  resident: boolean;
 }
 
 interface FormErrors {
@@ -20,6 +23,9 @@ interface FormErrors {
   mobile?: string;
   videoUrl?: string;
   message?: string;
+  readTerms?: boolean;
+  over18?: boolean;
+  resident?: boolean;
 }
 
 interface EmbedHtml {
@@ -31,6 +37,9 @@ interface EmbedHtml {
   };
 }
 
+const BATCH_SIZE = 500;
+const BATCH_TIMEOUT = 30000; // 30 seconds
+
 const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
 const isDev = import.meta.env.MODE === "development";
 
@@ -41,6 +50,9 @@ const Form = () => {
     mobile: "",
     videoUrl: "",
     message: "",
+    readTerms: false,
+    over18: false,
+    resident: false,
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -49,16 +61,12 @@ const Form = () => {
     "idle" | "submitting" | "success" | "error"
   >("idle");
 
+  // ----------------------------------------------------------------
   // Video Validation
+  // ----------------------------------------------------------------
   const [embedHtml, setEmbedHtml] = useState<EmbedHtml | null>(null);
   const [videoErrorMessage, setVideoErrorMessage] = useState("");
   const [validating, setValidating] = useState(false);
-
-  const wordCount = formData.message
-    .trim()
-    .split(/\s+/)
-    .filter((word) => word.length > 0).length;
-  const isOverLimit = wordCount > 100;
 
   const handleValidateVideo = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -92,6 +100,18 @@ const Form = () => {
       setValidating(false);
     }
   };
+  const [validVideo, setValidVideo] = useState(false);
+  useEffect(() => {
+    if (embedHtml?.meta) {
+      setValidVideo(true);
+    } else {
+      setValidVideo(false);
+    }
+  }, [embedHtml?.meta]);
+
+  // ----------------------------------------------------------------
+  // Form Validation
+  // ----------------------------------------------------------------
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -120,63 +140,22 @@ const Form = () => {
       newErrors.message = "Message is required";
     }
 
+    // if (!formData.readTerms) {
+    //   newErrors.readTerms = "Please accept the terms and conditions";
+    // }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const wordCount = formData.message
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length;
+  const isOverLimit = wordCount > 100;
 
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      setSubmitStatus("submitting");
-      await addDoc(collection(db, "submissions"), {
-        ...formData,
-        createdAt: new Date(),
-      });
-
-      setSubmitStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        mobile: "",
-        videoUrl: "",
-        message: "",
-      });
-    } catch (error) {
-      setSubmitStatus("error");
-      console.error("Error submitting form:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    // Apply phone formatting if it's the mobile field
-    // const formattedValue = name === "mobile" ? formatPhoneNumber(value) : value;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
-    }
-  };
   // Add this at the top of your component where other state declarations are
-  const [formErrors, setFormErrors] = useState(false);
+  // const [formErrors, setFormErrors] = useState(false);
   const [disabledSubmit, setDissabledSetSubmit] = useState(true);
   useEffect(() => {
     // Check if any required fields are empty
@@ -185,7 +164,10 @@ const Form = () => {
       !formData.email.trim() ||
       !formData.mobile.trim() ||
       !formData.videoUrl.trim() ||
-      !formData.message.trim();
+      !formData.message.trim() ||
+      !formData.readTerms ||
+      !formData.over18 ||
+      !formData.resident;
 
     // Check if there are any validation errors
     const hasValidationErrors = Object.keys(errors).length > 0;
@@ -207,14 +189,140 @@ const Form = () => {
     }));
   };
 
-  const [validVideo, setValidVideo] = useState(false);
-  useEffect(() => {
-    if (embedHtml?.meta) {
-      setValidVideo(true);
-    } else {
-      setValidVideo(false);
+  // ----------------------------------------------------------------
+  // Form Change Handler
+  // ----------------------------------------------------------------
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    // Apply phone formatting if it's the mobile field
+    // const formattedValue = name === "mobile" ? formatPhoneNumber(value) : value;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
     }
-  }, [embedHtml?.meta]);
+  };
+
+  const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: checked,
+    }));
+  };
+
+  // ----------------------------------------------------------------
+  // Batch Processing
+  // ----------------------------------------------------------------
+  const [submissionQueue, setSubmissionQueue] = useState<
+    Array<FormData & { createdAt: Date }>
+  >([]);
+  const [batchProcessing, setBatchProcessing] = useState(false);
+  const [batchStatus, setBatchStatus] = useState<string>("");
+
+  // Handle batch processing
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const processBatch = async () => {
+      if (submissionQueue.length === 0 || batchProcessing) return;
+
+      try {
+        setBatchProcessing(true);
+        const batch = writeBatch(db);
+        const submissionsRef = collection(db, "submissions");
+
+        // Process up to BATCH_SIZE submissions
+        const itemsToProcess = submissionQueue.slice(0, BATCH_SIZE);
+        itemsToProcess.forEach((submission) => {
+          const docRef = doc(submissionsRef);
+          batch.set(docRef, submission);
+        });
+
+        await batch.commit();
+
+        // Remove processed items from queue
+        setSubmissionQueue((prev) => prev.slice(itemsToProcess.length));
+        setBatchStatus(
+          `Successfully processed ${itemsToProcess.length} submissions`,
+        );
+      } catch (error) {
+        console.error("Batch processing error:", error);
+        setBatchStatus("Error processing batch. Will retry...");
+      } finally {
+        setBatchProcessing(false);
+      }
+    };
+
+    // Process immediately if queue reaches batch size
+    if (submissionQueue.length >= BATCH_SIZE) {
+      processBatch();
+    }
+    // Otherwise, set a timer to process whatever is in the queue
+    else if (submissionQueue.length > 0) {
+      timeoutId = setTimeout(processBatch, BATCH_TIMEOUT);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [submissionQueue, batchProcessing]);
+
+  // ----------------------------------------------------------------
+  // Form Submission
+  // ----------------------------------------------------------------
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    try {
+      setSubmitStatus("submitting");
+
+      // Add submission to queue instead of immediate Firebase write
+      const submissionData = {
+        ...formData,
+        createdAt: new Date(),
+      };
+
+      setSubmissionQueue((prev) => [...prev, submissionData]);
+      setBatchStatus(
+        `Added to queue. Current queue size: ${submissionQueue.length + 1}`,
+      );
+
+      setSubmitStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        videoUrl: "",
+        message: "",
+        readTerms: false,
+        over18: false,
+        resident: false,
+      });
+    } catch (error) {
+      setSubmitStatus("error");
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+
+    console.log({ batchProcessing, batchStatus, submissionQueue });
+  };
+
   return (
     <div className={styles.formWrapper}>
       {submitStatus === "idle" && (
@@ -222,6 +330,14 @@ const Form = () => {
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: 20 }}
         >
+          {submissionQueue.length > 0 && (
+            <div className={styles.batchStatus}>
+              <p className="small-print">
+                Submissions in queue: {submissionQueue.length}
+              </p>
+              <p className="small-print">{batchStatus}</p>
+            </div>
+          )}
           <fieldset className={styles.fieldset}>
             <h3 className={styles.fieldHeading}>Your information</h3>
             <input
@@ -352,7 +468,8 @@ const Form = () => {
             <input
               type="checkbox"
               id="read"
-              name="read"
+              name="readTerms"
+              onChange={(e) => handleTermsChange(e)}
               className={styles.checkbox}
             />
             <p>I have read and accept the terms and conditions</p>
@@ -361,7 +478,8 @@ const Form = () => {
             <input
               type="checkbox"
               id="age"
-              name="age"
+              name="over18"
+              onChange={(e) => handleTermsChange(e)}
               className={styles.checkbox}
             />
             <p>I AM OVER THE AGE OF 18</p>
@@ -371,11 +489,19 @@ const Form = () => {
               type="checkbox"
               id="resident"
               name="resident"
+              onChange={(e) => handleTermsChange(e)}
               className={styles.checkbox}
             />
             <p>I Live in australia</p>
           </label>
-          <div>
+
+          <div className={styles.youWin}>
+            <h2 className="display-1">
+              YOU WIN: A paid, on-air role for at least the first 11 weeks of
+              the season, plus mentoring from the biggest names at Fox Footy.
+            </h2>
+          </div>
+          <div style={{ textAlign: "center" }}>
             <button
               className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
               type="submit"
@@ -390,6 +516,11 @@ const Form = () => {
         <div>
           <h2>Let's Go</h2>
           <p>Yout Kayo call up entry has been successfully submitted</p>
+          {/* {submissionQueue.length > 0 && (
+            <p className="small-print">
+              Your submission is queued and will be processed shortly.
+            </p>
+          )} */}
         </div>
       )}
     </div>
