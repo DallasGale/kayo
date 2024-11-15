@@ -40,7 +40,11 @@ const Form: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in successfully");
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      if (error instanceof Error) {
+        console.error("Error signing in:", error.message);
+      } else {
+        console.error("Error signing in:", error);
+      }
     }
   };
 
