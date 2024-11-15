@@ -68,3 +68,10 @@
     format("truetype");
   font-display: swap;
 }
+
+@font-face {
+  font-family: "KnockoutFullFeatherweight";
+  src: url("/src/assets/fonts/Knockout-HTF68-FullFeatherwt.otf")
+    format("openType");
+  font-display: swap;
+}

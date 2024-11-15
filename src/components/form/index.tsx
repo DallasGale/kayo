@@ -496,7 +496,7 @@ const Form = () => {
           </label>
 
           <div className={styles.youWin}>
-            <h2 className="display-1">
+            <h2 className="display-4">
               YOU WIN: A paid, on-air role for at least the first 11 weeks of
               the season, plus mentoring from the biggest names at Fox Footy.
             </h2>

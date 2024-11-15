@@ -44,6 +44,10 @@ const { title } = Astro.props;
     box-sizing: border-box;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   .content {
     max-width: 1440px;
     margin: auto;
@@ -63,19 +67,30 @@ const { title } = Astro.props;
   .display-1 {
     font-size: 20px;
     line-height: 111%;
+    font-weight: normal;
     font-family: "KayoGravity", sans-serif;
     text-transform: uppercase;
   }
   .display-2 {
     font-size: 76px;
     line-height: 79%;
-    font-family: "KnockoutFeatherweight", sans-serif;
+    font-weight: normal;
+    font-family: "KnockoutFullFeatherweight", sans-serif;
     text-transform: uppercase;
   }
   .display-3 {
     font-size: 32px;
     line-height: 111%;
+    font-weight: normal;
     font-family: "KnockoutFeatherweight", sans-serif;
+    text-transform: uppercase;
+  }
+
+  .display-4 {
+    font-size: 64px;
+    line-height: 79%;
+    font-weight: normal;
+    font-family: "KnockoutFullFeatherweight", sans-serif;
     text-transform: uppercase;
   }
 
@@ -137,21 +152,6 @@ const { title } = Astro.props;
       font-size: italic;
       text-decoration: none;
     }
-  }
-
-  .cta-container {
-    transform: translateY(-96px); // Move it up to overlap with header
-    position: sticky;
-    display: flex;
-    justify-content: flex-end;
-    top: 120px;
-    display: flex;
-    right: 0;
-    margin-left: auto;
-    z-index: 2;
-    width: 95%;
-    max-width: 1440px;
-    margin: auto;
   }
 
   @media screen and (min-width: $breakpoint-desktop) {
