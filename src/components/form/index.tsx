@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { validatePhone } from "../phValidate";
-import { addDoc, collection, writeBatch, doc } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+
 import { db } from "../../firebase/client";
 import styles from "./styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
@@ -37,22 +38,20 @@ interface EmbedHtml {
   };
 }
 
-const BATCH_SIZE = 500;
-const BATCH_TIMEOUT = 30000; // 30 seconds
-
-const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
+const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_KEY;
+const apiKey = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
 const isDev = import.meta.env.MODE === "development";
 
 const Form = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    mobile: "",
-    videoUrl: "",
-    message: "",
-    readTerms: false,
-    over18: false,
-    resident: false,
+    name: "Dallas Gale",
+    email: "dallasgale.digital@gmail.com",
+    mobile: "0409235082",
+    videoUrl: "https://youtu.be/SwCW-yVrC38?si=ZCsRq9oR5byClHjZ",
+    message: "Hey",
+    readTerms: true,
+    over18: true,
+    resident: true,
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -82,7 +81,7 @@ const Form = () => {
       const response = await fetch(
         `https://iframe.ly/api/iframely?url=${encodeURIComponent(
           formData.videoUrl,
-        )}&omit_script=1&${isDev ? "key" : "api_key"}=${key}`,
+        )}&omit_script=1&${isDev ? `key=${key}` : `api_key=${apiKey}`}`,
       );
       const data = await response.json();
       console.log({ data });
@@ -116,6 +115,9 @@ const Form = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
+    // Clear any existing errors first
+    setErrors({});
+
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
@@ -145,7 +147,26 @@ const Form = () => {
     // }
 
     setErrors(newErrors);
+    console.log({ errors, newErrors });
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Reset form and all related states
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      mobile: "",
+      videoUrl: "",
+      message: "",
+      readTerms: false,
+      over18: false,
+      resident: false,
+    });
+    setErrors({});
+    setEmbedHtml(null);
+    setVideoErrorMessage("");
+    setValidVideo(false);
   };
 
   const wordCount = formData.message
@@ -173,12 +194,19 @@ const Form = () => {
     const hasValidationErrors = Object.keys(errors).length > 0;
 
     // Check if video is validated (only if videoUrl is not empty)
-    const videoNotValidated = !!formData.videoUrl.trim() && !embedHtml?.html;
+    const videoNotValidated =
+      !!formData.videoUrl.trim() && !Boolean(embedHtml?.html);
 
     // Disable submit if any of these conditions are true
     setDissabledSetSubmit(
       isOverLimit || hasEmptyFields || hasValidationErrors || videoNotValidated,
     );
+    console.log({
+      isOverLimit,
+      hasEmptyFields,
+      hasValidationErrors,
+      videoNotValidated,
+    });
   }, [isOverLimit, errors, formData, embedHtml?.html]);
 
   const handleRemoveUrl = () => {
@@ -192,17 +220,17 @@ const Form = () => {
   // ----------------------------------------------------------------
   // Form Change Handler
   // ----------------------------------------------------------------
+  // Update the handleChange to properly clear errors
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    // Apply phone formatting if it's the mobile field
-    // const formattedValue = name === "mobile" ? formatPhoneNumber(value) : value;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
+
+    // Clear the specific error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({
         ...prev,
@@ -211,70 +239,22 @@ const Form = () => {
     }
   };
 
+  // Update handleTermsChange to clear errors
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: checked,
     }));
+
+    // Clear the specific error when checkbox is changed
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
   };
-
-  // ----------------------------------------------------------------
-  // Batch Processing
-  // ----------------------------------------------------------------
-  const [submissionQueue, setSubmissionQueue] = useState<
-    Array<FormData & { createdAt: Date }>
-  >([]);
-  const [batchProcessing, setBatchProcessing] = useState(false);
-  const [batchStatus, setBatchStatus] = useState<string>("");
-
-  // Handle batch processing
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const processBatch = async () => {
-      if (submissionQueue.length === 0 || batchProcessing) return;
-
-      try {
-        setBatchProcessing(true);
-        const batch = writeBatch(db);
-        const submissionsRef = collection(db, "submissions");
-
-        // Process up to BATCH_SIZE submissions
-        const itemsToProcess = submissionQueue.slice(0, BATCH_SIZE);
-        itemsToProcess.forEach((submission) => {
-          const docRef = doc(submissionsRef);
-          batch.set(docRef, submission);
-        });
-
-        await batch.commit();
-
-        // Remove processed items from queue
-        setSubmissionQueue((prev) => prev.slice(itemsToProcess.length));
-        setBatchStatus(
-          `Successfully processed ${itemsToProcess.length} submissions`,
-        );
-      } catch (error) {
-        console.error("Batch processing error:", error);
-        setBatchStatus("Error processing batch. Will retry...");
-      } finally {
-        setBatchProcessing(false);
-      }
-    };
-
-    // Process immediately if queue reaches batch size
-    if (submissionQueue.length >= BATCH_SIZE) {
-      processBatch();
-    }
-    // Otherwise, set a timer to process whatever is in the queue
-    else if (submissionQueue.length > 0) {
-      timeoutId = setTimeout(processBatch, BATCH_TIMEOUT);
-    }
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [submissionQueue, batchProcessing]);
 
   // ----------------------------------------------------------------
   // Form Submission
@@ -282,46 +262,58 @@ const Form = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Clear any existing errors before validation
+    setErrors({});
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitStatus("idle");
-    try {
-      setSubmitStatus("submitting");
+    setSubmitStatus("submitting");
 
-      // Add submission to queue instead of immediate Firebase write
+    try {
       const submissionData = {
         ...formData,
-        createdAt: new Date(),
+        createdAt: serverTimestamp(), // Use serverTimestamp() from firebase/firestore
+        status: "pending",
+        submittedAt: new Date().toISOString(),
+        retryCount: 0,
       };
 
-      setSubmissionQueue((prev) => [...prev, submissionData]);
-      setBatchStatus(
-        `Added to queue. Current queue size: ${submissionQueue.length + 1}`,
-      );
+      // Add to queue collection
+      await addDoc(collection(db, "submissionQueue"), submissionData);
 
       setSubmitStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        mobile: "",
-        videoUrl: "",
-        message: "",
-        readTerms: false,
-        over18: false,
-        resident: false,
-      });
+      resetForm(); // Use the new resetForm function
     } catch (error) {
       setSubmitStatus("error");
       console.error("Error submitting form:", error);
     } finally {
       setIsSubmitting(false);
     }
-
-    console.log({ batchProcessing, batchStatus, submissionQueue });
   };
+
+  useEffect(() => {
+    const hasEmptyFields =
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.mobile.trim() ||
+      !formData.videoUrl.trim() ||
+      !formData.message.trim() ||
+      !formData.readTerms ||
+      !formData.over18 ||
+      !formData.resident;
+
+    const hasValidationErrors = Object.keys(errors).length > 0;
+    const videoNotValidated = !!formData.videoUrl.trim() && !validVideo;
+
+    setDissabledSetSubmit(
+      isOverLimit || hasEmptyFields || hasValidationErrors || videoNotValidated,
+    );
+  }, [formData, errors, isOverLimit, validVideo]);
+
+  console.log({ submitStatus });
 
   return (
     <div className={styles.formWrapper}>
@@ -330,14 +322,6 @@ const Form = () => {
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: 20 }}
         >
-          {submissionQueue.length > 0 && (
-            <div className={styles.batchStatus}>
-              <p className="small-print">
-                Submissions in queue: {submissionQueue.length}
-              </p>
-              <p className="small-print">{batchStatus}</p>
-            </div>
-          )}
           <fieldset className={styles.fieldset}>
             <h3 className={styles.fieldHeading}>Your information</h3>
             <input
@@ -516,11 +500,6 @@ const Form = () => {
         <div>
           <h2>Let's Go</h2>
           <p>Yout Kayo call up entry has been successfully submitted</p>
-          {/* {submissionQueue.length > 0 && (
-            <p className="small-print">
-              Your submission is queued and will be processed shortly.
-            </p>
-          )} */}
         </div>
       )}
     </div>

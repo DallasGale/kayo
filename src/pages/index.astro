@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/layout.astro";
 import Accordion from "../components/accordion/index.astro";
-import VideoPlayer from "../components/videoPlayer/index.astro";
 import Steps from "../components/steps/index.astro";
 import FutureCollegues from "../components/futureColleagues/index.astro";
 
@@ -16,7 +15,39 @@ import Button from "../components/button/index.astro";
 import Nav from "../components/nav/nav.astro";
 import Audio from "../components/audio";
 import Cheer from "../assets/sounds/kayo_crowd_Cheer.mp3";
+// import mouseOver from "../components/audio/mouseover";
+// import { initAudioOnMouseover } from "../components/audio/mouseover";
 ---
+
+<script is:inline>
+  // import { initAudioOnMouseover } from "../components/audio/mouseover";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get your target element
+    const heroSection = document.querySelector("#hero");
+
+    if (heroSection) {
+      let hasInteracted = false;
+
+      heroSection.addEventListener(
+        "mouseover",
+        async () => {
+          if (hasInteracted) return;
+          hasInteracted = true;
+
+          try {
+            const audio = new Audio("../assets/sounds/kayo_crowd_Cheer.mp3");
+            console.log("Starting audio from hero mouseover");
+            await audio.play();
+          } catch (err) {
+            console.error("Audio playback failed:", err);
+          }
+        },
+        { once: true },
+      );
+    }
+  });
+</script>
 
 <Layout title="Kayo">
   <Header />
@@ -33,7 +64,7 @@ import Cheer from "../assets/sounds/kayo_crowd_Cheer.mp3";
   <WillYouGetTheCallUp />
 
   <Footer />
-  <Audio client:load audioUrl={Cheer} />
+  <!-- <Audio client:load audioUrl={Cheer} /> -->
 </Layout>
 
 <style lang="scss">

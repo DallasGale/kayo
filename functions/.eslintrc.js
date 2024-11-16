@@ -29,5 +29,9 @@ module.exports = {
     "max-len": "off",
     "object-curly-spacing": "off", // Disable object curly spacing rule
     "quote-props": "off", // Disable quote props rule
+    "typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "operator-linebreak": "off",
+    "no-unused-vars": "off",
   },
 };

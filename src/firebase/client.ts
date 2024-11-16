@@ -32,6 +32,11 @@ const firebaseConfig = {
   appId: import.meta.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+console.log(
+  " import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+  import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+);
+
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
@@ -68,7 +73,6 @@ export async function exportCollection(collectionName: string) {
     const result = (await exportFunc({ collection: collectionName })) as {
       data: { csv: string };
     };
-    console.log({ result });
 
     // Create and download the CSV file
     const blob = new Blob([result.data.csv], { type: "text/csv" });
