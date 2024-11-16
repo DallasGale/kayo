@@ -6,6 +6,36 @@ import Button from "../../components/button/index.astro";
 import Bg from "../../assets/footballs.png";
 ---
 
+<script is:inline>
+  // import { initAudioOnMouseover } from "../components/audio/mouseover";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get your target element
+    const heroSection = document.querySelector("#hero");
+
+    if (heroSection) {
+      let hasInteracted = false;
+
+      heroSection.addEventListener(
+        "mouseover",
+        async () => {
+          if (hasInteracted) return;
+          hasInteracted = true;
+
+          try {
+            const audio = new Audio("../assets/sounds/kayo_crowd_Cheer.mp3");
+            console.log("Starting audio from hero mouseover");
+            await audio.play();
+          } catch (err) {
+            console.error("Audio playback failed:", err);
+          }
+        },
+        { once: true },
+      );
+    }
+  });
+</script>
+
 <Layout title="Kayo - Submit">
   <header>
     <Button label="Back" isDark link="/" />
