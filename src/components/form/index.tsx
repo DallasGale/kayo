@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { validatePhone } from "../phValidate";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import HeroImg from "../../assets/hero.svg";
+import Bg from "../../assets/footballs.png";
 
 import { db } from "../../firebase/client";
 import styles from "./styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
 import Tick from "../../assets/tick.svg";
+
+import Cheer from "../../assets/sounds/cheer.mp3";
 
 interface FormData {
   name: string;
@@ -42,7 +46,10 @@ const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_KEY;
 const apiKey = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
 const isDev = import.meta.env.MODE === "development";
 
-const Form = () => {
+interface FormProps {
+  successCb: () => void;
+}
+const Form = ({ successCb }: FormProps) => {
   const [formData, setFormData] = useState<FormData>({
     name: "Dallas Gale",
     email: "dallasgale.digital@gmail.com",
@@ -294,6 +301,15 @@ const Form = () => {
     }
   };
 
+  // Function to emit custom event when state changes
+  useEffect(() => {
+    // Create and dispatch a custom event
+    const event = new CustomEvent("statusChange", {
+      detail: { status: submitStatus },
+    });
+    document.dispatchEvent(event);
+  }, [submitStatus]);
+
   useEffect(() => {
     const hasEmptyFields =
       !formData.name.trim() ||
@@ -313,196 +329,238 @@ const Form = () => {
     );
   }, [formData, errors, isOverLimit, validVideo]);
 
-  console.log({ submitStatus });
+  // When Submit is successful, play the cheer.mp3
+  useEffect(() => {
+    if (submitStatus === "success") {
+      const audio = new Audio(Cheer);
+      audio.play();
+    }
+  }, [submitStatus]);
+
+  // const [showForm, setShowForm] = useState(true);
+  // useEffect(() => {
+  //   if (submitStatus === "submitting") {
+  //       setShowForm(false);
+  //   }
+  // }, [submitStatus]);
 
   return (
-    <div className={styles.formWrapper}>
-      {submitStatus === "idle" && (
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: 20 }}
-        >
-          <fieldset className={styles.fieldset}>
-            <h3 className={styles.fieldHeading}>Your information</h3>
-            <input
-              className={styles.input}
-              id="name"
-              name="name"
-              type="text"
-              placeholder="First & Last Name"
-              value={formData.name}
-              onChange={(e) => handleChange(e)}
-            />
-            {errors.name && <p>{errors.name}</p>}
-            <input
-              className={styles.input}
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            {errors.email && <p>{errors.email}</p>}
-            <input
-              className={styles.input}
-              id="mobile"
-              name="mobile"
-              type="phone"
-              value={formData.mobile}
-              onChange={handleChange}
-              placeholder="Mobile No"
-            />
-          </fieldset>
-          {errors.mobile && <p>{errors.mobile}</p>}
-          <fieldset className={styles.fieldset}>
-            <h3 className={styles.fieldHeading}>Your submission video</h3>
-            {validVideo && (
-              <div
-                onClick={handleRemoveUrl}
-                className={`${styles.remove} small-print`}
-              >
-                Remove Video
-              </div>
-            )}
-
-            <div className={styles.videoFieldLockup}>
-              <input
-                className={styles.input}
-                id="videoUrl"
-                name="videoUrl"
-                type="text"
-                placeholder="Link to your submission video"
-                value={formData.videoUrl}
-                onChange={handleChange}
+    <section
+      className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
+    >
+      <div className={styles.wrapper}>
+        <div className={styles.formWrapper}>
+          {submitStatus !== "success" && (
+            <>
+              <img
+                className={styles.hero}
+                src={HeroImg.src}
+                alt="Kato Sports Call Up"
               />
-              <div>
-                {validVideo ? (
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <button
-                      className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}`}
-                    >
-                      <span>validated</span>
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}  ${btnStyles.darkBtn}`}
-                    onClick={handleValidateVideo}
-                  >
-                    <span>{validating ? "checking" : "Validate"}</span>
-                  </button>
-                )}
-              </div>
-            </div>
-            {validVideo && (
-              <div>
-                <div>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: `${embedHtml?.html}` }}
+              <h2 className="display-1">Submit your entry</h2>
+              <form
+                onSubmit={handleSubmit}
+                style={{ display: "flex", flexDirection: "column", gap: 20 }}
+              >
+                <fieldset className={styles.fieldset}>
+                  <h3 className={styles.fieldHeading}>Your information</h3>
+                  <input
+                    className={styles.input}
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="First & Last Name"
+                    value={formData.name}
+                    onChange={(e) => handleChange(e)}
                   />
-                </div>
-              </div>
-            )}
-            <p className={styles.videoTerms}>
-              {validVideo && <img src={Tick.src} />} The link provided must be
-              public with no password
-            </p>
-            <p className={styles.videoTerms}>
-              {validVideo && <img src={Tick.src} />} MUST BE A LINK FROM
-              YOUTUBE, VIMEO, INSTAGRAM, FACEBOOK or TIKTOK
-            </p>
+                  {errors.name && <p>{errors.name}</p>}
+                  <input
+                    className={styles.input}
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                  {errors.email && <p>{errors.email}</p>}
+                  <input
+                    className={styles.input}
+                    id="mobile"
+                    name="mobile"
+                    type="phone"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    placeholder="Mobile No"
+                  />
+                </fieldset>
+                {errors.mobile && <p>{errors.mobile}</p>}
+                <fieldset className={styles.fieldset}>
+                  <h3 className={styles.fieldHeading}>Your submission video</h3>
+                  {validVideo && (
+                    <div
+                      onClick={handleRemoveUrl}
+                      className={`${styles.remove} small-print`}
+                    >
+                      Remove Video
+                    </div>
+                  )}
 
-            {videoErrorMessage && <p>{videoErrorMessage}</p>}
-            {embedHtml?.error && <p>{embedHtml.error}</p>}
-            {errors.videoUrl && <p>{errors.videoUrl}</p>}
-          </fieldset>
+                  <div className={styles.videoFieldLockup}>
+                    <input
+                      className={styles.input}
+                      id="videoUrl"
+                      name="videoUrl"
+                      type="text"
+                      placeholder="Link to your submission video"
+                      value={formData.videoUrl}
+                      onChange={handleChange}
+                    />
+                    <div>
+                      {validVideo ? (
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <button
+                            className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}`}
+                          >
+                            <span>validated</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}  ${btnStyles.darkBtn}`}
+                          onClick={handleValidateVideo}
+                        >
+                          <span>{validating ? "checking" : "Validate"}</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  {validVideo && (
+                    <div>
+                      <div>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: `${embedHtml?.html}`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <p className={styles.videoTerms}>
+                    {validVideo && <img src={Tick.src} />} The link provided
+                    must be public with no password
+                  </p>
+                  <p className={styles.videoTerms}>
+                    {validVideo && <img src={Tick.src} />} MUST BE A LINK FROM
+                    YOUTUBE, VIMEO, INSTAGRAM, FACEBOOK or TIKTOK
+                  </p>
 
-          <fieldset className={styles.fieldset}>
-            <h3 className={styles.fieldHeading}>
-              Why should you get The Kayo Call Up?
-            </h3>
-            <textarea
-              className={styles.textArea}
-              id="message"
-              name="message"
-              placeholder="In 100 words of less"
-              value={formData.message}
-              onChange={handleChange}
-            />
-            <div
-              className={`${styles.limit}
+                  {videoErrorMessage && <p>{videoErrorMessage}</p>}
+                  {embedHtml?.error && <p>{embedHtml.error}</p>}
+                  {errors.videoUrl && <p>{errors.videoUrl}</p>}
+                </fieldset>
+
+                <fieldset className={styles.fieldset}>
+                  <h3 className={styles.fieldHeading}>
+                    Why should you get The Kayo Call Up?
+                  </h3>
+                  <textarea
+                    className={styles.textArea}
+                    id="message"
+                    name="message"
+                    placeholder="In 100 words of less"
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                  <div
+                    className={`${styles.limit}
               }`}
-            >
-              {isOverLimit && (
-                <p className="color-warning small-print">
-                  Please reduce your text to 100 words or less before
-                  submitting.
-                </p>
-              )}
-              <span className={isOverLimit ? " color-warning" : "color-grey"}>
-                {wordCount}
-              </span>{" "}
-              / 100
-            </div>
-          </fieldset>
-          {errors.message && <p>{errors.message}</p>}
+                  >
+                    {isOverLimit && (
+                      <p className="color-warning small-print">
+                        Please reduce your text to 100 words or less before
+                        submitting.
+                      </p>
+                    )}
+                    <span
+                      className={isOverLimit ? " color-warning" : "color-grey"}
+                    >
+                      {wordCount}
+                    </span>{" "}
+                    / 100
+                  </div>
+                </fieldset>
+                {errors.message && <p>{errors.message}</p>}
 
-          <label htmlFor="read" className={styles.termsLabel}>
-            <input
-              type="checkbox"
-              id="read"
-              name="readTerms"
-              onChange={(e) => handleTermsChange(e)}
-              className={styles.checkbox}
-            />
-            <p>I have read and accept the terms and conditions</p>
-          </label>
-          <label htmlFor="age" className={styles.termsLabel}>
-            <input
-              type="checkbox"
-              id="age"
-              name="over18"
-              onChange={(e) => handleTermsChange(e)}
-              className={styles.checkbox}
-            />
-            <p>I AM OVER THE AGE OF 18</p>
-          </label>
-          <label htmlFor="resident" className={styles.termsLabel}>
-            <input
-              type="checkbox"
-              id="resident"
-              name="resident"
-              onChange={(e) => handleTermsChange(e)}
-              className={styles.checkbox}
-            />
-            <p>I Live in australia</p>
-          </label>
+                <label htmlFor="read" className={styles.termsLabel}>
+                  <input
+                    type="checkbox"
+                    id="read"
+                    name="readTerms"
+                    onChange={(e) => handleTermsChange(e)}
+                    className={styles.checkbox}
+                  />
+                  <p>I have read and accept the terms and conditions</p>
+                </label>
+                <label htmlFor="age" className={styles.termsLabel}>
+                  <input
+                    type="checkbox"
+                    id="age"
+                    name="over18"
+                    onChange={(e) => handleTermsChange(e)}
+                    className={styles.checkbox}
+                  />
+                  <p>I AM OVER THE AGE OF 18</p>
+                </label>
+                <label htmlFor="resident" className={styles.termsLabel}>
+                  <input
+                    type="checkbox"
+                    id="resident"
+                    name="resident"
+                    onChange={(e) => handleTermsChange(e)}
+                    className={styles.checkbox}
+                  />
+                  <p>I Live in australia</p>
+                </label>
 
-          <div className={styles.youWin}>
-            <h2 className="display-4">
-              YOU WIN: A paid, on-air role for at least the first 11 weeks of
-              the season, plus mentoring from the biggest names at Fox Footy.
-            </h2>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <button
-              className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
-              type="submit"
-              disabled={disabledSubmit}
-            >
-              <span>{isSubmitting ? "Submitting..." : "SUBMIT ENTRY"}</span>
-            </button>
-          </div>
-        </form>
-      )}
-      {submitStatus === "success" && (
-        <div>
-          <h2>Let's Go</h2>
-          <p>Yout Kayo call up entry has been successfully submitted</p>
+                <div className={styles.youWin}>
+                  <h2 className="display-4 color-black05">
+                    <span className="color-black">YOU WIN:</span> A{" "}
+                    <span className="color-black">paid, on-air role</span> for
+                    at least the first 11 weeks of the season, plus{" "}
+                    <span className="color-black">mentoring</span> from the
+                    biggest names at Fox Footy.
+                  </h2>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <button
+                    className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
+                    type="submit"
+                    disabled={disabledSubmit}
+                  >
+                    <span>
+                      {isSubmitting ? "Submitting..." : "SUBMIT ENTRY"}
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
         </div>
-      )}
-    </div>
+        {submitStatus === "success" && (
+          <div className={styles.success}>
+            <h2 className={`${styles.successTitle}`}>LET'S GO!</h2>
+            <h3 className={`${styles.successSubTitle}`}>
+              Your KAYO CALL UP entry has been successfully submitted
+            </h3>
+          </div>
+        )}
+      </div>
+      <div
+        className={styles.bg}
+        style={{ backgroundImage: `url(${Bg.src})` }}
+      />
+    </section>
   );
 };
 

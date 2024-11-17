@@ -1,5 +1,40 @@
 @import "../../breakpoints.scss";
 
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--kayogreen);
+  &.success {
+    background-color: var(--black);
+  }
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 32px;
+}
+
+.bg {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-size: 1600px;
+  mix-blend-mode: darken;
+  background-position: center top;
+}
+.hero {
+  max-width: 306px;
+}
 .input {
   height: 56px;
   padding: 0;
@@ -104,4 +139,28 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.successTitle {
+  font-size: 442px;
+  color: var(--kayogreen);
+
+  line-height: 79%;
+  font-weight: normal;
+  font-family: "KnockoutFeatherweight", sans-serif;
+}
+
+.successSubTitle {
+  font-size: 62px;
+  color: var(--white);
+  line-height: 79%;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-family: "KnockoutFeatherweight", sans-serif;
+}
+
+@media screen and (min-width: 768px) {
+  section {
+    padding: 64px;
+  }
 }

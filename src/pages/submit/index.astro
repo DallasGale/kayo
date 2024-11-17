@@ -1,55 +1,43 @@
 ---
 import Form from "../../components/form/";
 import Layout from "../../layouts/layout.astro";
-import HeroImg from "../../assets/hero.svg";
 import Button from "../../components/button/index.astro";
-import Bg from "../../assets/footballs.png";
 ---
-
-<script is:inline>
-  // import { initAudioOnMouseover } from "../components/audio/mouseover";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // Get your target element
-    const heroSection = document.querySelector("#hero");
-
-    if (heroSection) {
-      let hasInteracted = false;
-
-      heroSection.addEventListener(
-        "mouseover",
-        async () => {
-          if (hasInteracted) return;
-          hasInteracted = true;
-
-          try {
-            const audio = new Audio("../assets/sounds/kayo_crowd_Cheer.mp3");
-            console.log("Starting audio from hero mouseover");
-            await audio.play();
-          } catch (err) {
-            console.error("Audio playback failed:", err);
-          }
-        },
-        { once: true },
-      );
-    }
-  });
-</script>
 
 <Layout title="Kayo - Submit">
   <header>
     <Button label="Back" isDark link="/" />
   </header>
-  <section>
-    <div class="wrapper">
-      <img class="hero" src={HeroImg.src} alt="Kato Sports Call Up" />
-      <h2 class="display-1">Submit your entry</h2>
-      <Form client:load />
-    </div>
-    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
-  </section>
+
+  <Form client:load successCb={() => console.log("success form astro")} />
+  <!-- <Confetti client:load /> -->
+
+  <div id="lottie-container"></div>
 </Layout>
 
+<script>
+  import lottie from "lottie-web";
+  import animationData from "../../assets/lotti/confetti.json";
+
+  document.addEventListener("statusChange", (event) => {
+    const status = event.detail.status;
+
+    const lottieContainer = document.getElementById("lottie-container");
+    // Update the page based on status
+    if (status === "success") {
+      // Initialize lottie animation
+      lottie.loadAnimation({
+        container: lottieContainer,
+        renderer: "svg",
+        loop: false,
+        autoplay: true,
+        animationData: animationData,
+      });
+    } else {
+      console.log("no success");
+    }
+  });
+</script>
 <style>
   header {
     box-sizing: border-box;
@@ -61,40 +49,14 @@ import Bg from "../../assets/footballs.png";
     right: 0;
     margin: auto;
   }
-  .hero {
-    max-width: 306px;
-  }
 
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    padding: 32px;
-  }
-  section {
-    background-color: var(--kayogreen);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .bg {
-    position: fixed;
-    z-index: 0;
+  #lottie-container {
+    position: absolute;
     top: 0;
-    width: 100%;
-    height: 100vh;
-    background-size: 1600px;
-    mix-blend-mode: darken;
-    background-position: center top;
-  }
-  @media screen and (min-width: 768px) {
-    section {
-      padding: 64px;
-    }
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    pointer-events: none;
   }
 </style>
