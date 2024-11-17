@@ -19,6 +19,7 @@
     "@astrojs/react": "^3.6.2",
     "@astrojs/ts-plugin": "^1.10.4",
     "@fontsource/roboto": "^5.1.0",
+    "@react-spring/web": "^9.7.5",
     "@splidejs/splide": "^4.1.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

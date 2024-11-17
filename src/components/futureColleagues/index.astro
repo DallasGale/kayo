@@ -100,7 +100,7 @@ const collegues: CardProps[] = [
           collegues.map((collegue: CardProps) => {
             return (
               <li class:list={[styles.slide, "slides"]}>
-                <Card {...collegue} />
+                <Card {...collegue} client:load />
               </li>
             );
           })
