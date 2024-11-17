@@ -7,7 +7,12 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:submissions": "node --import tsx ./src/tests/test-runner.ts",
+    "test:burst": "node --import tsx ./src/tests/test-runner.ts burst",
+    "test:load": "node --import tsx ./src/tests/test-runner.ts load",
+    "test:gradual": "node --import tsx ./src/tests/test-runner.ts gradual",
+    "test:cleanup": "node --import tsx ./src/tests/cleanup.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -39,15 +44,20 @@
   },
   "packageManager": "pnpm@9.1.4+sha1.2432063d815cfa88fd9fef1d85a445e3f609851d",
   "devDependencies": {
+    "@faker-js/faker": "^9.2.0",
     "@types/cors": "^2.8.17",
     "@types/json2csv": "^5.0.7",
+    "@types/node": "^22.9.0",
     "@types/react-lottie": "^1.2.10",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
+    "dotenv": "^16.4.5",
     "eslint": "^9.14.0",
     "postcss": "^8.4.48",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "sass-embedded": "^1.80.6"
+    "sass-embedded": "^1.80.6",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2"
   }
 }
