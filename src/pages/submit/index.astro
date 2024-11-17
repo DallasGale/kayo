@@ -10,7 +10,6 @@ import Button from "../../components/button/index.astro";
   </header>
 
   <Form client:load successCb={() => console.log("success form astro")} />
-  <!-- <Confetti client:load /> -->
 
   <div id="lottie-container"></div>
 </Layout>
@@ -20,11 +19,12 @@ import Button from "../../components/button/index.astro";
   import animationData from "../../assets/lotti/confetti.json";
 
   document.addEventListener("statusChange", (event) => {
-    const status = event.detail.status;
+    const status = (event as CustomEvent).detail.status;
 
-    const lottieContainer = document.getElementById("lottie-container");
+    const lottieContainer: HTMLElement | null =
+      document.getElementById("lottie-container");
     // Update the page based on status
-    if (status === "success") {
+    if (status === "success" && lottieContainer !== null) {
       // Initialize lottie animation
       lottie.loadAnimation({
         container: lottieContainer,
