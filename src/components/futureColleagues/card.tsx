@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 export interface CardProps {
   name: string;
   role: string;
-  avatar: string;
+  avatar: string | null;
 }
 
 const Card = ({ name, role, avatar }: CardProps) => {
