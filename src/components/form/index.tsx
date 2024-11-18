@@ -363,12 +363,14 @@ const Form = ({ successCb }: FormProps) => {
         <div className={styles.formWrapper}>
           {submitStatus !== "success" && (
             <>
-              <img
-                className={styles.hero}
-                src={HeroImg.src}
-                alt="Kato Sports Call Up"
-              />
-              <h2 className="display-1">Submit your entry</h2>
+              <div className={styles.logoLockup}>
+                <img
+                  className={styles.hero}
+                  src={HeroImg.src}
+                  alt="Kato Sports Call Up"
+                />
+                <h2 className="display-1">Submit your entry</h2>
+              </div>
               <form
                 onSubmit={handleSubmit}
                 style={{ display: "flex", flexDirection: "column", gap: 20 }}

@@ -13,6 +13,13 @@
   }
 }
 
+.logoLockup {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
 .successBtns {
   display: flex;
   gap: 20px;
@@ -69,7 +76,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 88px;
   margin-top: 12vh;
 }
 
@@ -242,6 +249,10 @@
     align-items: center;
     justify-content: center;
     gap: 30px;
+  }
+
+  .formWrapper {
+    gap: 112px;
   }
 }
 
