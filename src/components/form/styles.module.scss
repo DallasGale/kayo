@@ -184,6 +184,17 @@
   font-family: "KayoGravity", sans-serif;
 }
 
+.signUpNow {
+  margin-top: 33px;
+  font-size: 16px;
+  color: var(--kayogreen);
+  text-transform: uppercase;
+  font-family: "GibsonSemiBold", sans-serif;
+
+  a {
+    font-family: "GibsonSemiBold", sans-serif;
+  }
+}
 @media screen and (min-width: $breakpoint-desktop) {
   .foxLogo {
     width: 106px;

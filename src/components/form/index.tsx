@@ -66,7 +66,7 @@ const Form = ({ successCb }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
-  >("idle");
+  >("success");
 
   // ----------------------------------------------------------------
   // Video Validation
@@ -579,6 +579,13 @@ const Form = ({ successCb }: FormProps) => {
               >
                 <span>More info</span>
               </button>
+            </div>
+
+            <div>
+              <p className={styles.signUpNow}>
+                New to Kayo?{" "}
+                <a href="https://kayosports.com.au/">Sign up now</a>
+              </p>
             </div>
           </div>
         )}
