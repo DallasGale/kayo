@@ -586,6 +586,11 @@ const Form = ({ successCb }: FormProps) => {
                 New to Kayo?{" "}
                 <a href="https://kayosports.com.au/">Sign up now</a>
               </p>
+
+              <div className={styles.legal}>
+                <p className="small-print color-white">PRIVACY POLICY</p>
+                <p className="small-print color-white">TERMS AND CONDITIONS</p>
+              </div>
             </div>
           </div>
         )}
