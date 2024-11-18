@@ -23,7 +23,7 @@ const Card = ({ name, role, avatar }: CardProps) => {
         </div> */}
       </div>
       {/* </div> */}
-      <div>
+      <div className={styles.cardNameTitle}>
         <h2 className="display-5">{name}</h2>
         <p>{role}</p>
       </div>

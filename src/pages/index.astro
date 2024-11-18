@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/layout.astro";
-import Accordion from "../components/accordion/index.astro";
 import Steps from "../components/steps/index.astro";
 import FutureCollegues from "../components/futureColleagues/index.astro";
 
@@ -14,10 +13,34 @@ import Button from "../components/button/index.astro";
 import Nav from "../components/nav/nav.astro";
 ---
 
+<script>
+  // if screen size if below 1024px, add a class to the body
+
+  function updateButtonText() {
+    const submitBtn = document.getElementById("header-submit");
+
+    if (!submitBtn) return;
+    if (window.innerWidth < 1024 && submitBtn) {
+      submitBtn.textContent = "Submit entry";
+    } else {
+      submitBtn.textContent = "Submit your entry";
+    }
+  }
+
+  updateButtonText();
+
+  window.addEventListener("resize", updateButtonText);
+</script>
+
 <Layout title="Kayo">
   <Header />
   <div class="cta-container">
-    <Button label="Submit your entry" isLarge link="/submit" />
+    <Button
+      id="header-submit"
+      label="Submit your entry"
+      isLarge
+      link="/submit"
+    />
   </div>
   <Nav />
   <Hero />
@@ -26,7 +49,6 @@ import Nav from "../components/nav/nav.astro";
   <Steps />
   <FutureCollegues />
   <HaveAQuestion client:load />
-
   <Footer />
 </Layout>
 
@@ -64,7 +86,7 @@ import Nav from "../components/nav/nav.astro";
     justify-content: flex-end;
     top: 120px;
     display: flex;
-    right: 10px;
+    right: 20px;
     margin-left: auto;
     z-index: 23;
     width: 95%;

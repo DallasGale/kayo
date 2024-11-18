@@ -5,31 +5,41 @@ import TikTok from "../../assets/tiktok.svg";
 import Instagram from "../../assets/instagram.svg";
 import WillYouGetTheCallUp from "../../components/willYouGetTheCallUp/index.astro";
 import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
+import Button from "../button/index.astro";
 ---
 
-<footer>
-  <WillYouGetTheCallUp />
-  <div class="content">
-    <div class="logos">
-      <img src={KayoLogo.src} class="kayo-logo" alt="Kayo Sports" />
-      <img src={FoxLogo.src} class="fox-logo" alt="Fox Footy" />
-    </div>
-
-    <div class="links">
-      <div class="legal">
-        <p class="small-print">Privacy Policy</p>
-        <p class="small-print">Terms and conditions</p>
-      </div>
-
-      <div class="social">
-        <p class="small-print"><img src={TikTok.src} alt="TikTok" /></p>
-        <p class="small-print">
-          <img src={Instagram.src} alt="Instagram3" />
-        </p>
+<footer id="footer">
+  <section>
+    <div class="contentTop">
+      <h2 class="display-2">Will you get<br />the kayo call up?</h2>
+      <div>
+        <Button label="Submit your entry" isLarge link="/submit" />
       </div>
     </div>
-  </div>
-  <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+    <!-- <WillYouGetTheCallUp /> -->
+    <div class="contentBottom">
+      <div class="logos">
+        <img src={KayoLogo.src} class="kayo-logo" alt="Kayo Sports" />
+        <img src={FoxLogo.src} class="fox-logo" alt="Fox Footy" />
+      </div>
+
+      <div class="links">
+        <div class="legal">
+          <p class="small-print">Privacy Policy</p>
+          <p class="small-print">Terms and conditions</p>
+        </div>
+
+        <div class="social">
+          <p class="small-print"><img src={TikTok.src} alt="TikTok" /></p>
+          <p class="small-print">
+            <img src={Instagram.src} alt="Instagram3" />
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+  </section>
 </footer>
 
 <style lang="scss">
@@ -37,6 +47,28 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
   /* section {
     height: 70vh;
   } */
+  section {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: var(--kayogreen);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    position: relative;
+    padding: 116px 40px;
+    height: 100%;
+    flex-direction: column;
+    gap: 70px;
+  }
+  .contentTop {
+    text-align: center;
+    gap: 62px;
+    max-width: 900px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+  }
 
   footer {
     position: absolute;
@@ -68,11 +100,11 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
     width: 100%;
     height: auto;
   }
-  .content {
+  .contentBottom {
     margin: auto;
     left: 0;
     right: 0;
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: 0;
     z-index: 2;
@@ -82,6 +114,8 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
     flex-direction: column;
     gap: 20px;
     margin-bottom: 30px;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
   .kayo-logo {
     width: 84px;
@@ -113,11 +147,27 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
   }
 
   @media screen and (min-width: $breakpoint-desktop) {
+    section {
+      height: 90vh;
+      padding: 116px 20px 0;
+      gap: 0;
+    }
+    .bg {
+      background-position: center bottom 56px;
+    }
+    .kayo-logo {
+      width: 104px;
+      height: 55px;
+    }
+    .fox-logo {
+      width: 117px;
+      height: 70px;
+    }
     footer {
       height: auto;
     }
     .bg {
-      background-position: center bottom 56px;
+      background-position: center bottom -100px;
     }
 
     .legal {
@@ -130,7 +180,7 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
     }
     .logos {
       justify-content: flex-start;
-      gap: 20px;
+      gap: 54px;
     }
     .social {
       justify-content: flex-end;
@@ -144,10 +194,15 @@ import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
       align-items: center;
     }
 
-    .content {
-      flex-direction: row;
-      bottom: 80px;
+    .contentTop {
+      height: 600px;
       align-items: center;
+      justify-content: flex-end;
+    }
+    .contentBottom {
+      flex-direction: row;
+      align-items: center;
+      padding: 0 42px;
     }
   }
 </style>

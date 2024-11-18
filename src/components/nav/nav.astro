@@ -10,6 +10,7 @@
       threshold: 0.5, // trigger when 10% of target is visible
     };
 
+    const nav = document.querySelector(".nav-wrapper");
     const navFollower = document.getElementById("nav-follower");
     const whatYouWinAnchor = document.getElementById("what-you-win-anchor");
     const howItWorksAnchor = document.getElementById("how-it-works-anchor");
@@ -26,34 +27,41 @@
           // Add your custom logic here
 
           const { id } = entry.target;
+
+          console.log({ id });
           if (navFollower) {
             if (id === "hero") {
               whatYouWinAnchor?.classList.remove("active");
               howItWorksAnchor?.classList.remove("active");
               haveAQuestionAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-200%)";
+              nav?.classList.remove("hidden");
             }
             if (id === "what-you-win") {
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-75%) skew(-25deg)";
+              nav?.classList.remove("hidden");
             }
             if (id === "how-it-works") {
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-50%) skew(-25deg)";
-              // lastVisibleSection = id;
+              nav?.classList.remove("hidden");
             }
             if (id === "have-a-question") {
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.add("active");
               navFollower.style.transform = "translateX(-25%) skew(-25deg)";
-              // lastVisibleSection = id;
+              nav?.classList.remove("hidden");
             }
 
-            // return lastVisibleSection;
+            if (id === "footer") {
+              console.log("footer");
+              nav?.classList.add("hidden");
+            }
           }
 
           // Uncomment the next line if you want to stop observing after first intersection
@@ -66,7 +74,7 @@
     const observer = new IntersectionObserver(handleIntersect, options);
 
     // Select all sections you want to observe
-    const sections = document.querySelectorAll("section[id]");
+    const sections = document.querySelectorAll("[id]");
 
     // Start observing each section
     sections.forEach((section) => {
@@ -128,11 +136,15 @@
     background-color: var(--black);
     height: auto;
     // display: none;
+    transition: all 0.35s ease-out;
     align-items: center;
     animation: animateNav 600ms forwards linear;
     animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
     animation-delay: 5.5s;
     will-change: transform;
+    &.hidden {
+      transition: all 0.35s ease-out;
+    }
   }
   .nav {
     position: relative;
@@ -162,7 +174,6 @@
     }
   }
   .anchor {
-    // background-color: var(--black);
     padding: 0 10px;
     color: var(--kayogreen);
     font-size: 15px;
@@ -189,29 +200,9 @@
     align-items: center;
     padding: 0 0;
     position: relative;
-
-    // &:before {
-    //   content: "";
-    //   position: absolute;
-    //   width: 100%;
-    //   width: 2000px;
-    //   height: 100%;
-    //   background-color: var(--kayogreen);
-    //   opacity: 0;
-    //   bottom: 0;
-    //   left: auto;
-    //   right: 0;
-    //   transform: translateX(-10%) skew(-25deg);
-    //   z-index: -1;
-    //   transition: all 0.35s ease-out;
-    // }
   }
 
   li.active {
-    // &:before {
-    //   opacity: 1;
-    //   transform: translateX(0) skew(-25deg);
-    // }
     .anchor {
       color: var(--black);
       background-color: transparent;
@@ -237,10 +228,7 @@
     width: 100vw;
     height: 100%;
     background-color: var(--kayogreen);
-    // opacity: 0;
     bottom: 0;
-    // left: auto;
-    // right: 0;
     transform: translateX(-200%) skew(-25deg);
     z-index: -1;
     transition: all 0.35s ease-out;

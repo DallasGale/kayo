@@ -120,6 +120,12 @@
   top: 5px;
 }
 
+.cardNameTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 @media screen and (min-width: $breakpoint-desktop) {
   .card {
     height: 356px;
