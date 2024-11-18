@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Modal } from "react-responsive-modal";
+
 import { validatePhone } from "../phValidate";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import HeroImg from "../../assets/hero.svg";
@@ -6,6 +8,7 @@ import Bg from "../../assets/footballs.png";
 
 import { db } from "../../firebase/client";
 import styles from "./styles.module.scss";
+import modalStyles from "../modal/styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
 import Tick from "../../assets/tick.svg";
 
@@ -47,10 +50,16 @@ const key = import.meta.env.NEXT_PUBLIC_IFRAMELY_KEY;
 const apiKey = import.meta.env.NEXT_PUBLIC_IFRAMELY_API_KEY;
 const isDev = import.meta.env.MODE === "development";
 
-interface FormProps {
-  successCb: () => void;
-}
-const Form = ({ successCb }: FormProps) => {
+const Form = () => {
+  // Terms Modal
+  const [open, setOpen] = useState(false);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+
+  const handleOpenModal = () => {
+    onOpenModal();
+  };
   const [formData, setFormData] = useState<FormData>({
     name: "Dallas Gale",
     email: "dallasgale.digital@gmail.com",
@@ -149,10 +158,6 @@ const Form = ({ successCb }: FormProps) => {
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     }
-
-    // if (!formData.readTerms) {
-    //   newErrors.readTerms = "Please accept the terms and conditions";
-    // }
 
     setErrors(newErrors);
     console.log({ errors, newErrors });
@@ -505,7 +510,7 @@ const Form = ({ successCb }: FormProps) => {
                 </fieldset>
                 {errors.message && <p>{errors.message}</p>}
 
-                <label htmlFor="read" className={styles.termsLabel}>
+                <div className={styles.checkboxGroup}>
                   <input
                     type="checkbox"
                     id="read"
@@ -513,9 +518,16 @@ const Form = ({ successCb }: FormProps) => {
                     onChange={(e) => handleTermsChange(e)}
                     className={styles.checkbox}
                   />
-                  <p>I have read and accept the terms and conditions</p>
-                </label>
-                <label htmlFor="age" className={styles.termsLabel}>
+                  <label className={styles.termsLabel}>
+                    <p>
+                      I have read and accept the{" "}
+                      <span onClick={handleOpenModal}>
+                        terms and conditions
+                      </span>
+                    </p>
+                  </label>
+                </div>
+                <div className={styles.checkboxGroup}>
                   <input
                     type="checkbox"
                     id="age"
@@ -523,9 +535,11 @@ const Form = ({ successCb }: FormProps) => {
                     onChange={(e) => handleTermsChange(e)}
                     className={styles.checkbox}
                   />
-                  <p>I AM OVER THE AGE OF 18</p>
-                </label>
-                <label htmlFor="resident" className={styles.termsLabel}>
+                  <label htmlFor="age" className={styles.termsLabel}>
+                    <p>I AM OVER THE AGE OF 18</p>
+                  </label>
+                </div>
+                <div className={styles.checkboxGroup}>
                   <input
                     type="checkbox"
                     id="resident"
@@ -533,8 +547,10 @@ const Form = ({ successCb }: FormProps) => {
                     onChange={(e) => handleTermsChange(e)}
                     className={styles.checkbox}
                   />
-                  <p>I Live in australia</p>
-                </label>
+                  <label htmlFor="resident" className={styles.termsLabel}>
+                    <p>I Live in australia</p>
+                  </label>
+                </div>
 
                 <div className={styles.youWin}>
                   <h2 className="display-4 color-black05">
@@ -601,6 +617,13 @@ const Form = ({ successCb }: FormProps) => {
         className={styles.bg}
         style={{ backgroundImage: `url(${Bg.src})` }}
       />
+
+      <Modal open={open} onClose={onCloseModal} center>
+        <div className={modalStyles.modalContent}>
+          <h2 className={modalStyles.modalTitle}>Terms and conditions</h2>
+          <p className={modalStyles.modalParagraph}></p>
+        </div>
+      </Modal>
     </section>
   );
 };

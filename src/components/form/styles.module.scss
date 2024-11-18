@@ -32,6 +32,11 @@
   }
 }
 
+.checkboxGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
 .foxLogo {
   width: 69px;
 }

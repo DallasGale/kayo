@@ -1,5 +1,6 @@
 import Question from "../question";
 import styles from "../styles.module.scss";
+import modalStyles from "../../modal/styles.module.scss";
 import btnStyles from "../../button/styles.module.scss";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
@@ -40,10 +41,10 @@ const SuperSaturday = () => {
         </div>
 
         <Modal open={open} onClose={onCloseModal} center>
-          <div className={styles.modalContent}>
-            <h2 className={styles.modalTitle}>{modalContent.question}</h2>
+          <div className={modalStyles.modalContent}>
+            <h2 className={modalStyles.modalTitle}>{modalContent.question}</h2>
             {/* <p> */}
-            <p className={styles.modalParagraph}>{modalContent.answer}</p>
+            <p className={modalStyles.modalParagraph}>{modalContent.answer}</p>
           </div>
         </Modal>
         {/* Modal */}

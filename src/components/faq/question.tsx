@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import Plus from "../../assets/plus.svg";
 interface QuestionProps {
   label: string;
   onClick: () => void;

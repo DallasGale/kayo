@@ -1,0 +1,19 @@
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  gap: 20px;
+}
+
+.modalTitle {
+  font-family: "GibsonBold", sans-serif;
+  color: var(--black);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+.modalParagraph {
+  font-size: 18px;
+  line-height: 143%;
+}
