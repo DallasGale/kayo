@@ -48,11 +48,6 @@ const SuperSaturday = () => {
         </Modal>
         {/* Modal */}
         {/* Answer */}
-        <div className={styles.seeMore}>
-          <button className={`${btnStyles.btn} ${btnStyles.secondaryBtn}`}>
-            <span>See More</span>
-          </button>
-        </div>
       </div>
     </section>
   );

@@ -9,7 +9,6 @@
   flex-direction: column;
   gap: 8px;
   margin-top: 32px;
-  margin-bottom: 32px;
   align-items: center;
 }
 
@@ -62,7 +61,12 @@
 }
 
 .seeMore {
+  margin-top: 24px;
   text-align: center;
+  span {
+    font-family: "GibsonSemiBold", sans-serif;
+    font-size: 14px;
+  }
 }
 
 .modalContent {
