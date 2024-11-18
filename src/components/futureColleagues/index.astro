@@ -156,12 +156,15 @@ const collegues: CardProps[] = [
 <style lang="scss">
   @import "../../breakpoints.scss";
 
+  .title {
+    padding: 0 42px 32px;
+  }
   /* Add these global styles for Swiper */
   :global(.swiper) {
     width: 100%;
     overflow: hidden;
     padding: 0 20px;
-    margin-top: 30px;
+    margin-top: 0;
   }
 
   :global(.swiper-wrapper) {
@@ -233,11 +236,12 @@ const collegues: CardProps[] = [
   }
 
   @media screen and (min-width: $breakpoint-desktop) {
-    .container {
-      align-items: flex-start;
-    }
     .title {
       padding: 0 42px 45px;
+    }
+    .container {
+      align-items: flex-start;
+      padding-top: 118px;
     }
     :global(.swiper-slide) {
       width: 400px !important; /* Larger width for desktop if needed */
