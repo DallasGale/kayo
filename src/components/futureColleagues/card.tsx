@@ -12,7 +12,9 @@ const Card = ({ name, role, avatar }: CardProps) => {
       <div className={styles.card}>
         <div className={styles.cardInner}>
           <picture className={styles.cardFront}>
-            <img src={avatar} alt={name} className={styles.avatar} />
+            {avatar !== null && (
+              <img src={avatar} alt={name} className={styles.avatar} />
+            )}
           </picture>
         </div>
 
