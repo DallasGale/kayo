@@ -48,6 +48,7 @@
     height: 56px;
   }
 }
+
 .primaryBtn {
   position: relative;
   color: var(--darkgrey);
@@ -69,6 +70,15 @@
   }
   span {
     color: var(--white);
+  }
+}
+
+.greenBtn {
+  &:before {
+    background-color: var(--kayogreen);
+  }
+  span {
+    color: var(--black);
   }
 }
 

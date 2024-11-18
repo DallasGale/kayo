@@ -10,6 +10,7 @@ import btnStyles from "../button/styles.module.scss";
 import Tick from "../../assets/tick.svg";
 
 import Cheer from "../../assets/sounds/cheer.mp3";
+import FoxLogo from "../../assets/fox-logo-white.png";
 
 interface FormData {
   name: string;
@@ -341,6 +342,18 @@ const Form = ({ successCb }: FormProps) => {
     <section
       className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
     >
+      <header style={{ textAlign: "left", width: "100%" }}>
+        {submitStatus === "success" ? (
+          <img className={styles.foxLogo} src={FoxLogo.src} alt="Fox Footy" />
+        ) : (
+          <a
+            href="/ "
+            className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.darkBtn}`}
+          >
+            <span>Back</span>
+          </a>
+        )}
+      </header>
       <div className={styles.wrapper}>
         <div className={styles.formWrapper}>
           {submitStatus !== "success" && (
@@ -546,6 +559,22 @@ const Form = ({ successCb }: FormProps) => {
             <h3 className={`${styles.successSubTitle}`}>
               Your KAYO CALL UP entry has been successfully submitted
             </h3>
+
+            <div className={styles.successBtns}>
+              <button
+                className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
+                type="submit"
+              >
+                <span>Share with a mate</span>
+              </button>
+
+              <button
+                className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn} ${btnStyles.greenBtn}`}
+                type="submit"
+              >
+                <span>More info</span>
+              </button>
+            </div>
           </div>
         )}
       </div>

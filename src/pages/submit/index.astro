@@ -5,10 +5,6 @@ import Button from "../../components/button/index.astro";
 ---
 
 <Layout title="Kayo - Submit">
-  <header>
-    <Button label="Back" isDark link="/" />
-  </header>
-
   <Form client:load successCb={() => console.log("success form astro")} />
 
   <div id="lottie-container"></div>

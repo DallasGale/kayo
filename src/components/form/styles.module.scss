@@ -4,12 +4,29 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: var(--kayogreen);
   &.success {
     background-color: var(--black);
   }
+}
+
+.successBtns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  button {
+    width: 313px;
+  }
+}
+
+.foxLogo {
+  width: 69px;
 }
 .wrapper {
   position: relative;
@@ -21,6 +38,7 @@
   gap: 32px;
   padding: 10px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .bg {
@@ -149,7 +167,7 @@
 }
 
 .successTitle {
-  font-size: 442px;
+  font-size: 142px;
   color: var(--kayogreen);
 
   line-height: 79%;
@@ -158,20 +176,51 @@
 }
 
 .successSubTitle {
-  font-size: 62px;
+  font-size: 15px;
   color: var(--white);
-  line-height: 79%;
+  line-height: 111%;
   font-weight: normal;
   text-transform: uppercase;
-  font-family: "KnockoutFeatherweight", sans-serif;
+  font-family: "KayoGravity", sans-serif;
 }
 
 @media screen and (min-width: $breakpoint-desktop) {
+  .foxLogo {
+    width: 106px;
+  }
   section {
     padding: 64px;
   }
 
   .hero {
     max-width: 306px;
+  }
+
+  .successTitle {
+    font-size: 300px;
+  }
+
+  .successSubTitle {
+    font-size: 16px;
+  }
+  .successBtns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+
+    flex-direction: row;
+    button {
+      width: 313px;
+    }
+  }
+}
+
+@media screen and (min-width: $breakpoint-widescreen) {
+  .successTitle {
+    font-size: 442px;
+  }
+  .successSubTitle {
+    font-size: 24px;
   }
 }
