@@ -98,6 +98,9 @@
   text-align: left;
   margin-bottom: 56px;
   position: relative;
+  &:last-of-type {
+    margin-bottom: 50px;
+  }
 }
 
 .videoFieldLockup {
@@ -163,6 +166,7 @@
   p {
     font-size: 12px;
     line-height: 87%;
+    text-transform: uppercase;
     font-family: "GibsonRegular", sans-serif;
   }
 }
@@ -172,6 +176,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top: 48px;
 }
 
 .successTitle {
@@ -253,6 +258,10 @@
 
   .formWrapper {
     gap: 112px;
+  }
+
+  .youWin {
+    margin-top: 64px;
   }
 }
 
