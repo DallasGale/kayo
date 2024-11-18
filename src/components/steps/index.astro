@@ -45,11 +45,16 @@ const steps = [
     padding: 64px 16px;
   }
 
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
   @media screen and (min-width: $breakpoint-desktop) {
     .steps {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 73px;
     }
     section {
       padding-top: 130px;
