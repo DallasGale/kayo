@@ -60,14 +60,14 @@ const Form = () => {
     onOpenModal();
   };
   const [formData, setFormData] = useState<FormData>({
-    name: "Dallas Gale",
-    email: "dallasgale.digital@gmail.com",
-    mobile: "0409235082",
-    videoUrl: "https://youtu.be/SwCW-yVrC38?si=ZCsRq9oR5byClHjZ",
-    message: "Hey",
-    readTerms: true,
-    over18: true,
-    resident: true,
+    name: "",
+    email: "",
+    mobile: "",
+    videoUrl: "",
+    message: "",
+    readTerms: false,
+    over18: false,
+    resident: false,
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -159,7 +159,6 @@ const Form = () => {
     }
 
     setErrors(newErrors);
-    console.log({ errors, newErrors });
     return Object.keys(newErrors).length === 0;
   };
 
@@ -201,6 +200,8 @@ const Form = () => {
       !formData.readTerms ||
       !formData.over18 ||
       !formData.resident;
+
+    console.log(formData.readTerms, { hasEmptyFields });
 
     // Check if there are any validation errors
     const hasValidationErrors = Object.keys(errors).length > 0;
