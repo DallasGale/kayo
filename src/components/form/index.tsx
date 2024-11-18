@@ -337,13 +337,6 @@ const Form = ({ successCb }: FormProps) => {
     }
   }, [submitStatus]);
 
-  // const [showForm, setShowForm] = useState(true);
-  // useEffect(() => {
-  //   if (submitStatus === "submitting") {
-  //       setShowForm(false);
-  //   }
-  // }, [submitStatus]);
-
   return (
     <section
       className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
