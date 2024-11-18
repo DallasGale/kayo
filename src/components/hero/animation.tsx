@@ -18,16 +18,6 @@ const Animation = () => {
   }, []);
   return (
     <>
-      {/* <div
-        className={`${styles.ctaContainer} ${isAnimating ? styles.animate : ""}`}
-      >
-        <a
-          href="/submit"
-          className={`${styles.btn} ${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn} `}
-        >
-          <span>Submit your entry</span>
-        </a>
-      </div> */}
       <div className={styles.scene}>
         <div
           className={styles.animationContainer}

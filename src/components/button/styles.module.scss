@@ -42,9 +42,11 @@
   }
 }
 
-.largeBtn {
-  font-size: 15px;
-  height: 56px;
+@media screen and (min-width: $breakpoint-desktop) {
+  .largeBtn {
+    font-size: 15px;
+    height: 56px;
+  }
 }
 .primaryBtn {
   position: relative;
