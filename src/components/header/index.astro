@@ -3,7 +3,9 @@ import FoxLogo from "../../assets/fox-logo.png";
 ---
 
 <header>
-  <img src={FoxLogo.src} class="foxLogo" alt="Fox Footy" />
+  <a href="https://www.foxsports.com.au/afl">
+    <img src={FoxLogo.src} class="foxLogo" alt="Fox Footy" />
+  </a>
 </header>
 
 <style lang="scss">
@@ -25,17 +27,18 @@ import FoxLogo from "../../assets/fox-logo.png";
     align-items: center;
     display: flex;
     justify-content: flex-start;
-    width: 100%;
+    // width: 100%;
     gap: 20px;
     align-items: center;
     box-sizing: border-box;
     position: absolute;
     padding: 24px 16px 0;
-    max-width: 1440px;
-    margin: auto;
+    // max-width: 1440px;
+    // margin: auto;
     top: 0;
     left: 0;
     right: 0;
+    width: 200px;
     z-index: 22;
     height: auto;
     will-change: transform;

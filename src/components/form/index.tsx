@@ -342,9 +342,14 @@ const Form = ({ successCb }: FormProps) => {
     <section
       className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
     >
-      <header style={{ textAlign: "left", width: "100%" }}>
+      <header style={{ textAlign: "left", width: "100%", zIndex: 40 }}>
         {submitStatus === "success" ? (
-          <img className={styles.foxLogo} src={FoxLogo.src} alt="Fox Footy" />
+          <a
+            href="https://www.foxsports.com.au/afl"
+            style={{ display: "block", height: 80, width: 100 }}
+          >
+            <img className={styles.foxLogo} src={FoxLogo.src} alt="Fox Footy" />
+          </a>
         ) : (
           <a
             href="/ "
