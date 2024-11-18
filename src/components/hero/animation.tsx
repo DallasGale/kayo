@@ -3,8 +3,18 @@ import styles from "./styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
 import HeroImg from "../../assets/hero.svg";
 import GoalPosts from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
+import { Modal } from "react-responsive-modal";
+import modalStyles from "../modal/styles.module.scss";
 
 const Animation = () => {
+  // Terms Modal
+  const [open, setOpen] = useState(false);
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+  const handleOpenModal = () => {
+    onOpenModal();
+  };
+
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
@@ -16,6 +26,7 @@ const Animation = () => {
       setIsAnimating(false);
     };
   }, []);
+
   return (
     <>
       <div className={styles.scene}>
@@ -64,7 +75,12 @@ const Animation = () => {
                 {/* <Button label="Submit your entry" isLarge link="/submit" /> */}
                 <p className={`small-print text-center ${styles.smallPrint}`}>
                   Must be 18+ to enter and a current Australian resident.{" "}
-                  <a href="#">TERMS AND CONDITIONS</a> APPLY
+                  <button
+                    className="small-print  text-button"
+                    onClick={handleOpenModal}
+                  >
+                    TERMS AND CONDITIONS APPLY
+                  </button>
                 </p>
               </div>
             </div>
@@ -76,6 +92,12 @@ const Animation = () => {
             <img src={GoalPosts.src} loading="eager" decoding="async" />
           </picture>
         </div>
+        <Modal open={open} onClose={onCloseModal} center>
+          <div className={modalStyles.modalContent}>
+            <h2 className={modalStyles.modalTitle}>Terms and conditions</h2>
+            <p className={modalStyles.modalParagraph}></p>
+          </div>
+        </Modal>
       </div>
     </>
   );

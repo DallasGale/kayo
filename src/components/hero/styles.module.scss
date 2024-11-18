@@ -73,7 +73,7 @@
 
   &.animate {
     animation: animateLogo 4.5s forwards;
-    animation-delay: 600ms;
+    animation-delay: 800ms;
     animation-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
   }
 
@@ -149,9 +149,8 @@
 @keyframes animateLogo {
   0% {
     transform: translateY(160%) scale(12);
-    opacity: 0;
   }
-  0% {
+  20% {
     opacity: 1;
   }
   30% {

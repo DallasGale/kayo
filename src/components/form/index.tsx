@@ -53,11 +53,10 @@ const isDev = import.meta.env.MODE === "development";
 const Form = () => {
   // Terms Modal
   const [open, setOpen] = useState(false);
-
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
-
-  const handleOpenModal = () => {
+  const handleOpenModal = (e: React.MouseEvent) => {
+    e.preventDefault();
     onOpenModal();
   };
   const [formData, setFormData] = useState<FormData>({
@@ -521,9 +520,13 @@ const Form = () => {
                   <label className={styles.termsLabel}>
                     <p>
                       I have read and accept the{" "}
-                      <span onClick={handleOpenModal}>
-                        terms and conditions
-                      </span>
+                      <button
+                        className="text-button"
+                        type="button"
+                        onClick={(e) => handleOpenModal(e)}
+                      >
+                        TERMS AND CONDITIONS
+                      </button>
                     </p>
                   </label>
                 </div>

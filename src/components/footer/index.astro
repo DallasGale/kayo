@@ -3,7 +3,6 @@ import KayoLogo from "../../assets/kayo-logo-mono.png";
 import FoxLogo from "../../assets/fox-logo.png";
 import TikTok from "../../assets/tiktok.svg";
 import Instagram from "../../assets/instagram.svg";
-import WillYouGetTheCallUp from "../../components/willYouGetTheCallUp/index.astro";
 import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
 import Button from "../button/index.astro";
 ---
@@ -17,10 +16,11 @@ import Button from "../button/index.astro";
       </div>
     </div>
     <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
-    <!-- <WillYouGetTheCallUp /> -->
     <div class="contentBottom">
       <div class="logos">
-        <img src={KayoLogo.src} class="kayo-logo" alt="Kayo Sports" />
+        <a href="https://kayosports.com.au/">
+          <img src={KayoLogo.src} class="kayo-logo" alt="Kayo Sports" />
+        </a>
         <a href="https://www.foxsports.com.au/afl">
           <img src={FoxLogo.src} class="fox-logo" alt="Fox Footy" />
         </a>
@@ -46,9 +46,7 @@ import Button from "../button/index.astro";
 
 <style lang="scss">
   @import "../../breakpoints.scss";
-  /* section {
-    height: 70vh;
-  } */
+
   section {
     justify-content: center;
     align-items: center;
