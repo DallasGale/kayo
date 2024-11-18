@@ -1,6 +1,6 @@
-import Question from "./question";
-import styles from "./styles.module.scss";
-import btnStyles from "../button/styles.module.scss";
+import Question from "../question";
+import styles from "../styles.module.scss";
+import btnStyles from "../../button/styles.module.scss";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import { useState } from "react";

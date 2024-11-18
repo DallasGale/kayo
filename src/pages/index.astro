@@ -6,7 +6,8 @@ import FutureCollegues from "../components/futureColleagues/index.astro";
 import Hero from "../components/hero/index.astro";
 import HowToWin from "../components/howToWin/index.astro";
 import HowToEnter from "../components/howToEnter/index.astro";
-import HaveAQuestion from "../components/haveAQuestion";
+import HaveAQuestion from "../components/faq/haveAQuestion";
+import SuperSaturday from "../components/faq/superSaturday";
 import Footer from "../components/footer/index.astro";
 import Header from "../components/header/index.astro";
 import Button from "../components/button/index.astro";
@@ -49,6 +50,7 @@ import Nav from "../components/nav/nav.astro";
   <Steps />
   <FutureCollegues />
   <HaveAQuestion client:load />
+  <SuperSaturday client:load />
   <Footer />
 </Layout>
 
