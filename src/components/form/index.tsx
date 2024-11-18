@@ -66,7 +66,7 @@ const Form = ({ successCb }: FormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
-  >("success");
+  >("idle");
 
   // ----------------------------------------------------------------
   // Video Validation
