@@ -13,6 +13,8 @@ import Loughnan from "../../assets/collegues/Loughnan.jpg";
 import Riewoldt from "../../assets/collegues/Riewoldt.jpg";
 import Underwood from "../../assets/collegues/Underwood.jpg";
 
+import Slider from "./slider";
+
 const collegues: CardProps[] = [
   {
     avatar: Brown.src,
@@ -95,28 +97,122 @@ const collegues: CardProps[] = [
       <div class="title">
         <h6 class="display-1">Your future colleagues</h6>
       </div>
-      <ul class={styles.slides} id="slide-container">
-        {
-          collegues.map((collegue: CardProps) => {
-            return (
-              <li class:list={[styles.slide, "slides"]}>
-                <Card {...collegue} client:load />
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
-    <div id="progress" class={styles.progress}>
-      <div class={styles.fauxBar}></div>
-      <div id="progress-bar" class={styles.progressBar}></div>
+
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {
+            collegues.map((collegue: CardProps) => {
+              return (
+                <div class="swiper-slide" style={{ width: "auto" }}>
+                  <Card {...collegue} client:load />
+                </div>
+              );
+            })
+          }
+          <div class="swiper-slide" style={{ width: "auto" }}></div>
+        </div>
+
+        <div class="swiper-scrollbar"></div>
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  import Swiper from "swiper";
+  import { Virtual, Navigation, Pagination, Scrollbar } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/navigation";
+  import "swiper/css/pagination";
+
+  // Initialize Swiper after the DOM is loaded
+  function initSwiper() {
+    const swiper = new Swiper(".swiper", {
+      modules: [Virtual, Navigation, Pagination, Scrollbar],
+      slidesPerView: "auto",
+      spaceBetween: 20,
+      scrollbar: {
+        el: ".swiper-scrollbar",
+        hide: true,
+      },
+      speed: 800,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      // Remove virtual slides since we're rendering them directly
+      observer: true,
+      observeParents: true,
+    });
+  }
+
+  // Wait for the DOM to be fully loaded
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSwiper);
+  } else {
+    initSwiper();
+  }
+</script>
 <style lang="scss">
   @import "../../breakpoints.scss";
 
+  /* Add these global styles for Swiper */
+  :global(.swiper) {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 20px;
+    margin-top: 30px;
+  }
+
+  :global(.swiper-wrapper) {
+    display: flex;
+    width: max-content;
+  }
+
+  :global(.swiper-slide) {
+    width: 280px !important; /* Or whatever width your Card component should be */
+    flex-shrink: 0;
+  }
+
+  :global(.swiper-scrollbar) {
+    bottom: 0 !important;
+  }
+
+  :global(
+      .swiper-horizontal > .swiper-scrollbar,
+      .swiper-scrollbar.swiper-scrollbar-horizontal
+    ) {
+    background-color: var(--black);
+    opacity: 1 !important;
+    height: 21px;
+    box-sizing: border-box;
+    border-top: 10px solid var(--kayogreen);
+    border-bottom: 10px solid var(--kayogreen);
+    padding-left: 20px;
+    width: calc(100% - 2 * var(--swiper-scrollbar-sides-offset, 2.5%));
+  }
+
+  :global(.swiper-scrollbar-drag) {
+    background: var(--darkgrey);
+    top: -5px;
+    height: 10px;
+    border-radius: 0;
+    &:after,
+    &:before {
+      content: "";
+      width: 30px;
+      height: 100%;
+      right: -20px;
+      position: absolute;
+      top: 0;
+      background-color: var(--black);
+      transform: skew(-40deg) !important;
+    }
+
+    &::before {
+      left: -20px;
+    }
+  }
   section {
     background-color: var(--kayogreen);
   }
@@ -142,6 +238,12 @@ const collegues: CardProps[] = [
     }
     .title {
       padding: 0 42px 45px;
+    }
+    :global(.swiper-slide) {
+      width: 400px !important; /* Larger width for desktop if needed */
+      &:last-child {
+        margin-right: 0 !important;
+      }
     }
   }
 </style>

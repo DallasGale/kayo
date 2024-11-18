@@ -22,6 +22,11 @@ const { title } = Astro.props;
 </html>
 
 <style lang="scss" is:global>
+  // Import Swiper styles
+  @import "swiper/css";
+  @import "swiper/css/scrollbar";
+  @import "swiper/css/pagination";
+  @import "swiper/css/free-mode";
   @import "../fonts.css";
   @import "../breakpoints.scss";
 
@@ -88,6 +93,13 @@ const { title } = Astro.props;
 
   .display-4 {
     font-size: 64px;
+    line-height: 79%;
+    font-weight: normal;
+    font-family: "KnockoutFullFeatherweight", sans-serif;
+    text-transform: uppercase;
+  }
+  .display-5 {
+    font-size: 32px;
     line-height: 79%;
     font-weight: normal;
     font-family: "KnockoutFullFeatherweight", sans-serif;
@@ -174,6 +186,9 @@ const { title } = Astro.props;
     .btn {
       height: 72px;
       padding: 0 50px;
+    }
+    .display-5 {
+      font-size: 36px;
     }
   }
 
