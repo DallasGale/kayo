@@ -1,10 +1,7 @@
 import Question from "../question";
 import styles from "../styles.module.scss";
-import modalStyles from "../../modals/styles.module.scss";
-import btnStyles from "../../button/styles.module.scss";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
 import { useState } from "react";
+import FaqModal from "../../modals/faq";
 
 type Question = {
   question: string;
@@ -40,12 +37,12 @@ const SuperSaturday = () => {
           })}
         </div>
 
-        <Modal open={open} onClose={onCloseModal} center>
-          <div className={modalStyles.modalContent}>
-            <h2 className={modalStyles.modalTitle}>{modalContent.question}</h2>
-            <p className={modalStyles.modalParagraph}>{modalContent.answer}</p>
-          </div>
-        </Modal>
+        <FaqModal
+          open={open}
+          onCloseModal={onCloseModal}
+          question={modalContent.question}
+          answer={modalContent.answer}
+        />
       </div>
     </section>
   );
@@ -56,21 +53,21 @@ const questions = [
   {
     question: "What is Super Saturday LIVE?",
     answer:
-      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up.",
+      "Super Saturday LIVE offers LIVE, back-to-back AFL coverage on Fox Footy (available on Foxtel and Kayo Sports), showcasing multiple games without ad breaks during play. This offering provides uninterrupted viewing <strong>nationally for the first eight rounds</strong> of the season, ensuring you don’t miss a moment of the action. Fox Footy on Kayo Sports and Foxtel will be the only place to watch the footy LIVE and in 4K on a Saturday: <ul class='default-ul'><li class='default-li'>For the entire home and away season in VIC, TAS and NT</li><li class='default-li'>For the first 10 rounds in NSW, QLD and ACT</li><li class='default-li'>For the first 8 rounds in WA and SA</li></ul>",
   },
   {
     question: "How can I watch Super Saturday LIVE?",
     answer:
-      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up.",
+      "You can watch our Super Saturday coverage on Fox Footy (available on Foxtel and Kayo Sports), giving you flexibility to watch on TV or stream on-the-go. Both platforms deliver LIVE coverage, with high-definition visuals and expert commentary.",
   },
   {
     question: "What makes Fox Footy’s coverage unique?",
     answer:
-      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up.",
+      "Fox Footy on Foxtel and Kayo Sports will be the only place to watch the footy LIVE and in 4K on a Saturday. With dedicated commentary teams, and LIVE insights, you get a premium AFL viewing experience.",
   },
   {
     question: "Will every game be shown in full on Super Saturday LIVE?",
     answer:
-      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up.",
+      "Yes, Super Saturday LIVE features complete live broadcasts of every game with no ad breaks during play, ensuring you enjoy every key moment from start to finish. Click here to see the full fixture:  <a href='https://www.afl.com.au/broadcast-guide-premiership'>https://www.afl.com.au/broadcast-guide-premiership</a>",
   },
 ];

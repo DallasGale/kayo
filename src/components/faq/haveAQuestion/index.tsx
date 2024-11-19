@@ -1,9 +1,8 @@
 import Question from "../question";
 import styles from "../styles.module.scss";
-import modalStyles from "../../modals/styles.module.scss";
 import btnStyles from "../../button/styles.module.scss";
-import { Modal } from "react-responsive-modal";
 import { useState } from "react";
+import FaqModal from "../../modals/faq";
 
 type Question = {
   question: string;
@@ -39,18 +38,13 @@ const HaveAQuestion = () => {
           })}
         </div>
 
-        <Modal open={open} onClose={onCloseModal} center>
-          <div className={modalStyles.modalContent}>
-            <h2 className={modalStyles.modalTitle}>{modalContent.question}</h2>
-            {/* <p> */}
-            <p
-              className={modalStyles.modalParagraph}
-              dangerouslySetInnerHTML={{ __html: modalContent.answer }}
-            />
-          </div>
-        </Modal>
-        {/* Modal */}
-        {/* Answer */}
+        <FaqModal
+          open={open}
+          onCloseModal={onCloseModal}
+          question={modalContent.question}
+          answer={modalContent.answer}
+        />
+
         <div className={styles.seeMore}>
           <button className={`${btnStyles.btn} ${btnStyles.secondaryBtn}`}>
             <span>See More</span>
