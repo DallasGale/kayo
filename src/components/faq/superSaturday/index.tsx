@@ -68,6 +68,6 @@ const questions = [
   {
     question: "Will every game be shown in full on Super Saturday LIVE?",
     answer:
-      "Yes, Super Saturday LIVE features complete live broadcasts of every game with no ad breaks during play, ensuring you enjoy every key moment from start to finish. Click here to see the full fixture:  <a href='https://www.afl.com.au/broadcast-guide-premiership'>https://www.afl.com.au/broadcast-guide-premiership</a>",
+      "Yes, Super Saturday LIVE features complete live broadcasts of every game with no ad breaks during play, ensuring you enjoy every key moment from start to finish. Click here to see the full fixture:  <a href='https://www.afl.com.au/broadcast-guide-premiership' target='_blank' rel='noopener noreferrer'>https://www.afl.com.au/broadcast-guide-premiership</a>",
   },
 ];
