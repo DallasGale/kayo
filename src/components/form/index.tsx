@@ -505,7 +505,7 @@ const Form = () => {
                     className={styles.textArea}
                     id="message"
                     name="message"
-                    placeholder="In 100 words of less"
+                    placeholder="In 100 words or less"
                     value={formData.message}
                     onChange={(e) => handleChange(e)}
                   />
