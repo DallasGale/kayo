@@ -632,7 +632,16 @@ const Form = () => {
               </p>
 
               <div className={styles.legal}>
-                <p className="small-print color-white">PRIVACY POLICY</p>
+                <p className="small-print color-white">
+                  <a
+                    className={`small-print ${styles.smallPrint}`}
+                    style={{ color: "#fff" }}
+                    href="https://www.foxtel.com.au/about/privacy/comp-privacy-notice.html"
+                    target="_blank"
+                  >
+                    PRIVACY POLICY
+                  </a>
+                </p>
                 <p className="small-print color-white">
                   <button
                     className="text-button small-print color-white"

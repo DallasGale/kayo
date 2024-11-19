@@ -1,6 +1,7 @@
 import TermsModal from "../modals/terms";
 import { useState } from "react";
 import styles from "./styles.module.scss";
+
 const LegalLinks = () => {
   // Terms Modal
   const [open, setOpen] = useState(false);
@@ -13,7 +14,16 @@ const LegalLinks = () => {
   return (
     <>
       <div className={styles.legal}>
-        <p className={`small-print ${styles.smallPrint}`}>Privacy Policy</p>
+        <p className={`small-print ${styles.smallPrint}`}>
+          <a
+            className={`small-print ${styles.smallPrint}`}
+            style={{ color: "#000" }}
+            href="https://www.foxtel.com.au/about/privacy/comp-privacy-notice.html"
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+        </p>
         <button
           className="text-button small-print color-black"
           onClick={(e) => handleOpenModal(e)}
