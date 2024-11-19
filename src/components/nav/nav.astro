@@ -13,7 +13,7 @@
     const nav = document.querySelector(".nav-wrapper");
     const navFollower = document.getElementById("nav-follower");
     const whatYouWinAnchor = document.getElementById("what-you-win-anchor");
-    const howItWorksAnchor = document.getElementById("how-it-works-anchor");
+    const howItWorksAnchor = document.getElementById("how-to-enter-anchor");
     const haveAQuestionAnchor = document.getElementById(
       "have-a-question-anchor",
     );
@@ -48,7 +48,7 @@
               navFollower.style.transform = "translateX(-75%) skew(-25deg)";
               nav?.classList.remove("hidden");
             }
-            if (id === "how-it-works") {
+            if (id === "how-to-enter") {
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.remove("active");
@@ -112,8 +112,8 @@
       <li id="what-you-win-anchor">
         <a href="#what-you-win" class="anchor">What you win</a>
       </li>
-      <li id="how-it-works-anchor">
-        <a href="#how-it-works" href="/about" class="anchor">How it works</a>
+      <li id="how-to-enter-anchor">
+        <a href="#how-to-enter" href="/about" class="anchor">How to enter</a>
       </li>
       <li id="have-a-question-anchor">
         <a href="#have-a-question" href="/blog" class="anchor"
