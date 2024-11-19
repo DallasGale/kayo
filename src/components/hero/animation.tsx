@@ -3,8 +3,7 @@ import styles from "./styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
 import HeroImg from "../../assets/hero.svg";
 import GoalPosts from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
-import { Modal } from "react-responsive-modal";
-import modalStyles from "../modal/styles.module.scss";
+import TermsModal from "../modals/terms";
 
 const Animation = () => {
   // Terms Modal
@@ -92,12 +91,7 @@ const Animation = () => {
             <img src={GoalPosts.src} loading="eager" decoding="async" />
           </picture>
         </div>
-        <Modal open={open} onClose={onCloseModal} center>
-          <div className={modalStyles.modalContent}>
-            <h2 className={modalStyles.modalTitle}>Terms and conditions</h2>
-            <p className={modalStyles.modalParagraph}></p>
-          </div>
-        </Modal>
+        <TermsModal open={open} onCloseModal={onCloseModal} />
       </div>
     </>
   );

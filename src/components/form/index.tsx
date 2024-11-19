@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { Modal } from "react-responsive-modal";
 
-import { validatePhone } from "../phValidate";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import HeroImg from "../../assets/hero.svg";
 import Bg from "../../assets/footballs.png";
 
 import { db } from "../../firebase/client";
 import styles from "./styles.module.scss";
-import modalStyles from "../modal/styles.module.scss";
 import btnStyles from "../button/styles.module.scss";
 import Tick from "../../assets/tick.svg";
 
 import Cheer from "../../assets/sounds/cheer.mp3";
-import FoxLogo from "../../assets/fox-logo-white.png";
+import FoxLogo from "../../assets/fox-logo-white.svg";
+import { isEmailValid, isPhoneValid } from "./helpers";
+import TermsModal from "../modals/terms";
 
 interface FormData {
   name: string;
@@ -87,12 +86,10 @@ const Form = () => {
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
-
     setValidating(true);
     setVideoErrorMessage(""); // Clear any previous error message
 
     try {
-      console.log(formData.videoUrl);
       // Fetch embed HTML from Iframely API
       const response = await fetch(
         `https://iframe.ly/api/iframely?url=${encodeURIComponent(
@@ -100,7 +97,6 @@ const Form = () => {
         )}&omit_script=1&${isDev ? `key=${key}` : `api_key=${apiKey}`}`,
       );
       const data = await response.json();
-      console.log({ data });
 
       if (data.html) {
         setValidating(false);
@@ -115,6 +111,7 @@ const Form = () => {
       setValidating(false);
     }
   };
+
   const [validVideo, setValidVideo] = useState(false);
   useEffect(() => {
     if (embedHtml?.meta) {
@@ -127,12 +124,8 @@ const Form = () => {
   // ----------------------------------------------------------------
   // Form Validation
   // ----------------------------------------------------------------
-
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-
-    // Clear any existing errors first
-    setErrors({});
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
@@ -140,22 +133,22 @@ const Form = () => {
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (!isEmailValid(formData.email)) {
       newErrors.email = "Email is invalid";
     }
 
     if (!formData.mobile.trim()) {
       newErrors.mobile = "Mobile number is required";
-    } else if (!validatePhone(formData.mobile)) {
+    } else if (!isPhoneValid(formData.mobile)) {
       newErrors.mobile = "Please enter a valid mobile number";
-    }
-
-    if (videoErrorMessage === "privateVideo") {
-      newErrors.videoUrl = "A public Video URL is required";
     }
 
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
+    }
+
+    if (videoErrorMessage === "privateVideo") {
+      newErrors.videoUrl = "A public Video URL is required";
     }
 
     setErrors(newErrors);
@@ -188,39 +181,7 @@ const Form = () => {
 
   // Add this at the top of your component where other state declarations are
   // const [formErrors, setFormErrors] = useState(false);
-  const [disabledSubmit, setDissabledSetSubmit] = useState(true);
-  useEffect(() => {
-    // Check if any required fields are empty
-    const hasEmptyFields =
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.mobile.trim() ||
-      !formData.videoUrl.trim() ||
-      !formData.message.trim() ||
-      !formData.readTerms ||
-      !formData.over18 ||
-      !formData.resident;
-
-    console.log(formData.readTerms, { hasEmptyFields });
-
-    // Check if there are any validation errors
-    const hasValidationErrors = Object.keys(errors).length > 0;
-
-    // Check if video is validated (only if videoUrl is not empty)
-    const videoNotValidated =
-      !!formData.videoUrl.trim() && !Boolean(embedHtml?.html);
-
-    // Disable submit if any of these conditions are true
-    setDissabledSetSubmit(
-      isOverLimit || hasEmptyFields || hasValidationErrors || videoNotValidated,
-    );
-    console.log({
-      isOverLimit,
-      hasEmptyFields,
-      hasValidationErrors,
-      videoNotValidated,
-    });
-  }, [isOverLimit, errors, formData, embedHtml?.html]);
+  const [disabledSubmit, setDissabledSetSubmit] = useState<boolean>(true);
 
   const handleRemoveUrl = () => {
     setEmbedHtml(null);
@@ -243,13 +204,32 @@ const Form = () => {
       [name]: value,
     }));
 
-    // Clear the specific error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
+    // Remove the immediate error clearing
+    const newErrors = { ...errors };
+    delete newErrors[name as keyof FormErrors];
+
+    // Only set errors if the field has a value and is invalid
+    if (value.trim()) {
+      switch (name) {
+        case "email":
+          if (!isEmailValid(value)) {
+            newErrors.email = "Email is invalid";
+          }
+          break;
+        case "mobile":
+          if (!isPhoneValid(value)) {
+            newErrors.mobile = "Please enter a valid mobile number";
+          }
+          break;
+        case "message":
+          if (value.trim().length === 0) {
+            newErrors.message = "Please enter a message";
+          }
+          break;
+      }
     }
+
+    setErrors(newErrors);
   };
 
   // Update handleTermsChange to clear errors
@@ -260,13 +240,10 @@ const Form = () => {
       [name]: checked,
     }));
 
-    // Clear the specific error when checkbox is changed
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
-    }
+    // Simply clear any errors for this checkbox
+    const newErrors = { ...errors };
+    delete newErrors[name as keyof FormErrors];
+    setErrors(newErrors);
   };
 
   // ----------------------------------------------------------------
@@ -327,12 +304,46 @@ const Form = () => {
       !formData.over18 ||
       !formData.resident;
 
+    // Only check for validation errors on fields that have values
     const hasValidationErrors = Object.keys(errors).length > 0;
     const videoNotValidated = !!formData.videoUrl.trim() && !validVideo;
 
-    setDissabledSetSubmit(
-      isOverLimit || hasEmptyFields || hasValidationErrors || videoNotValidated,
-    );
+    const emailHasValue = formData.email.trim().length > 0;
+    const phoneHasValue = formData.mobile.trim().length > 0;
+    // Check if email and phone are valid when they have values
+    const emailValid = emailHasValue ? isEmailValid(formData.email) : false;
+    const phoneValid = phoneHasValue ? isPhoneValid(formData.mobile) : false;
+
+    const shouldDisableSubmit =
+      isOverLimit ||
+      hasEmptyFields ||
+      hasValidationErrors ||
+      videoNotValidated ||
+      (emailHasValue && !emailValid) ||
+      (phoneHasValue && !phoneValid);
+
+    console.log("Submit Button State:", {
+      shouldDisableSubmit,
+      reasons: {
+        isOverLimit,
+        hasEmptyFields,
+        hasValidationErrors,
+        videoNotValidated,
+        emailValid,
+        phoneValid,
+        currentErrors: errors,
+      },
+      formData: {
+        email: formData.email,
+        mobile: formData.mobile,
+        hasValues: {
+          email: !!formData.email.trim(),
+          mobile: !!formData.mobile.trim(),
+        },
+      },
+    });
+
+    setDissabledSetSubmit(shouldDisableSubmit);
   }, [formData, errors, isOverLimit, validVideo]);
 
   // When Submit is successful, play the cheer.mp3
@@ -399,20 +410,28 @@ const Form = () => {
                     type="email"
                     placeholder="Email"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                   />
-                  {errors.email && <p>{errors.email}</p>}
+                  <div>
+                    {errors.email && (
+                      <p>Please provide a valid email address</p>
+                    )}
+                  </div>
                   <input
                     className={styles.input}
                     id="mobile"
                     name="mobile"
                     type="phone"
                     value={formData.mobile}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     placeholder="Mobile No"
                   />
+                  <div>
+                    {errors.mobile && (
+                      <p>Please provide a valid AU phone number</p>
+                    )}
+                  </div>
                 </fieldset>
-                {errors.mobile && <p>{errors.mobile}</p>}
                 <fieldset className={styles.fieldset}>
                   <h3 className={styles.fieldHeading}>Your submission video</h3>
                   {validVideo && (
@@ -432,7 +451,7 @@ const Form = () => {
                       type="text"
                       placeholder="Link to your submission video"
                       value={formData.videoUrl}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e)}
                     />
                     <div>
                       {validVideo ? (
@@ -488,7 +507,7 @@ const Form = () => {
                     name="message"
                     placeholder="In 100 words of less"
                     value={formData.message}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                   />
                   <div
                     className={`${styles.limit}
@@ -512,6 +531,7 @@ const Form = () => {
 
                 <div className={styles.checkboxGroup}>
                   <input
+                    checked={formData.readTerms}
                     type="checkbox"
                     id="read"
                     name="readTerms"
@@ -533,6 +553,7 @@ const Form = () => {
                 </div>
                 <div className={styles.checkboxGroup}>
                   <input
+                    checked={formData.over18}
                     type="checkbox"
                     id="age"
                     name="over18"
@@ -545,6 +566,7 @@ const Form = () => {
                 </div>
                 <div className={styles.checkboxGroup}>
                   <input
+                    checked={formData.resident}
                     type="checkbox"
                     id="resident"
                     name="resident"
@@ -611,7 +633,14 @@ const Form = () => {
 
               <div className={styles.legal}>
                 <p className="small-print color-white">PRIVACY POLICY</p>
-                <p className="small-print color-white">TERMS AND CONDITIONS</p>
+                <p className="small-print color-white">
+                  <button
+                    className="text-button small-print color-white"
+                    onClick={(e) => handleOpenModal(e)}
+                  >
+                    TERMS AND CONDITIONS
+                  </button>
+                </p>
               </div>
             </div>
           </div>
@@ -621,13 +650,7 @@ const Form = () => {
         className={styles.bg}
         style={{ backgroundImage: `url(${Bg.src})` }}
       />
-
-      <Modal open={open} onClose={onCloseModal} center>
-        <div className={modalStyles.modalContent}>
-          <h2 className={modalStyles.modalTitle}>Terms and conditions</h2>
-          <p className={modalStyles.modalParagraph}></p>
-        </div>
-      </Modal>
+      <TermsModal open={open} onCloseModal={onCloseModal} />
     </section>
   );
 };

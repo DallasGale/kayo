@@ -1,10 +1,12 @@
 ---
 import KayoLogo from "../../assets/kayo-logo-mono.png";
-import FoxLogo from "../../assets/fox-logo.png";
-import TikTok from "../../assets/tiktok.svg";
-import Instagram from "../../assets/instagram.svg";
+import FoxLogo from "../../assets/fox-logo.svg";
 import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
 import Button from "../button/index.astro";
+import LegalLinks from "./legalLinks";
+
+import TikTok from "../../assets/tiktok.svg";
+import Instagram from "../../assets/instagram.svg";
 ---
 
 <footer id="footer">
@@ -27,13 +29,12 @@ import Button from "../button/index.astro";
       </div>
 
       <div class="links">
-        <div class="legal">
-          <p class="small-print">Privacy Policy</p>
-          <p class="small-print">Terms and conditions</p>
-        </div>
+        <LegalLinks client:load />
 
         <div class="social">
-          <p class="small-print"><img src={TikTok.src} alt="TikTok" /></p>
+          <p class="small-print">
+            <img src={TikTok.src} alt="TikTok" />
+          </p>
           <p class="small-print">
             <img src={Instagram.src} alt="Instagram3" />
           </p>
@@ -126,17 +127,6 @@ import Button from "../button/index.astro";
     height: 47px;
   }
 
-  .legal {
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    .small-print {
-      text-transform: uppercase;
-    }
-  }
-
   .social {
     display: flex;
     gap: 20px;
@@ -170,14 +160,6 @@ import Button from "../button/index.astro";
       background-position: center bottom -100px;
     }
 
-    .legal {
-      flex-direction: row;
-      width: 100%;
-      min-width: 300px;
-      justify-content: flex-end;
-      gap: 20px;
-      margin-bottom: 0;
-    }
     .logos {
       justify-content: flex-start;
       gap: 54px;
