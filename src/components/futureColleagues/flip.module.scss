@@ -1,5 +1,6 @@
+@import "../../breakpoints.scss";
 .card {
-  width: 300px;
+  width: 68vw;
   height: 300px;
   position: relative;
   perspective: 1000px;
@@ -17,8 +18,10 @@
   transition: transform 0.7s;
   transform-style: preserve-3d;
 }
-.card:hover .card-inner {
-  transform: rotateY(180deg);
+.card .flipped {
+  .card-inner {
+    transform: rotateY(180deg);
+  }
 }
 .cardFront,
 .cardBack {
@@ -50,11 +53,13 @@
   }
 }
 
-.card:hover .cardFront::before,
-.card:hover .cardFront::after,
-.card:hover .cardBack::before,
-.card:hover .cardBack::after {
-  transform: skewX(10deg);
+.card.flipped {
+  .cardFront::before,
+  .cardFront::after,
+  .cardBack::before,
+  .cardBack::after {
+    transform: skewX(10deg);
+  }
 }
 
 .cardFront {
@@ -81,25 +86,29 @@
 }
 
 // When card hovers I want the front card to flip on the X axis to reveal the back card
-.card:hover .cardFront {
-  transform: rotateY(180deg);
+.card.flipped {
+  .cardFront {
+    transform: rotateY(180deg);
 
-  &:before,
-  &:after {
-    transform: skewX(10deg);
+    &:before,
+    &:after {
+      transform: skewX(10deg);
+    }
   }
 }
 
-.card:hover .cardBack {
-  transform: rotateY(0deg);
+.card.flipped {
+  .cardBack {
+    transform: rotateY(0deg);
 
-  &:after {
-    box-shadow: 7px 8px 0px 0 rgba(48, 186, 95, 1);
-    transform: skewX(10deg);
-  }
-  &:before,
-  &:after {
-    transform: skewX(10deg);
+    &:after {
+      box-shadow: 7px 8px 0px 0 rgba(48, 186, 95, 1);
+      transform: skewX(10deg);
+    }
+    &:before,
+    &:after {
+      transform: skewX(10deg);
+    }
   }
 }
 
@@ -117,4 +126,10 @@
   flex-direction: column;
   gap: 16px;
   margin-left: 20px;
+}
+
+@media screen and (min-width: $breakpoint-mobile) {
+  .card {
+    width: 300px;
+  }
 }

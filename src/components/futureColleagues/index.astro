@@ -91,14 +91,14 @@ const collegues: CardProps[] = [
   function initSwiper() {
     const swiper = new Swiper(".swiper", {
       modules: [Virtual, Navigation, Pagination, Scrollbar],
-      slidesPerView: "auto",
+      slidesPerView: 1,
       spaceBetween: 20,
       scrollbar: {
         el: ".swiper-scrollbar",
         hide: true,
         draggable: true,
         dragSize: 80,
-        snapOnRelease: false,
+        snapOnRelease: true,
         enabled: true,
       },
       speed: 250,
@@ -109,6 +109,11 @@ const collegues: CardProps[] = [
       // Remove virtual slides since we're rendering them directly
       observer: true,
       observeParents: true,
+      breakpoints: {
+        768: {
+          slidesPerView: "auto",
+        },
+      },
     });
   }
 
@@ -154,7 +159,7 @@ const collegues: CardProps[] = [
 
   :global(.swiper-slide) {
     padding: 40px 0;
-    width: 355px !important; /* Larger width for desktop if needed */
+    width: 100% !important; /* Larger width for desktop if needed */
     // width: 280px !important; /* Or whatever width your Card component should be */
     flex-shrink: 0;
   }
@@ -174,7 +179,7 @@ const collegues: CardProps[] = [
     border-top: 10px solid var(--kayogreen);
     border-bottom: 10px solid var(--kayogreen);
     padding-left: 20px;
-    width: calc(100% - 2 * var(--swiper-scrollbar-sides-offset, 2.5%));
+    width: calc(100% - 2 * var(--swiper-scrollbar-sides-offset, 1%));
   }
 
   :global(.swiper-scrollbar-drag) {
