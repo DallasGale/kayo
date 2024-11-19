@@ -1,5 +1,5 @@
 ---
-import { type CardProps } from "./card";
+import { type CardProps } from "./flipCard";
 import FlipCard from "./flipCard";
 import Brown from "../../assets/collegues/Brown.jpg";
 import Buckley from "../../assets/collegues/Buckley.jpg";
@@ -15,6 +15,13 @@ const collegues: CardProps[] = [
     role: "Fox Footy Export",
     description:
       "Recently elevated to Legend status in the AFL Hall of Fame, Jason Dunstall’s on-field career speaks for itself. As an expert, Dunstall now adds his analysis on game day and provides plenty of laughs alongside other larrikins on Bounce.",
+  },
+  {
+    avatar: Underwood.src,
+    name: "Kelli Underwood",
+    role: "Fox Footy Commentator",
+    description:
+      "A trailblazer in the commentary box, Kelli Underwood was the first female to call an AFL match on television and has since gone on to carve a respected career at Fox Footy and other media outlets.",
   },
   {
     avatar: Lyon.src,
@@ -36,13 +43,6 @@ const collegues: CardProps[] = [
     role: "Fox Footy Expert",
     description:
       "Universally loved across the competition, Eddie Betts now lights up the coverage for Fox Footy after retiring in 2021. Cheeky, insightful and someone who wears his heart on his sleeve, Betts has cemented himself as a fan favourite.",
-  },
-  {
-    avatar: Underwood.src,
-    name: "Kelli Underwood",
-    role: "Fox Footy Commentator",
-    description:
-      "A trailblazer in the commentary box, Kelli Underwood was the first female to call an AFL match on television and has since gone on to carve a respected career at Fox Footy and other media outlets.",
   },
   {
     avatar: Brown.src,
@@ -98,10 +98,10 @@ const collegues: CardProps[] = [
         hide: true,
         draggable: true,
         dragSize: 80,
-        // snapOnRelease: true,
+        snapOnRelease: false,
         enabled: true,
       },
-      speed: 800,
+      speed: 250,
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
@@ -118,6 +118,20 @@ const collegues: CardProps[] = [
   } else {
     initSwiper();
   }
+</script>
+
+<script>
+  const slides: NodeListOf<HTMLDivElement> =
+    document.querySelectorAll(".swiper-slide");
+  // on mouseover of the collection of slides add zindex
+  slides.forEach((slide) => {
+    slide.addEventListener("mouseover", function () {
+      slide.style.zIndex = "100";
+    });
+    slide.addEventListener("mouseout", function () {
+      slide.style.zIndex = "0";
+    });
+  });
 </script>
 <style lang="scss">
   @import "../../breakpoints.scss";
@@ -140,7 +154,7 @@ const collegues: CardProps[] = [
 
   :global(.swiper-slide) {
     padding: 40px 0;
-    width: 400px !important; /* Larger width for desktop if needed */
+    width: 355px !important; /* Larger width for desktop if needed */
     // width: 280px !important; /* Or whatever width your Card component should be */
     flex-shrink: 0;
   }
@@ -202,6 +216,11 @@ const collegues: CardProps[] = [
     width: 100%;
     padding-top: 64px;
   }
+  @media screen and (min-width: $breakpoint-mobile) {
+    :global(.swiper-slide) {
+      width: 425px !important; /* Larger width for desktop if needed */
+    }
+  }
 
   @media screen and (min-width: $breakpoint-desktop) {
     .title {
@@ -212,6 +231,7 @@ const collegues: CardProps[] = [
       padding-top: 118px;
     }
     :global(.swiper-slide) {
+      width: 365px !important; /* Larger width for desktop if needed */
       &:last-child {
         margin-right: 0 !important;
       }

@@ -46,7 +46,7 @@
     left: -30px;
   }
   &:after {
-    right: -33px;
+    right: -32px;
   }
 }
 
@@ -65,7 +65,7 @@
   }
 }
 .cardBack {
-  box-shadow: var(--boxshadow);
+  box-shadow: 7px 8px 0px 0 rgba(48, 186, 95, 1);
   background-color: white;
   transform: rotateY(-180deg);
   p {
@@ -92,8 +92,9 @@
 
 .card:hover .cardBack {
   transform: rotateY(0deg);
+
   &:after {
-    box-shadow: var(--boxshadow);
+    box-shadow: 7px 8px 0px 0 rgba(48, 186, 95, 1);
     transform: skewX(10deg);
   }
   &:before,
