@@ -85,7 +85,7 @@ const questions = [
   {
     question: "What is the prize?",
     answer:
-      "<ul class='default-ul'><li class='default-li'>A paid on-air role for at least eight weeks of the season on Fox Footy’s Super Saturday LIVE broadcast - available on Kayo Sports and Foxtel.</li><li class='default-li'>Mentorship from Fox Footy’s industry-leading experts.</li><li class='default-li'>The chance to kickstart a long-term career in sports broadcasting.</li></ul>Check out the Terms and Conditions for more details and enter now to make 2025 your breakout year!",
+      "<ul class='default-ul'><li class='default-li'>A paid on-air role for at least 8 rounds of the season on Fox Footy’s Super Saturday LIVE broadcast - available on Kayo Sports and Foxtel.</li><li class='default-li'>Mentorship from Fox Footy’s industry-leading experts.</li><li class='default-li'>The chance to kickstart a long-term career in sports broadcasting.</li></ul>Check out the Terms and Conditions for more details and enter now to make 2025 your breakout year!",
   },
   {
     question: "How much will I get paid?",

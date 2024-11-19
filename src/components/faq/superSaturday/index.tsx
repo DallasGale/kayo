@@ -53,7 +53,7 @@ const questions = [
   {
     question: "What is Super Saturday LIVE?",
     answer:
-      "Super Saturday LIVE offers LIVE, back-to-back AFL coverage on Fox Footy (available on Foxtel and Kayo Sports), showcasing multiple games without ad breaks during play. This offering provides uninterrupted viewing <strong>nationally for the first eight rounds</strong> of the season, ensuring you don’t miss a moment of the action. Fox Footy on Kayo Sports and Foxtel will be the only place to watch the footy LIVE and in 4K on a Saturday: <ul class='default-ul'><li class='default-li'>For the entire home and away season in VIC, TAS and NT</li><li class='default-li'>For the first 10 rounds in NSW, QLD and ACT</li><li class='default-li'>For the first 8 rounds in WA and SA</li></ul>",
+      "Super Saturday LIVE offers LIVE, back-to-back AFL coverage on Fox Footy (available on Foxtel and Kayo Sports), showcasing multiple games without ad breaks during play. This offering provides uninterrupted viewing <strong>nationally for the first 8 rounds</strong> of the season, ensuring you don’t miss a moment of the action. Fox Footy on Kayo Sports and Foxtel will be the only place to watch the footy LIVE and in 4K on a Saturday: <ul class='default-ul'><li class='default-li'>For the entire home and away season in VIC, TAS and NT</li><li class='default-li'>For the first 10 rounds in NSW, QLD and ACT</li><li class='default-li'>For the first 8 rounds in WA and SA</li></ul>",
   },
   {
     question: "How can I watch Super Saturday LIVE?",
