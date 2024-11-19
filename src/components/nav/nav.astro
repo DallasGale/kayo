@@ -17,6 +17,9 @@
     const haveAQuestionAnchor = document.getElementById(
       "have-a-question-anchor",
     );
+    const superSaturdayLiveAnchor = document.getElementById(
+      "super-saturday-live-anchor",
+    );
     // let lastVisibleSection: string | null = null;
 
     // Callback function to handle intersections
@@ -34,12 +37,14 @@
               whatYouWinAnchor?.classList.remove("active");
               howItWorksAnchor?.classList.remove("active");
               haveAQuestionAnchor?.classList.remove("active");
+              superSaturdayLiveAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-200%)";
               nav?.classList.remove("hidden");
             }
             if (id === "what-you-win") {
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.remove("active");
+              superSaturdayLiveAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-75%) skew(-25deg)";
               nav?.classList.remove("hidden");
             }
@@ -47,6 +52,7 @@
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.remove("active");
+              superSaturdayLiveAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-50%) skew(-25deg)";
               nav?.classList.remove("hidden");
             }
@@ -54,14 +60,23 @@
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.add("active");
+              superSaturdayLiveAnchor?.classList.remove("active");
               navFollower.style.transform = "translateX(-25%) skew(-25deg)";
               nav?.classList.remove("hidden");
             }
-
-            if (id === "footer") {
-              console.log("footer");
-              nav?.classList.add("hidden");
+            if (id === "super-saturday-live") {
+              superSaturdayLiveAnchor?.classList.add("active");
+              whatYouWinAnchor?.classList.add("active");
+              howItWorksAnchor?.classList.add("active");
+              haveAQuestionAnchor?.classList.add("active");
+              navFollower.style.transform = "translateX(0%) skew(-25deg)";
+              nav?.classList.remove("hidden");
             }
+
+            // if (id === "footer") {
+            //   console.log("footer");
+            //   nav?.classList.add("hidden");
+            // }
           }
 
           // Uncomment the next line if you want to stop observing after first intersection
