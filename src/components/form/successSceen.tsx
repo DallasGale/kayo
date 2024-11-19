@@ -11,7 +11,7 @@ const SuccessScreen = ({ handleOpenModal }: Props) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        "https://thekayocallup.kayosports.com.au/",
+        "https://thekayocallup.kayosports.com.au/submit",
       );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
