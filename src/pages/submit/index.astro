@@ -34,6 +34,19 @@ import Button from "../../components/button/index.astro";
     }
   });
 </script>
+
+<script>
+  import { analyticsUtils } from "../../firebase/client";
+  // Log page view on initial load
+  document.addEventListener("DOMContentLoaded", () => {
+    analyticsUtils.logPageView(window.location.pathname, document.title);
+  });
+
+  // Log page view on client-side navigation (if using View Transitions or client routing)
+  document.addEventListener("astro:page-load", () => {
+    analyticsUtils.logPageView(window.location.pathname, document.title);
+  });
+</script>
 <style>
   header {
     box-sizing: border-box;

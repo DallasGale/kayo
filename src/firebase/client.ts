@@ -10,8 +10,14 @@ declare global {
   interface ImportMeta extends ImportMetaEnv {}
 }
 
+// Analytics Event Types
+type EventParams = {
+  [key: string]: string | number | boolean;
+};
+
 import { initializeApp } from "firebase/app";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { getAnalytics, logEvent, type Analytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
@@ -32,15 +38,44 @@ export const firebaseConfig = {
   appId: import.meta.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-console.log(
-  " import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID",
-  import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-);
-
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+// Initialize Analytics with null check for SSR
+let analytics: Analytics | null = null;
+if (typeof window !== "undefined") {
+  analytics = getAnalytics(app);
+}
+
+export const analyticsUtils = {
+  // Log a custom event
+  logCustomEvent: (eventName: string, eventParams?: EventParams) => {
+    if (analytics && typeof window !== "undefined") {
+      logEvent(analytics, eventName, eventParams);
+    }
+  },
+
+  // Log page view
+  logPageView: (pagePath: string, pageTitle: string) => {
+    if (analytics && typeof window !== "undefined") {
+      logEvent(analytics, "page_view", {
+        page_path: pagePath,
+        page_title: pageTitle,
+      });
+    }
+  },
+
+  // Log user sign in
+  logUserSignIn: (method: string) => {
+    if (analytics && typeof window !== "undefined") {
+      logEvent(analytics, "login", {
+        method: method,
+      });
+    }
+  },
+};
 
 export const signInWithGoogle = async () => {
   try {
