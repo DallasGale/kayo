@@ -5,9 +5,10 @@ export interface CardProps {
   name: string;
   role: string;
   avatar: string | null;
+  description: string;
 }
 
-const Card = ({ name, role, avatar }: CardProps) => {
+const Card = ({ name, role, avatar, description }: CardProps) => {
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.card}>
@@ -29,12 +30,7 @@ const Card = ({ name, role, avatar }: CardProps) => {
             </picture> */}
 
             <div className={styles.cardBack}>
-              <p>
-                Recently elevated to Legend status in the AFL Hall of Fame,
-                Jason Dunstall’s on-field career speaks for itself. As an
-                expert, Dunstall now adds his analysis on game day and provides
-                plenty of laughs alongside other larrikins on Bounce.
-              </p>
+              <p>{description}</p>
             </div>
           </div>
         </div>

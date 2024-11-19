@@ -2,15 +2,10 @@
 import styles from "./styles.module.scss";
 import Card, { type CardProps } from "./card";
 
-// import TalLoughnan from "../../assets/TAL_Loughnan.png";
-// import TalJones from "../../assets/TAL_Jones.png";
-
 import Brown from "../../assets/collegues/Brown.jpg";
 import Buckley from "../../assets/collegues/Buckley.jpg";
 import Eddie from "../../assets/collegues/eddie.jpg";
-import Jones from "../../assets/collegues/Jones.jpg";
-import Loughnan from "../../assets/collegues/Loughnan.jpg";
-import Riewoldt from "../../assets/collegues/Riewoldt.jpg";
+import Dunstall from "../../assets/collegues/jason.jpg";
 import Underwood from "../../assets/collegues/Underwood.jpg";
 import Lyon from "../../assets/collegues/Lyon.jpg";
 
@@ -18,34 +13,46 @@ import Slider from "./slider";
 
 const collegues: CardProps[] = [
   {
-    avatar: Jones.src,
-    name: "Sarah Jones",
-    role: "Fox Footy Host",
+    avatar: Dunstall.src,
+    name: "Jason Dunstall",
+    role: "Fox Footy Export",
+    description:
+      "Recently elevated to Legend status in the AFL Hall of Fame, Jason Dunstall’s on-field career speaks for itself. As an expert, Dunstall now adds his analysis on game day and provides plenty of laughs alongside other larrikins on Bounce.",
   },
   {
     avatar: Lyon.src,
     name: "Garry Lyon",
     role: "Fox Footy Expert",
+    description:
+      "Melbourne Demons great Garry Lyon is a staple on Fox Footy, offering insightful commentary on match day while also tackling the games biggest issues On The Couch. Lyon’s broadcasting career now spans more than three decades.",
   },
   {
     avatar: Buckley.src,
-    name: "John Doe",
+    name: "Nathan Buckly",
     role: "Fox Footy Expert",
+    description:
+      "A natural-born leader, Nathan Buckley’s deep understanding of Australian Rules Football has allowed him to transition seamlessly from player, to coach, to expert analyst while commanding respect and attention every step of the way.",
   },
   {
     avatar: Eddie.src,
     name: "Eddie Betts",
     role: "Fox Footy Expert",
+    description:
+      "Universally loved across the competition, Eddie Betts now lights up the coverage for Fox Footy after retiring in 2021. Cheeky, insightful and someone who wears his heart on his sleeve, Betts has cemented himself as a fan favourite.",
   },
   {
     avatar: Underwood.src,
     name: "Kelli Underwood",
     role: "Fox Footy Commentator",
+    description:
+      "A trailblazer in the commentary box, Kelli Underwood was the first female to call an AFL match on television and has since gone on to carve a respected career at Fox Footy and other media outlets.",
   },
   {
     avatar: Brown.src,
     name: "Jonathan Brown",
     role: "Fox Footy Expert",
+    description:
+      "It’s hard to find a more versatile on-air personality than three-time Premiership player, Jonathan Brown who commands respect when behind the mic. A jack of all trades, Brown can offer serious expertise while also finding humour in the nuances of the game.",
   },
 ];
 ---
