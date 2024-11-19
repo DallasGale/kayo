@@ -70,6 +70,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   overflow: visible;
+  margin-bottom: 50px;
 }
 .cardInner {
   width: 100%;
@@ -78,8 +79,42 @@
   width: 264px;
   display: block;
   transform: var(--skewDeg);
-  overflow: hidden;
   background-color: var(--darkgrey);
+  transition: var(--buttonTrans);
+  &:hover {
+    transition: var(--buttonTrans);
+    .cardBack {
+      opacity: 1;
+    }
+    .cardFront {
+      opacity: 0;
+    }
+  }
+}
+
+.cardAvatar {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  transform: translateX(-18px);
+  .image {
+    position: absolute;
+    transform: skew(10deg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+}
+
+.cardInnerFlipped {
+  transform: var(--skewDeg) translateX(95px) !important;
+  img,
+  picture {
+    opacity: 0 !important;
+    background-color: transparent !important;
+  }
 }
 
 .cardFront {
@@ -89,6 +124,7 @@
   width: 300px;
   height: 300px;
   object-fit: cover;
+  transition: var(--buttonTrans);
 }
 
 .avatar {
@@ -99,14 +135,24 @@
 }
 
 .cardBack {
-  transform: rotate("180deg") skew(10deg);
-  opacity: 1;
+  transition: var(--buttonTrans);
+  // transform: skew(10deg);
+  opacity: 0;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: white;
+
+  box-shadow: var(--boxshadow);
+  p {
+    transform: skew(10deg);
+    padding: 50px;
+  }
 }
 
 .fauxBar {
@@ -152,22 +198,15 @@
   .cardInner {
     width: 400px;
   }
-}
 
+  .cardAvatar {
+    transform: translateX(-40px);
+  }
+}
 @media screen and (min-width: $breakpoint-widescreen) {
   .progress {
     max-width: 1440px;
   }
-}
-
-.c {
-  position: absolute;
-  max-width: 500px;
-  max-height: 500px;
-  width: 350px;
-  height: 200px;
-  cursor: pointer;
-  will-change: transform, opacity;
 }
 
 .sliderWrapper {
