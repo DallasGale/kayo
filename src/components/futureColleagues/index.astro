@@ -159,7 +159,7 @@ const collegues: CardProps[] = [
 
   :global(.swiper-slide) {
     padding: 40px 0;
-    width: 100% !important; /* Larger width for desktop if needed */
+    width: 100vw !important; /* Larger width for desktop if needed */
     // width: 280px !important; /* Or whatever width your Card component should be */
     flex-shrink: 0;
   }
@@ -221,7 +221,7 @@ const collegues: CardProps[] = [
     width: 100%;
     padding-top: 64px;
   }
-  @media screen and (min-width: $breakpoint-mobile) {
+  @media screen and (min-width: $breakpoint-tablet) {
     :global(.swiper-slide) {
       width: 425px !important; /* Larger width for desktop if needed */
     }
