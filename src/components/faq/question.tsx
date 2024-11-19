@@ -8,7 +8,7 @@ const Question = ({ label, onClick }: QuestionProps) => {
   return (
     <button className={styles.question} onClick={onClick}>
       <div className={styles.content}>
-        <p className={styles.label}>{label}</p>
+        <p className={`${styles.label} color-black`}>{label}</p>
         <span className={styles.toggle}>+</span>
       </div>
     </button>
