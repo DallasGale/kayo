@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import HeroImg from "../../assets/hero.svg";
 import Bg from "../../assets/footballs.png";
@@ -74,7 +73,7 @@ const Form = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
-  >("idle");
+  >("success");
 
   // ----------------------------------------------------------------
   // Video Validation

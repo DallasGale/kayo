@@ -11,7 +11,7 @@ const SuccessScreen = ({ handleOpenModal }: Props) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(
-        "https://thekayocallup.kayosports.com.au/submit",
+        "https://thekayocallup.kayosports.com.au",
       );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -37,11 +37,11 @@ const SuccessScreen = ({ handleOpenModal }: Props) => {
         </button>
 
         <a
-          href="/"
+          href="/#have-a-question"
           className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn} ${btnStyles.greenBtn}`}
           type="submit"
         >
-          <span>Back to home</span>
+          <span>Have a question</span>
         </a>
       </div>
 
