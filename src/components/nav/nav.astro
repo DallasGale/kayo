@@ -1,5 +1,67 @@
 <script>
-  import type { CollectionEntry } from "astro:content";
+  // Add breakpoint constants
+  const BREAKPOINTS = {
+    TABLET: 768, // Matching $breakpoint-tablet
+  };
+
+  // Function to get transform values based on screen width
+  function getTransformValues(screenWidth: number) {
+    const isNarrowScreen = screenWidth < BREAKPOINTS.TABLET;
+
+    return {
+      hero: "-220%",
+      whatYouWin: !isNarrowScreen ? "-75%" : "-78%",
+      howToEnter: !isNarrowScreen ? "-50%" : "-55%",
+      haveAQuestion: !isNarrowScreen ? "-25%" : "-29%",
+      superSaturdayLive: "0%",
+    };
+  }
+
+  // Function to update nav follower position
+  function updateNavFollowerPosition(id: string, navFollower: HTMLElement) {
+    const transforms = getTransformValues(window.innerWidth);
+    const transform = transforms[id as keyof typeof transforms];
+
+    if (transform !== undefined) {
+      navFollower.style.transform = `translateX(${transform}) skew(-25deg)`;
+    }
+  }
+
+  // Function to scroll active anchor into view
+  function scrollAnchorIntoView(anchorId: string, isScrolling = false) {
+    const anchor = document.getElementById(anchorId);
+    const navWrapper = document.querySelector(".nav-wrapper");
+
+    if (anchor && navWrapper && window.innerWidth < BREAKPOINTS.TABLET) {
+      // Calculate the center position
+      const navWrapperWidth = navWrapper.clientWidth;
+      const anchorLeft = anchor.offsetLeft;
+      const anchorWidth = anchor.clientWidth;
+
+      // Calculate scroll position that will center the element
+      const scrollPosition = anchorLeft - navWrapperWidth / 2 + anchorWidth / 2;
+      const scrollBehavior: ScrollBehavior = isScrolling ? "auto" : "smooth";
+
+      // Smooth scroll to the position
+      navWrapper.scrollTo({
+        left: scrollPosition,
+        behavior: scrollBehavior,
+      });
+    }
+  }
+
+  // Debounce function to limit the frequency of scroll handling
+  function debounce<T extends (...args: any[]) => void>(
+    func: T,
+    wait: number,
+  ): (...args: Parameters<T>) => void {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    return (...args: Parameters<T>) => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
 
   // Create a function to handle intersection observer setup
   function setupIntersectionObserver() {
@@ -20,70 +82,93 @@
     const superSaturdayLiveAnchor = document.getElementById(
       "super-saturday-live-anchor",
     );
-    // let lastVisibleSection: string | null = null;
+
+    //  Track if user is actively scrolling
+    let isScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
+    // Handle scroll events
+    window.addEventListener(
+      "scroll",
+      () => {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+
+        // Reset scroll state after scrolling stops
+        scrollTimeout = setTimeout(() => {
+          isScrolling = false;
+        }, 150);
+      },
+      { passive: true },
+    );
 
     // Callback function to handle intersections
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+    const handleIntersect = debounce((entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && navFollower) {
           console.log(`Section ${entry.target.id} is now visible`);
-          // Add your custom logic here
 
           const { id } = entry.target;
+          // Reset all active states
+          const resetActiveStates = () => {
+            whatYouWinAnchor?.classList.remove("active");
+            howItWorksAnchor?.classList.remove("active");
+            haveAQuestionAnchor?.classList.remove("active");
+            superSaturdayLiveAnchor?.classList.remove("active");
+          };
 
-          console.log({ id });
-          if (navFollower) {
-            if (id === "hero") {
-              whatYouWinAnchor?.classList.remove("active");
-              howItWorksAnchor?.classList.remove("active");
-              haveAQuestionAnchor?.classList.remove("active");
-              superSaturdayLiveAnchor?.classList.remove("active");
-              navFollower.style.transform = "translateX(-200%)";
+          switch (id) {
+            case "hero":
+              resetActiveStates();
+              updateNavFollowerPosition("hero", navFollower);
+              scrollAnchorIntoView("what-you-win-anchor", isScrolling);
               nav?.classList.remove("hidden");
-            }
-            if (id === "what-you-win") {
+              break;
+
+            case "what-you-win":
+              resetActiveStates();
               whatYouWinAnchor?.classList.add("active");
-              howItWorksAnchor?.classList.remove("active");
-              superSaturdayLiveAnchor?.classList.remove("active");
-              navFollower.style.transform = "translateX(-75%) skew(-25deg)";
+              updateNavFollowerPosition("whatYouWin", navFollower);
+              // scrollAnchorIntoView("what-you-win-anchor", isScrolling);
               nav?.classList.remove("hidden");
-            }
-            if (id === "how-to-enter") {
+              break;
+
+            case "how-to-enter":
+              resetActiveStates();
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
-              haveAQuestionAnchor?.classList.remove("active");
-              superSaturdayLiveAnchor?.classList.remove("active");
-              navFollower.style.transform = "translateX(-50%) skew(-25deg)";
+              updateNavFollowerPosition("howToEnter", navFollower);
+              scrollAnchorIntoView("how-to-enter-anchor", isScrolling);
               nav?.classList.remove("hidden");
-            }
-            if (id === "have-a-question") {
+              break;
+
+            case "have-a-question":
+              resetActiveStates();
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.add("active");
-              superSaturdayLiveAnchor?.classList.remove("active");
-              navFollower.style.transform = "translateX(-25%) skew(-25deg)";
+              updateNavFollowerPosition("haveAQuestion", navFollower);
+              scrollAnchorIntoView("have-a-question-anchor", isScrolling);
               nav?.classList.remove("hidden");
-            }
-            if (id === "super-saturday-live") {
+              break;
+
+            case "super-saturday-live":
+              resetActiveStates();
               superSaturdayLiveAnchor?.classList.add("active");
               whatYouWinAnchor?.classList.add("active");
               howItWorksAnchor?.classList.add("active");
               haveAQuestionAnchor?.classList.add("active");
-              navFollower.style.transform = "translateX(0%) skew(-25deg)";
+              updateNavFollowerPosition("superSaturdayLive", navFollower);
+              scrollAnchorIntoView("super-saturday-live-anchor", isScrolling);
               nav?.classList.remove("hidden");
-            }
-
-            // if (id === "footer") {
-            //   console.log("footer");
-            //   nav?.classList.add("hidden");
-            // }
+              break;
           }
 
           // Uncomment the next line if you want to stop observing after first intersection
           // observer.unobserve(entry.target);
         }
       });
-    };
+    }, 50);
 
     // Create the observer
     const observer = new IntersectionObserver(handleIntersect, options);
@@ -95,6 +180,42 @@
     sections.forEach((section) => {
       console.log({ section });
       observer.observe(section);
+    });
+
+    // Add resize listener to update positions when screen size changes
+    window.addEventListener("resize", () => {
+      const visibleSection = Array.from(sections).find((section) => {
+        const rect = section.getBoundingClientRect();
+        return (
+          rect.top <= window.innerHeight / 2 &&
+          rect.bottom >= window.innerHeight / 2
+        );
+      });
+
+      if (visibleSection && navFollower) {
+        updateNavFollowerPosition(visibleSection.id, navFollower);
+        if (visibleSection.id !== "hero") {
+          scrollAnchorIntoView(`${visibleSection.id}-anchor`);
+        }
+      }
+    });
+
+    // Add click handlers to smooth scroll the nav
+    document.querySelectorAll(".nav a").forEach((anchor) => {
+      anchor.addEventListener("click", (e) => {
+        const href = (e.currentTarget as HTMLAnchorElement).getAttribute(
+          "href",
+        );
+        if (href?.startsWith("#")) {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetSection = document.getElementById(targetId);
+          targetSection?.scrollIntoView({ behavior: "smooth" });
+
+          // Scroll the nav item into view as well
+          scrollAnchorIntoView(`${targetId}-anchor`);
+        }
+      });
     });
 
     return observer;
@@ -169,7 +290,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 900px;
+    width: 164vw;
   }
   ul {
     display: flex;
@@ -240,7 +361,7 @@
 
   .nav-follower {
     position: absolute;
-    width: 100vw;
+    width: 164vw;
     height: 100%;
     background-color: var(--kayogreen);
     bottom: 0;
@@ -256,14 +377,20 @@
       height: 100%;
     }
   }
+  @media screen and (min-width: $breakpoint-tablet) {
+    .nav {
+      width: 100%;
+    }
+
+    .nav-follower {
+      width: 100vw;
+    }
+  }
 
   @media screen and (min-width: $breakpoint-desktop) {
     .nav-wrapper {
       display: flex;
       justify-content: center;
-    }
-    .nav {
-      width: 100%;
     }
 
     ul {
