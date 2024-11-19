@@ -1,7 +1,6 @@
 ---
-import styles from "./styles.module.scss";
-import Card, { type CardProps } from "./card";
-
+import { type CardProps } from "./card";
+import FlipCard from "./flipCard";
 import Brown from "../../assets/collegues/Brown.jpg";
 import Buckley from "../../assets/collegues/Buckley.jpg";
 import Eddie from "../../assets/collegues/eddie.jpg";
@@ -55,40 +54,6 @@ const collegues: CardProps[] = [
 ];
 ---
 
-<script>
-  const slideContainer: HTMLDivElement | null =
-    document.querySelector("#slide-container");
-
-  const scrollX = slideContainer?.scrollLeft;
-  const width = slideContainer?.clientWidth;
-  const scrollWidth = slideContainer?.scrollWidth;
-  const progressBar = document.querySelector("#progress-bar") as HTMLDivElement;
-  console.log({ scrollX, width, scrollWidth });
-
-  if (scrollX && width && scrollWidth) {
-    progressBar.style.left = `calc(${(scrollX / (scrollWidth - width)) * 100}%)`;
-  }
-
-  slideContainer?.addEventListener("scroll", (e) => {
-    // if parent is being scrolled check the scrollX distance from the left and compare it to the width of the parent
-    const scrollX = slideContainer.scrollLeft || 0;
-    const width = slideContainer.clientWidth || 0;
-    const scrollWidth = slideContainer.scrollWidth || 0;
-    console.log({ scrollX, width, scrollWidth });
-    const progressBar = document.querySelector(
-      "#progress-bar",
-    ) as HTMLDivElement;
-
-    let percent = (scrollX / (scrollWidth - width)) * 90;
-    console.log({ percent });
-
-    if (percent < 2) return;
-    progressBar.style.left = `calc(${percent}%)`;
-  });
-  console.log("loaded");
-  // });
-</script>
-
 <section>
   <div class="content">
     <div class="container">
@@ -102,12 +67,11 @@ const collegues: CardProps[] = [
             collegues.map((collegue: CardProps) => {
               return (
                 <div class="swiper-slide" style={{ width: "auto" }}>
-                  <Card {...collegue} client:load />
+                  <FlipCard client:load {...collegue} />
                 </div>
               );
             })
           }
-          <div class="swiper-slide" style={{ width: "auto" }}></div>
         </div>
 
         <div class="swiper-scrollbar"></div>
@@ -132,6 +96,10 @@ const collegues: CardProps[] = [
       scrollbar: {
         el: ".swiper-scrollbar",
         hide: true,
+        draggable: true,
+        dragSize: 80,
+        // snapOnRelease: true,
+        enabled: true,
       },
       speed: 800,
       pagination: {
@@ -171,7 +139,9 @@ const collegues: CardProps[] = [
   }
 
   :global(.swiper-slide) {
-    width: 280px !important; /* Or whatever width your Card component should be */
+    padding: 40px 0;
+    width: 400px !important; /* Larger width for desktop if needed */
+    // width: 280px !important; /* Or whatever width your Card component should be */
     flex-shrink: 0;
   }
 
@@ -242,7 +212,6 @@ const collegues: CardProps[] = [
       padding-top: 118px;
     }
     :global(.swiper-slide) {
-      width: 400px !important; /* Larger width for desktop if needed */
       &:last-child {
         margin-right: 0 !important;
       }
