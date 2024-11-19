@@ -75,7 +75,7 @@ const Animation = () => {
                 <p className={`small-print text-center ${styles.smallPrint}`}>
                   Must be 18+ to enter and a current Australian resident.{" "}
                   <button
-                    className="small-print  text-button"
+                    className="small-print  text-button color-black"
                     onClick={handleOpenModal}
                   >
                     TERMS AND CONDITIONS APPLY
