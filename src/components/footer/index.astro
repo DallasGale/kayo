@@ -7,17 +7,30 @@ import LegalLinks from "./legalLinks";
 
 import TikTok from "../../assets/tiktok.svg";
 import Instagram from "../../assets/instagram.svg";
+
+const { isLandingPage } = Astro.props;
 ---
 
 <footer id="footer">
-  <section>
-    <div class="contentTop">
-      <h2 class="display-2">Will you get<br />the kayo call up?</h2>
-      <div>
-        <Button label="Submit your entry" isLarge link="/submit" />
-      </div>
-    </div>
-    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+  <section class={`section ${isLandingPage ? "section-tall" : ""}`}>
+    {
+      isLandingPage && (
+        <>
+          <div class="contentTop">
+            <h2 class="display-2">
+              Will you get
+              <br />
+              the kayo call up?
+            </h2>
+            <div>
+              <Button label="Submit your entry" isLarge link="/submit" />
+            </div>
+          </div>
+          <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }} />
+        </>
+      )
+    }
+
     <div class="contentBottom">
       <div class="logos">
         <a href="https://kayosports.com.au/">
@@ -33,22 +46,30 @@ import Instagram from "../../assets/instagram.svg";
 
         <div class="social">
           <p class="small-print">
-            <img src={TikTok.src} alt="TikTok" />
+            <a href="https://www.tiktok.com/@kayosports" target="_blank">
+              <img src={TikTok.src} alt="TikTok" />
+            </a>
           </p>
           <p class="small-print">
-            <img src={Instagram.src} alt="Instagram3" />
+            <a href="https://www.instagram.com/kayosports/" target="_blank">
+              <img src={Instagram.src} alt="Instagram3" />
+            </a>
           </p>
         </div>
       </div>
     </div>
-    <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }}></div>
+    {
+      isLandingPage && (
+        <div class="bg" style={{ backgroundImage: `url(${Bg.src})` }} />
+      )
+    }
   </section>
 </footer>
 
 <style lang="scss">
   @import "../../breakpoints.scss";
 
-  section {
+  .section {
     justify-content: center;
     align-items: center;
     display: flex;
@@ -136,10 +157,13 @@ import Instagram from "../../assets/instagram.svg";
   }
 
   @media screen and (min-width: $breakpoint-desktop) {
-    section {
-      height: 90vh;
+    .section {
       padding: 116px 20px 52px;
       gap: 0;
+    }
+
+    .section-tall {
+      height: 90vh;
     }
     .bg {
       background-position: center bottom 56px;

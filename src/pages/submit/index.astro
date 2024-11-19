@@ -1,12 +1,14 @@
 ---
 import Form from "../../components/form/";
 import Layout from "../../layouts/layout.astro";
+import Footer from "../../components/footer/index.astro";
 ---
 
 <Layout title="Kayo Sports Call Up - Submit Your Entry">
   <Form client:load />
 
   <div id="lottie-container"></div>
+  <Footer isLandingPage={false} />
 </Layout>
 
 <script>
