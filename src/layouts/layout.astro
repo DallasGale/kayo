@@ -43,7 +43,15 @@ const { title } = Astro.props;
   @import "swiper/css/free-mode";
   @import "../fonts.css";
   @import "../breakpoints.scss";
-
+  :root {
+    --black: #000000;
+    --darkgrey: #171717;
+    --white: #ffffff;
+    --kayogreen: #40f87f;
+    --skewDeg: skewX(-10deg);
+    --buttonTrans: all 0.2s ease-in-out;
+    --boxshadow: 7px 8px 0px 0 rgba(0, 0, 0, 0.25) !important;
+  }
   html {
     scroll-behavior: smooth;
   }
@@ -82,13 +90,6 @@ const { title } = Astro.props;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-  }
-  :root {
-    --black: #000000;
-    --darkgrey: #171717;
-    --white: #ffffff;
-    --kayogreen: #40f87f;
-    --skewDeg: skewX(-10deg);
   }
 
   .text-button {
@@ -230,6 +231,6 @@ const { title } = Astro.props;
   }
 
   .react-responsive-modal-modal {
-    box-shadow: 7px 8px 0px 0 rgba(0, 0, 0, 0.25) !important;
+    box-shadow: var(--boxshadow);
   }
 </style>

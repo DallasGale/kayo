@@ -29,6 +29,15 @@
     background-color: var(--white);
     z-index: 0;
     transform: var(--skewDeg);
+    transition: var(--buttonTrans);
+  }
+
+  &:hover {
+    transition: var(--buttonTrans);
+    &:before {
+      transition: var(--buttonTrans);
+      box-shadow: var(--boxshadow);
+    }
   }
 
   span {

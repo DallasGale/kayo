@@ -2,6 +2,7 @@
 .section {
   background-color: var(--kayogreen);
   padding-top: 68px;
+  padding-bottom: 20px;
 }
 
 .questionsList {
@@ -32,14 +33,10 @@
   padding: 0 20px;
   width: 100%;
   border: none;
-  transition: all 0.15s ease-in-out;
+  transition: var(--buttonTrans);
   &:hover {
-    background-color: var(--black);
-    color: var(--white);
-    transition: all 0.15s ease-in-out;
-    .toggle {
-      background: url("../../assets/plus-white.svg");
-    }
+    transition: var(--buttonTrans);
+    box-shadow: var(--boxshadow);
   }
 }
 
