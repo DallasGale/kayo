@@ -1,22 +1,119 @@
-.c {
-  position: absolute;
-  max-width: 500px;
-  max-height: 500px;
+.card {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  perspective: 1000px;
+  cursor: grab;
+  margin-bottom: 20px;
+  &:first-of-type {
+    margin-left: 80px;
+  }
+}
+
+.cardInner {
+  position: relative;
   width: 100%;
   height: 100%;
-  cursor: pointer;
-  will-change: transform, opacity;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+.cardFront,
+.cardBack {
+  transition: all 0.55s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Hides the back of the card when flipped */
+
+  &:before,
+  &:after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0;
+
+    width: 60px;
+    height: 100%;
+    transform: skewX(-10deg);
+  }
+  &:before {
+    left: -30px;
+  }
+  &:after {
+    right: -33px;
+  }
 }
 
-.front,
-.back {
+.card:hover .cardFront::before,
+.card:hover .cardFront::after,
+.card:hover .cardBack::before,
+.card:hover .cardBack::after {
+  transform: skewX(10deg);
+}
+
+.cardFront {
+  background-color: #171717;
+  &:before,
+  &:after {
+    background: #171717;
+  }
+}
+.cardBack {
+  box-shadow: var(--boxshadow);
+  background-color: white;
+  transform: rotateY(-180deg);
+  p {
+    z-index: 1;
+    font-size: 16px;
+    line-height: 143%;
+  }
+  &:before,
+  &:after {
+    z-index: 0;
+    background: var(--white);
+  }
+}
+
+// When card hovers I want the front card to flip on the X axis to reveal the back card
+.card:hover .cardFront {
+  transform: rotateY(180deg);
+
+  &:before,
+  &:after {
+    transform: skewX(10deg);
+  }
+}
+
+.card:hover .cardBack {
+  transform: rotateY(0deg);
+  &:after {
+    box-shadow: var(--boxshadow);
+    transform: skewX(10deg);
+  }
+  &:before,
+  &:after {
+    transform: skewX(10deg);
+  }
+}
+
+.cardAvatar {
+  height: 100%;
+  width: 100%;
   background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.back {
-  // background-image: url(https://images.unsplash.com/photo-1544511916-0148ccdeb877?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1901&q=80i&auto=format&fit=crop);
-}
-
-.front {
-  // background-image: url(https://images.unsplash.com/photo-1540206395-68808572332f?ixlib=rb-1.2.1&w=1181&q=80&auto=format&fit=crop);
+.cardNameTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 20px;
 }
