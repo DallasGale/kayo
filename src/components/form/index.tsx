@@ -13,6 +13,7 @@ import Cheer from "../../assets/sounds/cheer.mp3";
 import FoxLogo from "../../assets/fox-logo-white.svg";
 import { isEmailValid, isPhoneValid } from "./helpers";
 import TermsModal from "../modals/terms";
+import SuccessScreen from "./successSceen";
 
 interface FormData {
   name: string;
@@ -73,7 +74,7 @@ const Form = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
-  >("idle");
+  >("success");
 
   // ----------------------------------------------------------------
   // Video Validation
@@ -603,56 +604,7 @@ const Form = () => {
           )}
         </div>
         {submitStatus === "success" && (
-          <div className={styles.success}>
-            <h2 className={`${styles.successTitle}`}>LET'S GO!</h2>
-            <h3 className={`${styles.successSubTitle}`}>
-              Your KAYO CALL UP entry has been successfully submitted
-            </h3>
-
-            <div className={styles.successBtns}>
-              <button
-                className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
-                type="submit"
-              >
-                <span>Share with a mate</span>
-              </button>
-
-              <button
-                className={`${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn} ${btnStyles.greenBtn}`}
-                type="submit"
-              >
-                <span>More info</span>
-              </button>
-            </div>
-
-            <div>
-              <p className={styles.signUpNow}>
-                New to Kayo?{" "}
-                <a href="https://kayosports.com.au/">Sign up now</a>
-              </p>
-
-              <div className={styles.legal}>
-                <p className="small-print color-white">
-                  <a
-                    className={`small-print ${styles.smallPrint}`}
-                    style={{ color: "#fff" }}
-                    href="https://www.foxtel.com.au/about/privacy/comp-privacy-notice.html"
-                    target="_blank"
-                  >
-                    PRIVACY POLICY
-                  </a>
-                </p>
-                <p className="small-print color-white">
-                  <button
-                    className="text-button small-print color-white"
-                    onClick={(e) => handleOpenModal(e)}
-                  >
-                    TERMS AND CONDITIONS
-                  </button>
-                </p>
-              </div>
-            </div>
-          </div>
+          <SuccessScreen handleOpenModal={(e) => handleOpenModal(e)} />
         )}
       </div>
       <div
