@@ -55,21 +55,19 @@ import Footer from "../../components/footer/index.astro";
         const container = document.getElementById(id);
         if (container) {
           setTimeout(() => {
-            const animConfig: AnimationConfig = {
-              container: container,
+            lottie.loadAnimation({
+              container,
               renderer: "svg",
               loop: false,
               autoplay: true,
-              animationData: animationData,
+              animationData,
               rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice",
+                clearCanvas: true,
                 progressiveLoad: false,
                 hideOnTransparent: true,
               },
-            };
-
-            // Create the animation
-            const anim: AnimationItem = lottie.loadAnimation(animConfig);
+            });
 
             // Set the dimensions after creation
             if (container) {
