@@ -48,19 +48,6 @@ import Footer from "../../components/footer/index.astro";
       },
     ];
 
-    // Base configuration for all animations
-    const baseConfig = {
-      renderer: "svg",
-      loop: false,
-      autoplay: true,
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice",
-        clearCanvas: true,
-        progressiveLoad: false,
-        hideOnTransparent: true,
-      },
-    };
     // Update the page based on status
     if (status === "success") {
       // Initialize lottie animation
