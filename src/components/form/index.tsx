@@ -579,15 +579,6 @@ const Form = () => {
                   </label>
                 </div>
 
-                <div className={styles.youWin}>
-                  <h2 className="display-4 color-black05">
-                    <span className="color-black">YOU WIN:</span> A{" "}
-                    <span className="color-black">paid, on-air role</span> for
-                    at least the first 8 rounds of the season, plus{" "}
-                    <span className="color-black">mentoring</span> from the
-                    biggest names at Fox Footy.
-                  </h2>
-                </div>
                 <div style={{ textAlign: "center" }}>
                   <button
                     className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
@@ -598,6 +589,15 @@ const Form = () => {
                       {isSubmitting ? "Submitting..." : "SUBMIT ENTRY"}
                     </span>
                   </button>
+                </div>
+                <div className={styles.youWin}>
+                  <h2 className="display-4 color-black05">
+                    <span className="color-black">YOU WIN:</span> A{" "}
+                    <span className="color-black">paid, on-air role</span> for
+                    at least the first 8 rounds of the season, plus{" "}
+                    <span className="color-black">mentoring</span> from the
+                    biggest names at Fox Footy.
+                  </h2>
                 </div>
               </form>
             </>

@@ -14,10 +14,6 @@
   width: auto;
   text-decoration: none;
 
-  &:disabled {
-    opacity: 0.4;
-  }
-
   &:before {
     content: "";
     display: block;
@@ -37,6 +33,15 @@
     &:before {
       transition: var(--buttonTrans);
       box-shadow: var(--boxshadow);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    &:hover {
+      &::before {
+        box-shadow: none;
+      }
     }
   }
 
