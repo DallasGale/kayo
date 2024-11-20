@@ -3,6 +3,7 @@ import styles from "../styles.module.scss";
 import btnStyles from "../../button/styles.module.scss";
 import { useState } from "react";
 import FaqModal from "../../modals/faq";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 type Question = {
   question: string;
@@ -23,19 +24,60 @@ const HaveAQuestion = () => {
     setModalContent({ question, answer });
     onOpenModal();
   };
+
+  const isMobile = useIsMobile();
+  const [showMore, setShowMore] = useState(false);
+
   return (
     <section className={styles.section} id="have-a-question">
       <div className="content">
         <h6 className="display-1">Have a Question?</h6>
         <div className={styles.questionsList}>
-          {questions.map(({ question, answer }) => {
-            return (
-              <Question
-                label={question}
-                onClick={() => handleOpenModal(question, answer)}
-              />
-            );
-          })}
+          {isMobile ? (
+            <>
+              {questions.slice(0, 6).map(({ question, answer }) => {
+                return (
+                  <Question
+                    label={question}
+                    onClick={() => handleOpenModal(question, answer)}
+                  />
+                );
+              })}
+
+              {showMore && (
+                <>
+                  {questions.slice(6).map(({ question, answer }) => {
+                    return (
+                      <Question
+                        label={question}
+                        onClick={() => handleOpenModal(question, answer)}
+                      />
+                    );
+                  })}
+                </>
+              )}
+
+              <div className={styles.seeMore}>
+                <button
+                  className={`${btnStyles.btn} ${btnStyles.secondaryBtn}`}
+                  onClick={() => setShowMore(!showMore)}
+                >
+                  <span>{showMore ? "See Less" : "See More"}</span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {questions.map(({ question, answer }) => {
+                return (
+                  <Question
+                    label={question}
+                    onClick={() => handleOpenModal(question, answer)}
+                  />
+                );
+              })}
+            </>
+          )}
         </div>
 
         <FaqModal
@@ -44,12 +86,6 @@ const HaveAQuestion = () => {
           question={modalContent.question}
           answer={modalContent.answer}
         />
-
-        <div className={styles.seeMore}>
-          <button className={`${btnStyles.btn} ${btnStyles.secondaryBtn}`}>
-            <span>See More</span>
-          </button>
-        </div>
       </div>
     </section>
   );

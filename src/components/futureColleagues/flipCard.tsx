@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./flip.module.scss";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 export interface CardProps {
   name: string;
@@ -9,23 +10,8 @@ export interface CardProps {
 }
 const FlipCard = ({ name, role, avatar, description }: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  // Check if device is mobile on mount and window resize
-  useEffect(() => {
-    const checkMobile = () => {
-      // console.log("checking");
-      setIsMobile(window.innerWidth < 768);
-    };
 
-    // Initial check
-    checkMobile();
-
-    // Add resize listener
-    window.addEventListener("resize", checkMobile);
-
-    // Cleanup
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
     <>
