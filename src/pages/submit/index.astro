@@ -6,7 +6,6 @@ import Footer from "../../components/footer/index.astro";
 
 <Layout title="Kayo Sports Call Up - Submit Your Entry">
   <Form client:load />
-
   <div class="lottie-container" id="lottie-container"></div>
   <div class="lottie-container" id="lottie-container-2"></div>
   <div class="lottie-container" id="lottie-container-3"></div>
@@ -15,7 +14,7 @@ import Footer from "../../components/footer/index.astro";
 </Layout>
 
 <script>
-  import lottie, { type AnimationConfig, type AnimationItem } from "lottie-web";
+  import lottie from "lottie-web";
   import animationData from "../../assets/lotti/confetti.json";
 
   document.addEventListener("statusChange", (event) => {
@@ -58,6 +57,8 @@ import Footer from "../../components/footer/index.astro";
 
     // Update the page based on status
     if (status === "success") {
+      const footer = document.getElementById("footer");
+      footer?.classList.add("hide");
       // Initialize lottie animation
       animations.forEach(({ id, delay, width, height, scale = 1 }) => {
         const container = document.getElementById(id);
@@ -115,7 +116,7 @@ import Footer from "../../components/footer/index.astro";
   }
 
   .lottie-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

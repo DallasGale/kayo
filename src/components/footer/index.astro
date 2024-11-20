@@ -97,6 +97,10 @@ const { isLandingPage } = Astro.props;
     width: 100%;
     background-color: var(--kayogreen);
     z-index: 0;
+    display: flex;
+    &.hide {
+      display: none;
+    }
   }
   .bg {
     position: absolute;
