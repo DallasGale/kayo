@@ -58,7 +58,7 @@ const questions = [
   {
     question: "How can I watch Super Saturday LIVE?",
     answer:
-      "You can watch our Super Saturday LIVE coverage on Fox Footy (available on Foxtel and Kayo Sports), giving you flexibility to watch on TV or stream on-the-go. Both platforms deliver LIVE 4K coverage, with high-definition visuals and expert commentary.",
+      "To: Super Saturday LIVE offers LIVE, exclusive back-to-back AFL coverage on Fox Footy (available on Foxtel and Kayo Sports), showcasing multiple games in 4K without ad breaks during play. Both platforms deliver LIVE 4K coverage, with high-definition visuals and expert commentary.",
   },
   {
     question: "What makes Fox Footy’s coverage unique?",
