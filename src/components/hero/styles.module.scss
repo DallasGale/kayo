@@ -201,8 +201,6 @@
   }
 }
 
-//
-
 .logoMessageContainer {
   display: flex;
   flex-direction: column;
@@ -316,7 +314,8 @@
     max-width: 800px;
 
     img {
-      max-height: 300px;
+      min-height: 150px;
+      max-height: 10vw;
     }
   }
 

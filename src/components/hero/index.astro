@@ -1,7 +1,4 @@
 ---
-import HeroImg from "../../assets/hero.svg";
-import Bg from "../../assets/generic-seated-aussie-rules-stadium-600nw.png";
-import Button from "../button/index.astro";
 import Animation from "./animation";
 ---
 
@@ -24,79 +21,11 @@ import Animation from "./animation";
     height: 100vh;
     position: relative;
   }
-  .bg {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    mix-blend-mode: darken;
-    background-position: center bottom;
-  }
-  .message {
-    max-width: 770px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .logo {
-    padding: 0 60px;
-    box-sizing: border-box;
-  }
-  img {
-    width: 100%;
-  }
-
-  .submit-lockup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    // z-index: 2;
-  }
-
-  .content {
-    gap: 62px;
-  }
-
-  .small-print {
-    padding: 0 40px;
-  }
-  a {
-    color: var(--darkgrey);
-  }
 
   @media screen and (min-width: $breakpoint-desktop) {
-    .content {
-      max-width: 915px;
-      z-index: 1;
-      // padding-top: 178px;
-    }
     section {
       padding-top: 0;
-      // height: calc(100vh - 52px);
       margin-top: -60px;
-    }
-    .logo {
-      width: 100%;
-      margin: auto;
-      padding-top: 10vh;
-    }
-
-    .display-1 {
-      font-size: 24px;
-    }
-
-    .btn {
-      order: 1;
-      margin-top: 71px;
-    }
-
-    .small-print {
-      flex: 1;
-      order: 0;
     }
   }
 </style>
