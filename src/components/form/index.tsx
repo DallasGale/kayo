@@ -575,7 +575,9 @@ const Form = () => {
                     className={styles.checkbox}
                   />
                   <label htmlFor="resident" className={styles.termsLabel}>
-                    <p>I Live in australia</p>
+                    <p>
+                      I live in Australia and I am eligible to work in Australia
+                    </p>
                   </label>
                 </div>
 

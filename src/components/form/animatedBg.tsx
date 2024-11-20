@@ -12,7 +12,7 @@ const AnimatedBg = () => {
   ];
 
   const getRandomStyle = () => ({
-    "--duration": `${2 + Math.random() * 2}s`,
+    "--duration": `${5 + Math.random() * 2}s`,
     "--delay": `${Math.random() * 5}s`,
   });
 
