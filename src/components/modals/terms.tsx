@@ -11,7 +11,9 @@ const TermsModal = ({ open, onCloseModal }: Props) => {
     <Modal open={open} onClose={onCloseModal} center>
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Terms and conditions</h2>
-        <p className={styles.modalParagraph}></p>
+        <p className={styles.modalParagraph}>
+          <a href="/terms.pdf">Click here to view our terms and conditions</a>
+        </p>
       </div>
     </Modal>
   );
