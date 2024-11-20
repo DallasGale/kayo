@@ -5,7 +5,7 @@
   <div class="video-wrapper">
     <iframe
       class="video"
-      src="https://www.youtube.com/embed/uabI9JtPyys?si=acxtRCsV7gpETYQt"
+      src="https://www.youtube.com/embed/fbX3AqNnlZ4?si=sBQxonrnmoDT5uR9"
       title="YouTube video player"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -22,7 +22,7 @@
   }
   .video-wrapper {
     position: relative;
-    height: 637px;
+    height: 60vw;
     max-width: 1448px;
     margin: auto;
     margin-top: 40px;
@@ -40,6 +40,12 @@
 
     section {
       padding-top: 111px;
+    }
+  }
+
+  @media screen and (min-width: $breakpoint-widescreen) {
+    .video-wrapper {
+      height: 820px;
     }
   }
 </style>
