@@ -7,7 +7,10 @@ import Footer from "../../components/footer/index.astro";
 <Layout title="Kayo Sports Call Up - Submit Your Entry">
   <Form client:load />
 
-  <div id="lottie-container"></div>
+  <div class="lottie-container" id="lottie-container"></div>
+  <div class="lottie-container" id="lottie-container-2"></div>
+  <div class="lottie-container" id="lottie-container-3"></div>
+  <div class="lottie-container" id="lottie-container-4"></div>
   <Footer isLandingPage={false} />
 </Layout>
 
@@ -18,17 +21,59 @@ import Footer from "../../components/footer/index.astro";
   document.addEventListener("statusChange", (event) => {
     const status = (event as CustomEvent).detail.status;
 
-    const lottieContainer: HTMLElement | null =
-      document.getElementById("lottie-container");
+    const animations = [
+      {
+        id: "lottie-container",
+        delay: 0,
+        dimensions: { width: 500, height: 500 },
+      },
+      {
+        id: "lottie-container-2",
+        delay: 150,
+        dimensions: { width: 1000, height: 1000 },
+      },
+      {
+        id: "lottie-container-3",
+        delay: 300,
+        dimensions: { width: 1500, height: 1500 },
+      },
+      {
+        id: "lottie-container-4",
+        delay: 450,
+        dimensions: { width: 4000, height: 4000 },
+      },
+    ];
+
+    // Base configuration for all animations
+    const baseConfig = {
+      renderer: "svg",
+      loop: false,
+      autoplay: true,
+      animationData: animationData,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice",
+        clearCanvas: true,
+        progressiveLoad: false,
+        hideOnTransparent: true,
+      },
+    };
     // Update the page based on status
-    if (status === "success" && lottieContainer !== null) {
+    if (status === "success") {
       // Initialize lottie animation
-      lottie.loadAnimation({
-        container: lottieContainer,
-        renderer: "svg",
-        loop: false,
-        autoplay: true,
-        animationData: animationData,
+      animations.forEach(({ id, delay, dimensions }) => {
+        const container = document.getElementById(id);
+        if (container) {
+          setTimeout(() => {
+            lottie.loadAnimation({
+              ...baseConfig,
+              container,
+              rendererSettings: {
+                ...baseConfig.rendererSettings,
+                ...dimensions,
+              },
+            });
+          }, delay);
+        }
       });
     } else {
       console.log("no success");
@@ -61,7 +106,7 @@ import Footer from "../../components/footer/index.astro";
     z-index: 2;
   }
 
-  #lottie-container {
+  .lottie-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -69,5 +114,17 @@ import Footer from "../../components/footer/index.astro";
     bottom: 0;
     z-index: 3;
     pointer-events: none;
+  }
+  #lottie-container-1 {
+    transform: scale(2);
+  }
+  #lottie-container-2 {
+    transform: scale(1);
+  }
+  #lottie-container-3 {
+    transform: scale(2.2);
+  }
+  #lottie-container-4 {
+    transform: scale(1.3);
   }
 </style>

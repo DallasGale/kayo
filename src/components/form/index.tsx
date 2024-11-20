@@ -73,7 +73,7 @@ const Form = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "submitting" | "success" | "error"
-  >("idle");
+  >("success");
 
   // ----------------------------------------------------------------
   // Video Validation
