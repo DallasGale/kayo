@@ -92,12 +92,12 @@ const collegues: CardProps[] = [
     const swiper = new Swiper(".swiper", {
       modules: [Virtual, Navigation, Pagination, Scrollbar],
       slidesPerView: 1,
-      spaceBetween: 20,
+      spaceBetween: 0,
       scrollbar: {
         el: ".swiper-scrollbar",
         hide: true,
         draggable: true,
-        dragSize: 80,
+        dragSize: 20,
         snapOnRelease: true,
         enabled: true,
       },
@@ -178,7 +178,7 @@ const collegues: CardProps[] = [
     box-sizing: border-box;
     border-top: 10px solid var(--kayogreen);
     border-bottom: 10px solid var(--kayogreen);
-    padding-left: 20px;
+    padding-left: 0;
     width: calc(100% - 2 * var(--swiper-scrollbar-sides-offset, 1%));
   }
 
@@ -223,7 +223,7 @@ const collegues: CardProps[] = [
   }
   @media screen and (min-width: $breakpoint-tablet) {
     :global(.swiper-slide) {
-      width: 425px !important; /* Larger width for desktop if needed */
+      width: 450px !important; /* Larger width for desktop if needed */
     }
   }
 
@@ -235,11 +235,19 @@ const collegues: CardProps[] = [
       align-items: flex-start;
       padding-top: 118px;
     }
-    :global(.swiper-slide) {
-      width: 350px !important; /* Larger width for desktop if needed */
-      &:last-child {
-        margin-right: 0 !important;
-      }
+    // :global(.swiper-slide) {
+    //   width: 360px !important; /* Larger width for desktop if needed */
+    //   &:last-child {
+    //     margin-right: 0 !important;
+    //   }
+    // }
+
+    :global(
+        .swiper-horizontal > .swiper-scrollbar,
+        .swiper-scrollbar.swiper-scrollbar-horizontal
+      ) {
+      padding-left: 20px;
+      width: calc(100% - 2 * var(--swiper-scrollbar-sides-offset, 1%));
     }
   }
 </style>
