@@ -13,6 +13,7 @@ import FoxLogo from "../../assets/fox-logo-white.svg";
 import { isEmailValid, isPhoneValid } from "./helpers";
 import TermsModal from "../modals/terms";
 import SuccessScreen from "./successSceen";
+import AnimatedBg from "./animatedBg";
 
 interface FormData {
   name: string;
@@ -606,11 +607,9 @@ const Form = () => {
           <SuccessScreen handleOpenModal={(e) => handleOpenModal(e)} />
         )}
       </div>
-      <div
-        className={styles.bg}
-        style={{ backgroundImage: `url(${Bg.src})` }}
-      />
+
       <TermsModal open={open} onCloseModal={onCloseModal} />
+      <AnimatedBg />
     </section>
   );
 };
