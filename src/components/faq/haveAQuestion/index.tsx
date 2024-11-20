@@ -116,7 +116,7 @@ const questions = [
   {
     question: "When is the shortlisting phase of the talent search?",
     answer:
-      "The team at Fox Footy will be shortlisting talent 11 December 2024 – 20 January 2025.",
+      "The team at Fox Footy will be shortlisting talent 12 December 2024 – 20 January 2025.",
   },
   {
     question: "What is the prize?",

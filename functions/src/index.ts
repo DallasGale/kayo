@@ -49,12 +49,31 @@ export const exportFirestoreToCSV = functions
           "Missing collection parameter",
         );
       }
+      // Get documents ordered by submittedAt
+      const snapshot = await admin
+        .firestore()
+        .collection(collection)
+        .orderBy("submittedAt", "desc") // Change to 'asc' if you want oldest first
+        .get();
 
-      const snapshot = await admin.firestore().collection(collection).get();
-      const documents = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const documents = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        // Format the timestamp for CSV
+        if (data.submittedAt) {
+          // Handle both Timestamp and date strings
+          const timestamp =
+            data.submittedAt instanceof admin.firestore.Timestamp
+              ? data.submittedAt.toDate()
+              : new Date(data.submittedAt);
+
+          data.submittedAt = timestamp.toISOString();
+        }
+
+        return {
+          id: doc.id,
+          ...data,
+        };
+      });
 
       const csv = json2csv.parse(documents);
       return { csv };
