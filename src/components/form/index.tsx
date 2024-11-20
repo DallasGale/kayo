@@ -79,6 +79,7 @@ const Form = () => {
   // ----------------------------------------------------------------
   // Video Validation
   // ----------------------------------------------------------------
+  const [needsValidation, setNeedsValidation] = useState(false);
   const [embedHtml, setEmbedHtml] = useState<EmbedHtml | null>(null);
   const [videoErrorMessage, setVideoErrorMessage] = useState("");
   const [validating, setValidating] = useState(false);
@@ -204,6 +205,11 @@ const Form = () => {
       ...prev,
       [name]: value,
     }));
+
+    if (name === "videoUrl") {
+      // Show red outline if there's a value but not yet validated
+      setNeedsValidation(value.trim() !== "" && !validVideo);
+    }
 
     // Remove the immediate error clearing
     const newErrors = { ...errors };
@@ -355,6 +361,13 @@ const Form = () => {
     }
   }, [submitStatus]);
 
+  useEffect(() => {
+    if (validVideo) {
+      setNeedsValidation(false);
+    } else if (formData.videoUrl.trim() !== "") {
+      setNeedsValidation(true);
+    }
+  }, [validVideo, formData.videoUrl]);
   return (
     <section
       className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
@@ -446,7 +459,11 @@ const Form = () => {
 
                   <div className={styles.videoFieldLockup}>
                     <input
-                      className={styles.input}
+                      className={`${styles.input} ${
+                        formData.videoUrl && !validVideo
+                          ? styles.redOutline
+                          : ""
+                      }`}
                       id="videoUrl"
                       name="videoUrl"
                       type="text"
