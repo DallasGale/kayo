@@ -111,7 +111,7 @@ const questions = [
   {
     question: "What’s the deadline for entries?",
     answer:
-      "Entries open on 7.00pm, 20 November, 2024, and close on 11:59pm AEDT on 11 December 2024. The competition goes for 3 weeks. Make sure to submit your entry within this timeframe.",
+      "Entries open on 7.00pm AEDT, 20 November, 2024, and close on 11:59pm AEDT on 11 December 2024. The competition goes for 3 weeks. Make sure to submit your entry within this timeframe.",
   },
   {
     question: "When is the shortlisting phase of the talent search?",
