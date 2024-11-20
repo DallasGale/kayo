@@ -136,7 +136,7 @@ const questions = [
   {
     question: "When will the winner be announced?",
     answer:
-      "The winner will be announced in February 2025, so stay tuned! We will contact the winner via phone and email.",
+      "The winner will be announced in the week of 17 February 2025, so stay tuned! We will contact the winner via phone and email.",
   },
   {
     question: "Can I submit multiple entries?",
