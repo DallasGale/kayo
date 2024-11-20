@@ -609,7 +609,7 @@ const Form = () => {
       </div>
 
       <TermsModal open={open} onCloseModal={onCloseModal} />
-      <AnimatedBg />
+      {submitStatus !== "success" && <AnimatedBg />}
     </section>
   );
 };

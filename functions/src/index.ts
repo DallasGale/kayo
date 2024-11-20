@@ -28,6 +28,11 @@ export const exportFirestoreToCSV = functions
     const ADMIN_UIDS = [
       "4qMzDHluo8eFettrWKbxGjkkePg1",
       "FcUQCFyCAFd9yV61kHunChqJoGt1",
+      "d2XtvppiBSNbhcc2U5acbg6iLsa2",
+      "UuKMS6QgozLOm33V56SOAxXJTDr2",
+      "O2H6h6aLQtOE6COm0TPuZuCijyj2",
+      "Hl2wZuD4kNUjcjVenPWwmmo6i8E2",
+      "J6Z3t7Xjj5NnHZGFphageAnloHs2",
     ]; // Replace with your Firebase UID
     if (!ADMIN_UIDS.includes(context.auth.uid)) {
       throw new functions.https.HttpsError(
