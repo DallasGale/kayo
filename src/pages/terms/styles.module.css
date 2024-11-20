@@ -1,0 +1,92 @@
+.terms {
+  font-size: 14px;
+  line-height: 140%;
+  font-family: "GibsonRegular", sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Table styles remain the same */
+
+.sectionTitle {
+  font-weight: bold;
+  margin: 24px 0 16px 0;
+  font-size: 1.2em;
+  border-bottom: 2px solid #333;
+  padding-bottom: 8px;
+}
+
+.mainList li {
+  list-style: decimal;
+  &:before {
+    display: none;
+  }
+}
+
+/* Base numbering starts at 1 */
+ol.mainList {
+  counter-reset: mainitem 0;
+}
+
+ol.mainList > li {
+  counter-increment: mainitem;
+  margin-bottom: 12px;
+  padding-left: 40px;
+  position: relative;
+}
+
+ol.mainList > li::before {
+  display: none;
+  content: counter(mainitem) ".";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Alpha list */
+.alphaList {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.alphaList > li {
+  list-style: lower-alpha;
+  padding-left: 25px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.alphaList > li::before {
+  content: attr(data-letter) ")";
+  position: absolute;
+  left: 0;
+}
+
+/* Roman numeral list */
+.romanList {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.romanList > li {
+  padding-left: 25px;
+  position: relative;
+  margin-bottom: 8px;
+  list-style: lower-roman;
+}
+
+.romanList > li::before {
+  content: attr(data-numeral) ".";
+  position: absolute;
+  left: 0;
+}
+
+.termHighlight {
+  font-weight: bold;
+  font-style: italic;
+}

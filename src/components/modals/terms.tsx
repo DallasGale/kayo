@@ -1,5 +1,6 @@
 import { Modal } from "react-responsive-modal";
 import styles from "./styles.module.scss";
+import Terms from "../../pages/terms/terms";
 
 interface Props {
   open: boolean;
@@ -10,10 +11,7 @@ const TermsModal = ({ open, onCloseModal }: Props) => {
   return (
     <Modal open={open} onClose={onCloseModal} center>
       <div className={styles.modalContent}>
-        <h2 className={styles.modalTitle}>Terms and conditions</h2>
-        <p className={styles.modalParagraph}>
-          <a href="/terms.pdf">Click here to view our terms and conditions</a>
-        </p>
+        <Terms />
       </div>
     </Modal>
   );
