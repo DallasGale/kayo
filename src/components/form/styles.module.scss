@@ -41,6 +41,7 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  align-items: center;
 }
 .foxLogo {
   width: 69px;
@@ -178,10 +179,12 @@ input[type="checkbox"]:checked {
   flex-direction: row;
   gap: 10px;
   align-items: center;
+  height: 40px;
+  text-align: left;
   p,
   button {
     font-size: 12px;
-    line-height: 87%;
+    line-height: 147%;
     text-transform: uppercase;
     font-family: "GibsonRegular", sans-serif;
   }
