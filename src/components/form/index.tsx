@@ -579,7 +579,7 @@ const Form = () => {
                   </label>
                 </div>
 
-                <div style={{ textAlign: "center" }}>
+                <div className={styles.submitButton}>
                   <button
                     className={`${btnStyles.btn} ${btnStyles.primaryBtn}  ${btnStyles.largeBtn}`}
                     type="submit"

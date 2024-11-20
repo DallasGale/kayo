@@ -11,8 +11,8 @@ import Instagram from "../../assets/instagram.svg";
 const { isLandingPage } = Astro.props;
 ---
 
-<footer id="footer">
-  <section class={`section ${isLandingPage ? "section-tall" : ""}`}>
+<footer id="footer" class={`${isLandingPage ? "landing" : ""}`}>
+  <section class={`section ${isLandingPage ? "landing section-tall" : ""}`}>
     {
       isLandingPage && (
         <>
@@ -73,7 +73,7 @@ const { isLandingPage } = Astro.props;
     justify-content: center;
     align-items: center;
     display: flex;
-    background-color: var(--kayogreen);
+    // background-color: var(--kayogreen);
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: cover;
@@ -82,6 +82,9 @@ const { isLandingPage } = Astro.props;
     height: 100%;
     flex-direction: column;
     gap: 70px;
+    &.landing {
+      background-color: var(--kayogreen);
+    }
   }
   .contentTop {
     text-align: center;
@@ -95,9 +98,11 @@ const { isLandingPage } = Astro.props;
   footer {
     position: absolute;
     width: 100%;
-    background-color: var(--kayogreen);
-    z-index: 0;
+    z-index: 1;
     display: flex;
+    &.landing {
+      background-color: var(--kayogreen);
+    }
     &.hide {
       display: none;
     }
@@ -204,7 +209,7 @@ const { isLandingPage } = Astro.props;
     }
 
     .contentTop {
-      height: 600px;
+      height: auto;
       align-items: center;
       justify-content: flex-end;
     }
