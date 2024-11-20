@@ -21,7 +21,15 @@ import Footer from "../../components/footer/index.astro";
   document.addEventListener("statusChange", (event) => {
     const status = (event as CustomEvent).detail.status;
 
-    const animations = [
+    interface AnimationSettings {
+      id: string;
+      delay: number;
+      width: number;
+      height: number;
+      scale?: number;
+    }
+
+    const animations: AnimationSettings[] = [
       {
         id: "lottie-container",
         delay: 0,
@@ -51,7 +59,7 @@ import Footer from "../../components/footer/index.astro";
     // Update the page based on status
     if (status === "success") {
       // Initialize lottie animation
-      animations.forEach(({ id, delay, width, height }) => {
+      animations.forEach(({ id, delay, width, height, scale = 1 }) => {
         const container = document.getElementById(id);
         if (container) {
           setTimeout(() => {
@@ -63,16 +71,14 @@ import Footer from "../../components/footer/index.astro";
               animationData,
               rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice",
-                clearCanvas: true,
-                progressiveLoad: false,
-                hideOnTransparent: true,
               },
             });
 
-            // Set the dimensions after creation
-            if (container) {
-              container.style.width = `${width}px`;
-              container.style.height = `${height}px`;
+            // Set dimensions and scale
+            container.style.width = `${width}px`;
+            container.style.height = `${height}px`;
+            if (scale !== 1) {
+              container.style.transform = `scale(${scale})`;
             }
           }, delay);
         }
