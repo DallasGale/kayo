@@ -315,7 +315,7 @@
 
     img {
       min-height: 150px;
-      max-height: 10vw;
+      max-height: 30vw;
     }
   }
 
@@ -325,6 +325,18 @@
 
   .goalPosts {
     display: block;
+  }
+}
+
+@media screen and (min-width: $breakpoint-desktop) and (max-height: 868px) {
+  .logo {
+    top: 5vh;
+    max-width: 800px;
+
+    img {
+      min-height: 150px;
+      max-height: 15vw;
+    }
   }
 }
 
