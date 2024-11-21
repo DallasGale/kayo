@@ -10,13 +10,12 @@ export interface CardProps {
 }
 const FlipCard = ({ name, role, avatar, description }: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
-
   const isMobile = useIsMobile();
 
   return (
     <>
       <div
-        className={`${styles.card}  ${isFlipped ? styles.flipped : "not-flipped"}`}
+        className={`${styles.card}  ${isFlipped ? styles.flipped : ""}`}
         onClick={() => isMobile && setIsFlipped(!isFlipped)}
         onMouseEnter={() => !isMobile && setIsFlipped(true)}
         onMouseLeave={() => !isMobile && setIsFlipped(false)}

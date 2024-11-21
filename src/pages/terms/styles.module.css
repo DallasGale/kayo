@@ -1,7 +1,22 @@
 .terms {
-  font-size: 14px;
+  font-size: 11px;
   line-height: 140%;
   font-family: "GibsonRegular", sans-serif;
+  word-break: auto-phrase;
+
+  th,
+  tr {
+    padding: 8px;
+  }
+  th {
+    width: 25%;
+  }
+  td {
+    width: 75%;
+  }
+  table {
+    box-sizing: border-box;
+  }
 }
 
 .header {
@@ -89,4 +104,10 @@ ol.mainList > li::before {
 .termHighlight {
   font-weight: bold;
   font-style: italic;
+}
+
+@media screen and (min-width: $breakpoint-tablet) {
+  .terms {
+    font-size: 14px;
+  }
 }

@@ -14,7 +14,7 @@ const Terms = () => {
         attached to this Schedule.
       </p>
 
-      <table border={1} cellPadding={10} cellSpacing={0}>
+      <table border={1} cellSpacing={0}>
         <tr>
           <th>Name of Promotion</th>
           <td>"THE KAYO CALL UP" PROMOTION</td>
