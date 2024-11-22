@@ -100,7 +100,16 @@ const Form = () => {
       );
       const data = await response.json();
 
-      if (data.html) {
+      console.log({ data });
+
+      if (
+        data.meta.site === "Twitter" ||
+        data.meta.site === "YouTube" ||
+        data.meta.site === "Vimeo" ||
+        data.meta.site === "Instagram" ||
+        data.meta.site === "Facebook" ||
+        data.meta.site === "TikTok"
+      ) {
         setValidating(false);
         setEmbedHtml(data); // Store the HTML to render
       } else {
@@ -368,6 +377,8 @@ const Form = () => {
       setNeedsValidation(true);
     }
   }, [validVideo, formData.videoUrl]);
+
+  console.log({ embedHtml });
   return (
     <section
       className={`${styles.section} ${submitStatus === "success" ? styles.success : ""}`}
