@@ -251,6 +251,8 @@ input[type="checkbox"]:checked {
 
 @media screen and (min-width: $breakpoint-tablet) {
   .videoFieldLockup {
+    display: grid;
+    grid-template-columns: 1fr 160px;
     flex-direction: row;
     button {
       height: 100%;
