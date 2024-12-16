@@ -65,12 +65,12 @@ const Animation = () => {
                 TEAM.
               </h2>
               <div className={styles.submitLockup}>
-                <a
+                {/* <a
                   href="/submit"
                   className={`${styles.btn} ${btnStyles.btn} ${btnStyles.primaryBtn} ${btnStyles.largeBtn}  ${isAnimating ? styles.animate : ""}`}
                 >
                   <span>Submit your entry</span>
-                </a>
+                </a> */}
                 {/* <Button label="Submit your entry" isLarge link="/submit" /> */}
                 <p className={`small-print text-center ${styles.smallPrint}`}>
                   Must be 18+ to enter and a current Australian resident.{" "}
