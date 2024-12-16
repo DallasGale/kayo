@@ -101,7 +101,7 @@ const questions = [
   {
     question: "What do I need to submit?",
     answer:
-      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up. <a href='/submit' style='color: #000';>Submit your entry.</a>",
+      "Create a 15–30 second video where you show off your personality and imagine you’re live on air with Fox Footy. Post it to your public social media account (Instagram, TikTok, Facebook, YouTube, or Vimeo), copy the link and paste it into our entry form. Please make sure your social profile of choice is public so we can view your submission. Then, add a short 100-word description of why you’re perfect for The Kayo Call Up. Submit your entry.",
   },
   {
     question: "Which social media platforms can I use?",
